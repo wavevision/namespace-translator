@@ -1,0 +1,24 @@
+<?php declare(strict_types = 1);
+
+namespace Wavevision\NamespaceTranslator;
+
+trait NamespaceTranslator
+{
+
+	/**
+	 * @var Translator
+	 */
+	protected $translator;
+
+	/**
+	 * @var TranslatorFactory
+	 */
+	private $translatorFactory;
+
+	public function injectTranslatorFactory(TranslatorFactory $translatorFactory): void
+	{
+		$this->translatorFactory = $translatorFactory;
+		$this->translator = $translatorFactory->create(static::class);
+	}
+
+}

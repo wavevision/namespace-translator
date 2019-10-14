@@ -7,15 +7,39 @@
     {
       "name": "Wavevision s.r.o",
       "email": "info@wavevision.com"
+    },
+    {
+      "name": "Jakub Filla",
+      "email": "jakub.filla@wavevision.com"
+    },
+    {
+      "name": "Vít Rozsíval",
+      "email": "vit@wavevision.com"
     }
   ],
-  "require": {},
+  "autoload": {
+    "psr-4": {
+      "Wavevision\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Wavevision\\": "tests"
+    }
+  },
+  "require": {
+    "php": ">=7.2",
+    "kdyby/translation": "^3.0",
+    "nette/utils": "^3.0",
+    "nette/neon": "^3.0"
+  },
   "require-dev": {
     "wavevision/coding-standard": "^1.1",
     "phpunit/phpunit": "^8.4",
     "phpstan/phpstan": "^0.11.16",
     "phing/phing": "^2.16",
-    "jakub-onderka/php-parallel-lint": "^1.0"
+    "jakub-onderka/php-parallel-lint": "^1.0",
+    "php-coveralls/php-coveralls": "^2.1"
   },
   "scripts": {
     "phing": "phing"
