@@ -68,7 +68,7 @@ class ImportManager
 		$namespace = $this->domainManager->getNamespace($key);
 		foreach ($this->pm->getRootDirs() as $rootDir) {
 			if ($resourceDir = $this->findResourceDir($namespace, $rootDir)) {
-				$dir = Path::join($resourceDir, ResourceManager::DIR);
+				$dir = $resourceDir;
 			}
 		}
 		if (!is_dir($dir)) {
@@ -109,11 +109,15 @@ class ImportManager
 		do {
 			$delimiter = strrpos($path, Path::DELIMITER);
 			if (!$delimiter) {
-				continue;
+				break;
 			}
 			$path = substr($path, 0, $delimiter);
 		} while ($path !== $rootDir && !is_dir($path));
-		return $path === $rootDir ? null : $path;
+		$translations = Path::join($path, ResourceManager::DIR);
+		if ($path === $rootDir && !is_dir($translations)) {
+			return null;
+		}
+		return $translations;
 	}
 
 }

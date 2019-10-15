@@ -4,7 +4,6 @@ namespace Wavevision\NamespaceTranslator\Import;
 
 use Nette\FileNotFoundException;
 use Nette\InvalidStateException;
-use Nette\Neon\Encoder;
 use Nette\Neon\Neon;
 use Nette\SmartObject;
 use Nette\Utils\FileSystem;
@@ -20,11 +19,6 @@ class ImportTranslations
 	use SmartObject;
 
 	/**
-	 * @var Encoder
-	 */
-	private $encoder;
-
-	/**
 	 * @var ExportManager
 	 */
 	private $exportManager;
@@ -38,7 +32,6 @@ class ImportTranslations
 		ExportManager $exportManager,
 		ImportManager $importManager
 	) {
-		$this->encoder = new Encoder();
 		$this->exportManager = $exportManager;
 		$this->importManager = $importManager;
 	}
@@ -51,6 +44,7 @@ class ImportTranslations
 	 */
 	public function process(callable $onFileStart, callable $onFileEnd, ?string $file = null): array
 	{
+		$resources = [];
 		$import = new Import();
 		if ($file) {
 			if (!is_file($file)) {
@@ -60,22 +54,20 @@ class ImportTranslations
 			$onFileStart($file, $locale);
 			$resources = $this->importCsv($import, $locale);
 			$onFileEnd($resources);
-			$this->importManager->invalidateCache();
-			return $resources;
-		}
-		$dir = $this->importManager->getImportDir();
-		$resources = [];
-		$files = Finder::findFiles('*.csv')->in($dir);
-		if ($files->count() === 0) {
-			throw new InvalidStateException("No files to import from '$dir'.");
-		}
-		/** @var SplFileInfo $resource */
-		foreach ($files as $resource) {
-			$locale = $this->openFile($import, $resource->getPathname());
-			$onFileStart($resource->getPathname(), $locale);
-			$updated = $this->importCsv($import, $locale);
-			$resources = array_merge($resources, $updated);
-			$onFileEnd($updated);
+		} else {
+			$dir = $this->importManager->getImportDir();
+			$files = Finder::findFiles('*.csv')->in($dir);
+			if ($files->count() === 0) {
+				throw new InvalidStateException("No files to import from '$dir'.");
+			}
+			/** @var SplFileInfo $resource */
+			foreach ($files as $resource) {
+				$locale = $this->openFile($import, $resource->getPathname());
+				$onFileStart($resource->getPathname(), $locale);
+				$updated = $this->importCsv($import, $locale);
+				$resources = array_merge($resources, $updated);
+				$onFileEnd($updated);
+			}
 		}
 		$this->importManager->invalidateCache();
 		return $resources;
@@ -105,28 +97,17 @@ class ImportTranslations
 			if (!isset($resources[$resource])) {
 				$resources[$resource] = [];
 			}
-			$content = Arrays::buildTree(
-				explode(DomainManager::DOMAIN_DELIMITER, $key),
-				$this->filterMessage($message)
-			);
+			$content = Arrays::buildTree(explode(DomainManager::DOMAIN_DELIMITER, $key), $message);
 			$resources[$resource] = Arrays::mergeAllRecursive($resources[$resource], $content);
 		}
 		foreach ($resources as $resource => $contents) {
 			if (is_file($resource)) {
 				$contents = Arrays::mergeAllRecursive(Neon::decode(FileSystem::read($resource)), $contents);
 			}
-			FileSystem::write($resource, $this->encoder->encode($contents));
+			FileSystem::write($resource, Neon::encode($contents, Neon::BLOCK));
 		}
 		$import->close();
 		return array_keys($resources);
-	}
-
-	private function filterMessage(string $message): ?string
-	{
-		if (trim($message) === '') {
-			return null;
-		}
-		return $message;
 	}
 
 }

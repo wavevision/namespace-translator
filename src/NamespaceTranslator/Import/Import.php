@@ -4,6 +4,7 @@ namespace Wavevision\NamespaceTranslator\Import;
 
 use Nette\InvalidStateException;
 use Nette\SmartObject;
+use Wavevision\Utils\Strings;
 
 class Import
 {
@@ -42,10 +43,7 @@ class Import
 	{
 		$data = fgetcsv($this->file);
 		if (is_array($data)) {
-			$data = str_replace("\xEF\xBB\xBF", '', $data);
-		}
-		if (is_array($data)) {
-			return $data;
+			return array_map([$this, 'filterData'], $data);
 		}
 		return null;
 	}
@@ -53,6 +51,14 @@ class Import
 	public function getFileName(): string
 	{
 		return $this->fileName;
+	}
+
+	private function filterData(string $value): ?string
+	{
+		if ($value === '') {
+			return null;
+		}
+		return Strings::autoUtf(Strings::removeBOM($value));
 	}
 
 }
