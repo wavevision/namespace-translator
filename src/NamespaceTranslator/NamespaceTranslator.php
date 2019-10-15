@@ -13,7 +13,7 @@ trait NamespaceTranslator
 	/**
 	 * @var TranslatorFactory
 	 */
-	private $translatorFactory;
+	protected $translatorFactory;
 
 	public function injectTranslatorFactory(TranslatorFactory $translatorFactory): void
 	{

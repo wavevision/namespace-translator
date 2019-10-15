@@ -7,7 +7,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Wavevision\NamespaceTranslator\Export\ExportTranslations;
 
-class ExportTranslationsCommand extends Command
+class ExportCommand extends Command
 {
 
 	/**
@@ -18,7 +18,7 @@ class ExportTranslationsCommand extends Command
 
 	protected function configure(): void
 	{
-		$this->setName('namespace-translator:export-translations')
+		$this->setName('namespace-translator:export')
 			->setDescription('Exports translation resources to CSV files based on locale.');
 	}
 

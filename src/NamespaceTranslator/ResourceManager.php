@@ -7,6 +7,7 @@ use Nette\SmartObject;
 use Nette\Utils\Finder;
 use ReflectionClass;
 use Symfony\Component\Translation\MessageCatalogue;
+use Wavevision\Utils\Path;
 
 class ResourceManager
 {
@@ -46,7 +47,7 @@ class ResourceManager
 	public function findResources(string $namespace): ?Finder
 	{
 		$reflection = new ReflectionClass($namespace);
-		$dir = implode('/', [dirname((string)$reflection->getFileName()), self::DIR]);
+		$dir = Path::join(dirname((string)$reflection->getFileName()), self::DIR);
 		if (is_dir($dir)) {
 			return Finder::findFiles('*.' . self::FORMAT)->in($dir);
 		}

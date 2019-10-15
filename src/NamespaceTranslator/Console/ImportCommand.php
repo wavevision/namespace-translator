@@ -8,7 +8,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Wavevision\NamespaceTranslator\Import\ImportTranslations;
 
-class ImportTranslationsCommand extends Command
+class ImportCommand extends Command
 {
 
 	private const FILE = 'file';
@@ -21,7 +21,7 @@ class ImportTranslationsCommand extends Command
 
 	protected function configure(): void
 	{
-		$this->setName('namespace-translator:import-translations')
+		$this->setName('namespace-translator:import')
 			->addArgument(self::FILE, InputArgument::OPTIONAL, 'Optional path to a specific CSV file')
 			->setDescription(
 				'Imports either a CSV file specified or all CSV files from default translations export directory.'
