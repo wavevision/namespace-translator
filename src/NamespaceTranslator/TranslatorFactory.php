@@ -6,9 +6,6 @@ use Kdyby\Translation\Translator as KdybyTranslator;
 use Nette\SmartObject;
 use SplFileInfo;
 
-/**
- * @DIService
- */
 class TranslatorFactory
 {
 
