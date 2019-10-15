@@ -1,3 +1,5 @@
+ 🚧 **Work In Progress** 🚧
+
 # Wavevision NamespaceTranslator
 
 Translations manager for Nette framework using [Kdyby/Translation](https://github.com/Kdyby/Translation). It allows you
