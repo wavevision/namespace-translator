@@ -18,7 +18,7 @@ trait NamespaceTranslator
 	public function injectTranslatorFactory(TranslatorFactory $translatorFactory): void
 	{
 		$this->translatorFactory = $translatorFactory;
-		$this->translator = $translatorFactory->create(static::class);
+		$this->translator = $this->translatorFactory->create(static::class);
 	}
 
 }

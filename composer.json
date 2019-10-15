@@ -30,8 +30,9 @@
   "require": {
     "php": ">=7.2",
     "kdyby/translation": "^3.0",
-    "nette/utils": "^3.0",
-    "nette/neon": "^3.0"
+    "nette/neon": "^3.0",
+    "nette/di": "^3.0",
+    "wavevision/utils": "^1.2"
   },
   "require-dev": {
     "wavevision/coding-standard": "^1.1",

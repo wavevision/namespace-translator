@@ -1,0 +1,5 @@
+services:
+	domainManager: Wavevision\NamespaceTranslator\DomainManager
+	parametersManager: Wavevision\NamespaceTranslator\ParametersManager(%exclude%, %exportFile%, %rootDirs%, %rootNamespace%)
+	resourceManager:  Wavevision\NamespaceTranslator\ResourceManager
+	translatorFactory: Wavevision\NamespaceTranslator\TranslatorFactory
