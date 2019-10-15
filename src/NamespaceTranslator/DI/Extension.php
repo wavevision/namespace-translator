@@ -9,7 +9,10 @@ use Nette\Schema\Processor;
 class Extension extends CompilerExtension
 {
 
-	private const DEFAULTS = [
+	/**
+	 * @var mixed[]
+	 */
+	protected $config = [
 		self::EXCLUDE => [
 			'config',
 			'Console',
