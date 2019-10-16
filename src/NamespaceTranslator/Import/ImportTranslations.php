@@ -75,8 +75,11 @@ class ImportTranslations
 
 	public function openFile(Import $import, string $file): string
 	{
+		$locale = '';
 		$import->open($file);
-		[, , $locale] = $import->get();
+		if ($header = $import->get()) {
+			[, , $locale] = $header;
+		}
 		if (!in_array($locale, $this->exportManager->getLocales())) {
 			throw new InvalidStateException("Invalid locale '$locale'.");
 		}

@@ -55,6 +55,7 @@ class Import
 
 	private function filterData(string $value): ?string
 	{
+		$value = Strings::trim($value);
 		if ($value === '') {
 			return null;
 		}

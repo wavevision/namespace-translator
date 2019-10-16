@@ -30,19 +30,19 @@
   "require": {
     "php": ">=7.2",
     "kdyby/translation": "^3.0",
-    "nette/neon": "^3.0",
+    "nette/application": "^3.0",
     "nette/di": "^3.0",
-    "wavevision/utils": "^1.2",
-    "symfony/console": "^4.3"
+    "nette/neon": "^3.0",
+    "symfony/console": "^4.3",
+    "wavevision/utils": "^1.2"
   },
   "require-dev": {
-    "wavevision/coding-standard": "^1.1",
-    "phpunit/phpunit": "^8.4",
-    "phpstan/phpstan": "^0.11.16",
-    "phing/phing": "^2.16",
     "jakub-onderka/php-parallel-lint": "^1.0",
+    "phing/phing": "^2.16",
     "php-coveralls/php-coveralls": "^2.1",
-    "nette/application": "^3.0",
+    "phpstan/phpstan": "^0.11.16",
+    "phpunit/phpunit": "^8.4",
+    "wavevision/coding-standard": "^1.1",
     "wavevision/nette-tests": "^1.0"
   },
   "scripts": {
