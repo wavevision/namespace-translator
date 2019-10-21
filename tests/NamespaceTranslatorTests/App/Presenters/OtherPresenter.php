@@ -2,12 +2,11 @@
 
 namespace Wavevision\NamespaceTranslatorTests\App\Presenters;
 
+use Wavevision\NamespaceTranslatorTests\App\Components\OtherComponent\OtherComponentFactory;
 use Wavevision\NamespaceTranslatorTests\App\Components\SomeComponent\SomeComponentFactory;
 
 class OtherPresenter extends BasePresenter
 {
-
-	public const COMPONENT = 'someComponent';
 
 	/**
 	 * @inject
@@ -15,9 +14,20 @@ class OtherPresenter extends BasePresenter
 	 */
 	public $someComponentFactory;
 
+	/**
+	 * @inject
+	 * @var OtherComponentFactory
+	 */
+	public $otherComponentFactory;
+
 	public function actionDefault(): void
 	{
-		$this->addComponent($this->someComponentFactory->create(), self::COMPONENT);
+		$this->addComponent($this->someComponentFactory->create(), 'someComponent');
+	}
+
+	public function actionNext(): void
+	{
+		$this->addComponent($this->otherComponentFactory->create(), 'otherComponent');
 	}
 
 }

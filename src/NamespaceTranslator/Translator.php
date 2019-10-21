@@ -39,7 +39,7 @@ class Translator implements ITranslator
 		$domain = $args[2] ?? null;
 		$locale = $args[3] ?? null;
 		if ($this->messageExists($message, $locale)) {
-			$domain = $this->domain;
+			$domain = $this->getDomain();
 		}
 		if (is_array($count)) {
 			$parameters = $count;

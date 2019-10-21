@@ -1,1 +1,2 @@
 someText: "Some text"
+messageWithCount: "Celkem %count% kusů"

@@ -11,15 +11,26 @@ class TranslatedControlTest extends PresenterTestCase
 
 	public function testDefault(): void
 	{
-		$this->assertEquals("Titulek presenteru\ncs\nZpráva\nDalší zpráva", $this->getResponse());
-		$this->assertEquals("Presenter title\nen\nMessage\nOther message", $this->getResponse('en'));
+		$this->assertEquals(
+			"Titulek presenteru\nCelkem 5 kusů\ncs\nZpráva\nDalší zpráva\nundefinedMessage\n",
+			$this->getResponse()
+		);
+		$this->assertEquals(
+			"Presenter title\nCelkem 5 kusů\nen\nMessage\nOther message\nundefinedMessage\n",
+			$this->getResponse(OtherPresenter::DEFAULT_ACTION, 'en')
+		);
 	}
 
-	private function getResponse(string $locale = 'cs'): string
+	public function testNext(): void
+	{
+		$this->assertEquals('Some text', $this->getResponse('next'));
+	}
+
+	private function getResponse(string $action = OtherPresenter::DEFAULT_ACTION, string $locale = 'cs'): string
 	{
 		return $this->extractTextResponseContent(
 			$this->runPresenter(
-				new PresenterRequest(OtherPresenter::class, OtherPresenter::DEFAULT_ACTION, ['locale' => $locale])
+				new PresenterRequest(OtherPresenter::class, $action, ['locale' => $locale])
 			)
 		);
 	}
