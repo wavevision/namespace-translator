@@ -1,0 +1,28 @@
+application:
+    mapping:
+        *: Wavevision\NamespaceTranslatorTests\App\*Module\Presenters\*Presenter
+
+decorator:
+    Nette\Application\UI\Control:
+        inject: on
+
+session:
+    autoStart: false
+
+extensions:
+    translation: Kdyby\Translation\DI\TranslationExtension
+    namespaceTranslator: Wavevision\NamespaceTranslator\DI\Extension
+
+translation:
+    default: cs
+    dirs: [%appDir%/translations]
+    fallback: [cs]
+    whitelist: [cs, en]
+
+namespaceTranslator:
+    rootNamespace: 'Wavevision\NamespaceTranslatorTests\App'
+
+services:
+    router: Wavevision\NamespaceTranslatorTests\App\Router\RouterFactory::createRouter
+    - Wavevision\NamespaceTranslatorTests\App\Components\SomeComponent\SomeComponentFactory
+

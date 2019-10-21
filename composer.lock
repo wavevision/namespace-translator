@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9cbde1f5e65fc9f7a50aac2d711df901",
+    "content-hash": "0b2dab4886db63d6706689898e311552",
     "packages": [
         {
             "name": "flow/jsonpath",
@@ -4589,16 +4589,16 @@
         },
         {
             "name": "wavevision/nette-tests",
-            "version": "1.0.1",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wavevision/nette-tests.git",
-                "reference": "040f0dac5a7338e361362f10cd7fbd162cfed668"
+                "reference": "b21052db8a3492f51f92020450367c2116e85788"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wavevision/nette-tests/zipball/040f0dac5a7338e361362f10cd7fbd162cfed668",
-                "reference": "040f0dac5a7338e361362f10cd7fbd162cfed668",
+                "url": "https://api.github.com/repos/wavevision/nette-tests/zipball/b21052db8a3492f51f92020450367c2116e85788",
+                "reference": "b21052db8a3492f51f92020450367c2116e85788",
                 "shasum": ""
             },
             "require": {
@@ -4619,11 +4619,20 @@
                 "jakub-onderka/php-parallel-lint": "^1.0",
                 "phing/phing": "^2.16",
                 "php-coveralls/php-coveralls": "^2.1",
+                "phpstan/extension-installer": "^1.0",
                 "phpstan/phpstan": "^0.11.16",
+                "phpstan/phpstan-nette": "^0.11.1",
                 "phpstan/phpstan-phpunit": "^0.11.2",
                 "wavevision/coding-standard": "^1.1.0"
             },
             "type": "library",
+            "extra": {
+                "phpstan": {
+                    "includes": [
+                        "extension.neon"
+                    ]
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Wavevision\\NetteTests\\": "src/NetteTests/"
@@ -4648,7 +4657,7 @@
                 }
             ],
             "description": "PHPUnit extension for testing Nette applications.",
-            "time": "2019-10-11T12:51:46+00:00"
+            "time": "2019-10-18T14:40:59+00:00"
         },
         {
             "name": "webmozart/assert",

@@ -4,6 +4,6 @@ services:
 	exportTranslations: Wavevision\NamespaceTranslator\Export\ExportTranslations
 	importManager: Wavevision\NamespaceTranslator\Import\ImportManager
 	importTranslations: Wavevision\NamespaceTranslator\Import\ImportTranslations
-	parametersManager: Wavevision\NamespaceTranslator\ParametersManager(%exclude%, %exportFile%, %rootDirs%, %rootNamespace%)
+	parametersManager: Wavevision\NamespaceTranslator\ParametersManager(%exclude%, %exportDir%, %rootDirs%, %rootNamespace%)
 	resourceManager:  Wavevision\NamespaceTranslator\ResourceManager
 	translatorFactory: Wavevision\NamespaceTranslator\TranslatorFactory
