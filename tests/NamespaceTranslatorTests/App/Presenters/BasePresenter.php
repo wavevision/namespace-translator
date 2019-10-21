@@ -3,12 +3,12 @@
 namespace Wavevision\NamespaceTranslatorTests\App\Presenters;
 
 use Nette\Application\UI\Presenter;
-use Wavevision\NamespaceTranslator\NamespaceTranslator;
+use Wavevision\NamespaceTranslator\TranslatedComponent;
 
 abstract class BasePresenter extends Presenter
 {
 
-	use NamespaceTranslator;
+	use TranslatedComponent;
 
 	/**
 	 * @persistent
@@ -20,7 +20,6 @@ abstract class BasePresenter extends Presenter
 	{
 		parent::startup();
 		$this->translator->getTranslator()->setLocale($this->locale);
-		$this->template->setTranslator($this->translator);
 	}
 
 }

@@ -3,12 +3,12 @@
 namespace Wavevision\NamespaceTranslatorTests\App\Components\SomeComponent;
 
 use Nette\Application\UI\Control;
-use Wavevision\NamespaceTranslator\TranslatedControl;
+use Wavevision\NamespaceTranslator\TranslatedComponent;
 
 class SomeComponent extends Control
 {
 
-	use TranslatedControl;
+	use TranslatedComponent;
 
 	public function render(): void
 	{

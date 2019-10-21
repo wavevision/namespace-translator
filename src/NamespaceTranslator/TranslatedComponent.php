@@ -5,7 +5,7 @@ namespace Wavevision\NamespaceTranslator;
 use Nette\Application\UI\ITemplate;
 use Nette\Bridges\ApplicationLatte\Template;
 
-trait TranslatedControl
+trait TranslatedComponent
 {
 
 	use NamespaceTranslator;
