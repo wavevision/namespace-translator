@@ -3,6 +3,7 @@
 namespace Wavevision\NamespaceTranslator;
 
 use Kdyby\Translation\Translator;
+use Nette\InvalidStateException;
 use Nette\SmartObject;
 use Nette\Utils\Finder;
 use ReflectionClass;
@@ -46,8 +47,11 @@ class ResourceManager
 
 	public function findResources(string $namespace): ?Finder
 	{
-		$reflection = new ReflectionClass($namespace);
-		$dir = Path::join(dirname((string)$reflection->getFileName()), self::DIR);
+		$file = (new ReflectionClass($namespace))->getFileName();
+		if ($file === false) {
+			throw new InvalidStateException("Unable to get filename for namespace '$namespace'.");
+		}
+		$dir = Path::join(dirname($file), self::DIR);
 		if (is_dir($dir)) {
 			return Finder::findFiles('*.' . self::FORMAT)->in($dir);
 		}
