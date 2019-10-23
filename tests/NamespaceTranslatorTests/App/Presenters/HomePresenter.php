@@ -4,5 +4,5 @@ namespace Wavevision\NamespaceTranslatorTests\App\Presenters;
 
 class HomePresenter extends BasePresenter
 {
-	
+
 }

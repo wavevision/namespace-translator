@@ -20,7 +20,7 @@
     <target name="rm-cache">
         <exec executable="rm" logoutput="true" passthru="true" checkreturn="true">
             <arg value="-rf"/>
-            <arg value="${temp}/cache"/>
+            <arg value="${temp}"/>
         </exec>
     </target>
 

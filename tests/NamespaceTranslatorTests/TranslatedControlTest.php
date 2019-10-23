@@ -23,7 +23,7 @@ class TranslatedControlTest extends PresenterTestCase
 
 	public function testNext(): void
 	{
-		$this->assertEquals('Some text', $this->getResponse('next'));
+		$this->assertEquals("Some text\nSome text", $this->getResponse('next'));
 	}
 
 	private function getResponse(string $action = OtherPresenter::DEFAULT_ACTION, string $locale = 'cs'): string
