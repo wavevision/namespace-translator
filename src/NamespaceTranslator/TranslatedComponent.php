@@ -14,9 +14,7 @@ trait TranslatedComponent
 	{
 		/** @var Template $template */
 		$template = parent::createTemplate();
-		$template->setParameters(['translator' => $this->translator]);
-		$template->setTranslator($this->translator);
-		return $template;
+		return $this->setTemplateTranslator($template);
 	}
 
 }

@@ -2,6 +2,8 @@
 
 namespace Wavevision\NamespaceTranslator;
 
+use Nette\Bridges\ApplicationLatte\Template;
+
 trait NamespaceTranslator
 {
 
@@ -19,6 +21,13 @@ trait NamespaceTranslator
 	{
 		$this->translatorFactory = $translatorFactory;
 		$this->translator = $this->translatorFactory->create(static::class);
+	}
+
+	private function setTemplateTranslator(Template $template): Template
+	{
+		$template->setParameters(['translator' => $this->translator]);
+		$template->setTranslator($this->translator);
+		return $template;
 	}
 
 }
