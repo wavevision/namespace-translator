@@ -16,3 +16,61 @@ Via [Composer](https://getcomposer.org)
 ```bash
 composer require wavevision/namespace-translator
 ```
+
+## Usage
+
+Register required extensions in your project config:
+
+```neon
+extensions:
+	translation: Contributte\Translation\DI\TranslationExtension
+	namespaceTranslator: Wavevision\NamespaceTranslator\DI\Extension
+```
+
+You can configure `namespaceTranslator` as follows *(default values)*:
+
+```neon
+namespaceTranslator:
+    dirNames: # names of dirs in which namespace translations will reside
+        - translations
+        - Translations
+    loaders: # namespace translations loaders
+            neon: Wavevision\NamespaceTranslator\Loaders\Neon
+            php: Wavevision\NamespaceTranslator\Loaders\TranslationClass
+```
+> **Note:** Refer to [Contributte docs](https://contributte.org/packages/contributte/translation.html#configuration) for further info about configuring `translation`.
+
+With this setup, you can start managing your translations like a boss 🤵.
+
+### Translated components
+
+Your components (or presenters) can use `Wavevision\NamespaceTranslator\TranslatedComponent` trait.
+
+**Make sure your component has `inject` allowed.**
+
+The trait will provide your component class with `$translator` property. The translator will look for resources in configured dir names inside component's namespace.
+
+### Translated models
+
+Even your services can use the translator. Simply use `Wavevision\NamespaceTranslator\NamespaceTranslator`.
+
+**Make sure your service is registered with `inject: on` in your config.**
+
+After that, it works the same as with your components.
+
+## Loaders
+
+There are two resource loaders included by default:
+
+- [Neon](./src/NamespaceTranslator/Loaders/Neon.php) – loads translations from `neon` files
+- [TranslationClass](./src/NamespaceTranslator/Loaders/TranslationClass.php) – loads translations from PHP classes
+
+Using PHP classes is useful when you want to refer to your translations using constants so changes in your resources get propagated throughout the whole project.
+
+**Classes containing translations must implement `Wavevision\NamespaceTranslator\Resources\Translation`.**
+
+You can also create and register your own loader, just make sure it implements `Wavevision\NamespaceTranslator\Loaders\Loader`.
+
+## Examples
+
+See [tests](./tests/App) for example app implementation.

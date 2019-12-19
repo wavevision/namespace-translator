@@ -20,9 +20,6 @@ translation:
 		whitelist: [cs, en]
 	dirs: [%appDir%/translations]
 
-namespaceTranslator:
-	rootNamespace: 'Wavevision\NamespaceTranslatorTests\App'
-
 services:
 	router: Wavevision\NamespaceTranslatorTests\App\Router\RouterFactory::createRouter
 	- Wavevision\NamespaceTranslatorTests\App\Components\OtherComponent\OtherComponentFactory

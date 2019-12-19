@@ -12,51 +12,31 @@ class ParametersManager
 	/**
 	 * @var string[]
 	 */
-	private array $exclude;
+	private array $dirNames;
 
 	/**
-	 * @var mixed[]
+	 * @var string[]
 	 */
 	private array $loaders;
 
 	/**
-	 * @var string[]
-	 */
-	private array $rootDirs;
-
-	private string  $rootNamespace;
-
-	/**
-	 * @var string[]
-	 */
-	private array $translationDirNames;
-
-	/**
-	 * @param string[] $exclude
-	 * @param mixed[] $loaders
-	 * @param string[] $rootDirs
-	 * @param string[] $translationDirNames
+	 * @param string[] $dirNames
+	 * @param string[] $loaders
 	 */
 	public function __construct(
-		array $exclude,
-		array $loaders,
-		array $rootDirs,
-		string $rootNamespace,
-		array $translationDirNames
+		array $dirNames,
+		array $loaders
 	) {
-		$this->exclude = $exclude;
+		$this->dirNames = $dirNames;
 		$this->loaders = $loaders;
-		$this->rootDirs = $rootDirs;
-		$this->rootNamespace = $rootNamespace;
-		$this->translationDirNames = $translationDirNames;
 	}
 
 	/**
 	 * @return string[]
 	 */
-	public function getExclude(): array
+	public function getDirNames(): array
 	{
-		return $this->exclude;
+		return $this->dirNames;
 	}
 
 	/**
@@ -68,32 +48,11 @@ class ParametersManager
 	}
 
 	/**
-	 * @return mixed[]
+	 * @return string[]
 	 */
 	public function getLoaders(): array
 	{
 		return $this->loaders;
-	}
-
-	/**
-	 * @return string[]
-	 */
-	public function getRootDirs(): array
-	{
-		return $this->rootDirs;
-	}
-
-	public function getRootNamespace(): string
-	{
-		return $this->rootNamespace;
-	}
-
-	/**
-	 * @return string[]
-	 */
-	public function getTranslationDirNames(): array
-	{
-		return $this->translationDirNames;
 	}
 
 }

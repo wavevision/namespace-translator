@@ -13,11 +13,8 @@ class ParametersManagerTest extends TestCase
 
 	public function testParameters(): void
 	{
-		$pm = new ParametersManager([''], [''], [''], '', ['']);
-		$this->assertEquals([''], $pm->getExclude());
+		$pm = new ParametersManager([''], ['']);
 		$this->assertEquals([''], $pm->getLoaders());
-		$this->assertEquals([''], $pm->getRootDirs());
-		$this->assertEquals('', $pm->getRootNamespace());
 	}
 
 }

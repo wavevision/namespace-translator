@@ -21,36 +21,23 @@ class Extension extends CompilerExtension
 	 * @var mixed[]
 	 */
 	public $defaults = [
-		self::EXCLUDE => [
-			'config',
-			'Console',
-			'Entities',
-			'Events',
-			'Router',
-			'templates',
+		self::DIR_NAMES => [
+			'translations',
+			'Translations',
 		],
-		self::LOADERS => [Neon::FORMAT => Neon::class, TranslationClass::FORMAT => TranslationClass::class],
-		self::ROOT_DIRS => ['%appDir%'],
-		self::ROOT_NAMESPACE => 'App',
-		self::TRANSLATION_DIR_NAMES => ['translations', 'Translations'],
+		self::LOADERS => [
+			Neon::FORMAT => Neon::class,
+			TranslationClass::FORMAT => TranslationClass::class,
+		],
 	];
 
-	private const EXCLUDE = 'exclude';
+	private const DIR_NAMES = 'dirNames';
 
 	private const LOADERS = 'loaders';
 
-	private const ROOT_DIRS = 'rootDirs';
-
-	private const ROOT_NAMESPACE = 'rootNamespace';
-
-	private const TRANSLATION_DIR_NAMES = 'translationDirNames';
-
 	private const OPTIONS = [
-		self::EXCLUDE,
+		self::DIR_NAMES,
 		self::LOADERS,
-		self::ROOT_DIRS,
-		self::ROOT_NAMESPACE,
-		self::TRANSLATION_DIR_NAMES,
 	];
 
 	public function loadConfiguration(): void
@@ -69,11 +56,11 @@ class Extension extends CompilerExtension
 		$manager = $builder
 			->addDefinition($this->prefix('loaderManager'))
 			->setFactory(Manager::class);
-		foreach ($config[self::LOADERS] as $ext => $factory) {
+		foreach ($config[self::LOADERS] as $format => $factory) {
 			$loader = $builder
-				->addDefinition($this->prefix($ext . 'Loader'))
+				->addDefinition($this->prefix($format . 'Loader'))
 				->setFactory($factory);
-			$manager->addSetup('addLoader', [$ext, $loader]);
+			$manager->addSetup('addLoader', [$format, $loader]);
 		}
 	}
 
@@ -91,7 +78,6 @@ class Extension extends CompilerExtension
 	 */
 	private function validateExtensionConfig(): array
 	{
-		$builder = $this->getContainerBuilder();
 		/** @var mixed[] $config */
 		$config = $this->getConfig();
 		foreach ($config[self::LOADERS] as $loader) {
@@ -100,11 +86,6 @@ class Extension extends CompilerExtension
 				throw new InvalidArgument(
 					sprintf("Loader '%s' must implement '%s' interface.", $loaderReflection->getName(), Loader::class)
 				);
-			}
-		}
-		foreach ($config[self::ROOT_DIRS] as $rootDir) {
-			if (!is_dir(Helpers::expand($rootDir, $builder->parameters))) {
-				throw new InvalidArgument("Root dir '$rootDir' does not exist.");
 			}
 		}
 		return $config;

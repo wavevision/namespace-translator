@@ -88,7 +88,7 @@ class ResourceManager
 	{
 		return array_filter(
 			Arrays::map(
-				$this->pm->getTranslationDirNames(),
+				$this->pm->getDirNames(),
 				fn(string $dir): string => Path::join(dirname($file), $dir)
 			),
 			'is_dir'

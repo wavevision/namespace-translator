@@ -1,6 +1,6 @@
 services:
 	domainManager: Wavevision\NamespaceTranslator\DomainManager
-	parametersManager: Wavevision\NamespaceTranslator\ParametersManager(%exclude%, %loaders%, %rootDirs%, %rootNamespace%, %translationDirNames%)
+	parametersManager: Wavevision\NamespaceTranslator\ParametersManager(%dirNames%, %loaders%)
 	resourceLoader: Wavevision\NamespaceTranslator\ResourceLoader
 	resourceManager:  Wavevision\NamespaceTranslator\ResourceManager
 	translatorFactory: Wavevision\NamespaceTranslator\TranslatorFactory
