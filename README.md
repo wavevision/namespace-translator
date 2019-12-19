@@ -8,3 +8,11 @@ Translations manager for Nette framework using [contributte/translation](https:/
 to have your translation files located where they are really used (e.g. next to a component or model). 
 
 **No more global translations mess!** 💪
+
+## Installation
+
+Via [Composer](https://getcomposer.org)
+
+```bash
+composer require wavevision/namespace-translator
+```
