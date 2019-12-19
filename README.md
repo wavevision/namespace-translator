@@ -5,7 +5,7 @@
 [![PHPStan](https://img.shields.io/badge/style-level%20max-brightgreen.svg?label=phpstan)](https://github.com/phpstan/phpstan)
 
 Translations manager for Nette framework using [contributte/translation](https://github.com/contributte/translation). It allows you
-to have your translation files located where they are really used (e.g. next to a component or model). 
+to have your translation files located where they are really used (e.g. next to a component or a model). 
 
 **No more global translations mess!** 💪
 
@@ -35,8 +35,8 @@ namespaceTranslator:
         - translations
         - Translations
     loaders: # namespace translations loaders
-            neon: Wavevision\NamespaceTranslator\Loaders\Neon
-            php: Wavevision\NamespaceTranslator\Loaders\TranslationClass
+        neon: Wavevision\NamespaceTranslator\Loaders\Neon
+        php: Wavevision\NamespaceTranslator\Loaders\TranslationClass
 ```
 > **Note:** Refer to [Contributte docs](https://contributte.org/packages/contributte/translation.html#configuration) for further info about configuring `translation`.
 
