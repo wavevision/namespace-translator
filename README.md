@@ -38,9 +38,14 @@ namespaceTranslator:
         neon: Wavevision\NamespaceTranslator\Loaders\Neon
         php: Wavevision\NamespaceTranslator\Loaders\TranslationClass
 ```
-> **Note:** Refer to [Contributte docs](https://contributte.org/packages/contributte/translation.html#configuration) for further info about configuring `translation`.
+> **Note:** Refer to [Contributte docs](https://contributte.org/packages/contributte/translation.html#configuration) 
+> for further info about configuring `translation`.
 
 With this setup, you can start managing your translations like a boss 🤵.
+
+The best thing is the translator keeps full backwards compatibility with `contributte/translation` setup, 
+so you can still use your translations as you are used to and migrate to namespaces step-by-step.
+Any translation not found by namespace translator will fallback to `translation` resources.
 
 ### Translated components
 
@@ -48,7 +53,10 @@ Your components (or presenters) can use `Wavevision\NamespaceTranslator\Translat
 
 **Make sure your component has `inject` allowed.**
 
-The trait will provide your component class with `$translator` property. The translator will look for resources in configured dir names inside component's namespace.
+The trait will provide your component class with `$translator` property. 
+The translator will look for resources in configured dir names inside component's namespace.
+
+> **Note**: The `translate` macro in component templates will, of course, work too.
 
 ### Translated models
 
