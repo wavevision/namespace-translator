@@ -12,11 +12,11 @@ class TranslatedControlTest extends PresenterTestCase
 	public function testDefault(): void
 	{
 		$this->assertEquals(
-			"Titulek presenteru\nCelkem 5 kusů\ncs\nZpráva\nDalší zpráva\nundefinedMessage\n",
+			"Titulek presenteru\nBla!\nCelkem 5 kusů\ncs\nZpráva\nDalší zpráva\nundefinedMessage\n",
 			$this->getResponse()
 		);
 		$this->assertEquals(
-			"Presenter title\nCelkem 5 kusů\nen\nMessage\nOther message\nundefinedMessage\n",
+			"Presenter title\nBla!\nCelkem 5 kusů\nen\nMessage\nOther message\nundefinedMessage\n",
 			$this->getResponse(OtherPresenter::DEFAULT_ACTION, 'en')
 		);
 	}

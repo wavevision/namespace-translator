@@ -2,9 +2,10 @@
 
 namespace Wavevision\NamespaceTranslator;
 
-use Kdyby\Translation\ITranslator;
-use Kdyby\Translation\Phrase;
-use Kdyby\Translation\Translator as KdybyTranslator;
+use Contributte\Translation\Translator as ContributteTranslator;
+use Contributte\Translation\Wrappers\Message;
+use Contributte\Translation\Wrappers\NotTranslate;
+use Nette\Localization\ITranslator;
 use Nette\SmartObject;
 
 class Translator implements ITranslator
@@ -12,28 +13,25 @@ class Translator implements ITranslator
 
 	use SmartObject;
 
-	/**
-	 * @var string|null
-	 */
-	private $domain;
+	private ?string $domain;
 
-	/**
-	 * @var KdybyTranslator
-	 */
-	private $translator;
+	private ContributteTranslator $translator;
 
-	public function __construct(KdybyTranslator $translator)
+	public function __construct(ContributteTranslator $translator)
 	{
+		$this->domain = null;
 		$this->translator = $translator;
 	}
 
 	/**
-	 * @param Phrase|string $message
+	 * @param Message|NotTranslate|string $message
 	 * @param mixed ...$args
-	 * @return string
 	 */
 	public function translate($message, ...$args): string
 	{
+		if ($message instanceof NotTranslate) {
+			return $message->message;
+		}
 		$count = $args[0] ?? null;
 		$parameters = $args[1] ?? [];
 		$domain = $args[2] ?? null;
@@ -59,27 +57,24 @@ class Translator implements ITranslator
 		return $this;
 	}
 
-	public function getTranslator(): KdybyTranslator
+	public function getTranslator(): ContributteTranslator
 	{
 		return $this->translator;
 	}
 
 	/**
-	 * @param Phrase|string $message
-	 * @return string
+	 * @param Message|string $message
 	 */
 	private function getPureMessage($message): string
 	{
-		if ($message instanceof Phrase) {
+		if ($message instanceof Message) {
 			return $message->message;
 		}
 		return $message;
 	}
 
 	/**
-	 * @param Phrase|string $message
-	 * @param string|null $locale
-	 * @return bool
+	 * @param Message|string $message
 	 */
 	private function messageExists($message, ?string $locale): bool
 	{

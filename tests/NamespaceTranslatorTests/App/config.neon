@@ -1,28 +1,32 @@
 application:
-    mapping:
-        *: Wavevision\NamespaceTranslatorTests\App\*Module\Presenters\*Presenter
+	mapping:
+		*: Wavevision\NamespaceTranslatorTests\App\*Module\Presenters\*Presenter
 
 decorator:
-    Nette\Application\UI\Control:
-        inject: on
+	Nette\Application\UI\Control:
+		inject: on
 
 session:
-    autoStart: false
+	autoStart: false
 
 extensions:
-    translation: Kdyby\Translation\DI\TranslationExtension
-    namespaceTranslator: Wavevision\NamespaceTranslator\DI\Extension
+	translation: Contributte\Translation\DI\TranslationExtension
+	namespaceTranslator: Wavevision\NamespaceTranslator\DI\Extension
 
 translation:
-    default: cs
-    dirs: [%appDir%/translations]
-    fallback: [cs]
-    whitelist: [cs, en]
+	locales:
+		default: cs
+		fallback: [cs]
+		whitelist: [cs, en]
+	dirs: [%appDir%/translations]
 
 namespaceTranslator:
-    rootNamespace: 'Wavevision\NamespaceTranslatorTests\App'
+	rootNamespace: 'Wavevision\NamespaceTranslatorTests\App'
 
 services:
-    router: Wavevision\NamespaceTranslatorTests\App\Router\RouterFactory::createRouter
-    - Wavevision\NamespaceTranslatorTests\App\Components\OtherComponent\OtherComponentFactory
-    - Wavevision\NamespaceTranslatorTests\App\Components\SomeComponent\SomeComponentFactory
+	router: Wavevision\NamespaceTranslatorTests\App\Router\RouterFactory::createRouter
+	- Wavevision\NamespaceTranslatorTests\App\Components\OtherComponent\OtherComponentFactory
+	- Wavevision\NamespaceTranslatorTests\App\Components\SomeComponent\SomeComponentFactory
+	-
+		factory: Wavevision\NamespaceTranslatorTests\App\Models\Translated\Model
+		inject: on

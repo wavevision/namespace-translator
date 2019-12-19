@@ -12,9 +12,8 @@ abstract class BasePresenter extends Presenter
 
 	/**
 	 * @persistent
-	 * @var string
 	 */
-	public $locale;
+	public string $locale;
 
 	protected function startup(): void
 	{

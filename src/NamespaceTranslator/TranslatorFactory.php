@@ -2,7 +2,7 @@
 
 namespace Wavevision\NamespaceTranslator;
 
-use Kdyby\Translation\Translator as KdybyTranslator;
+use Contributte\Translation\Translator as ContributteTranslator;
 use Nette\SmartObject;
 use SplFileInfo;
 
@@ -11,20 +11,11 @@ class TranslatorFactory
 
 	use SmartObject;
 
-	/**
-	 * @var DomainManager
-	 */
-	private $domainManager;
+	private DomainManager $domainManager;
 
-	/**
-	 * @var ResourceManager
-	 */
-	private $resourceManager;
+	private ResourceManager $resourceManager;
 
-	/**
-	 * @var KdybyTranslator
-	 */
-	private $translator;
+	private ContributteTranslator $translator;
 
 	/**
 	 * @var Translator[]
@@ -34,7 +25,7 @@ class TranslatorFactory
 	public function __construct(
 		DomainManager $domainManager,
 		ResourceManager $resourceManager,
-		KdybyTranslator $translator
+		ContributteTranslator $translator
 	) {
 		$this->domainManager = $domainManager;
 		$this->translator = $translator;

@@ -7,15 +7,9 @@ use Nette\Bridges\ApplicationLatte\Template;
 trait NamespaceTranslator
 {
 
-	/**
-	 * @var Translator
-	 */
-	protected $translator;
+	protected Translator $translator;
 
-	/**
-	 * @var TranslatorFactory
-	 */
-	protected $translatorFactory;
+	protected TranslatorFactory $translatorFactory;
 
 	public function injectTranslatorFactory(TranslatorFactory $translatorFactory): void
 	{

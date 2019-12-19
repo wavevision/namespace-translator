@@ -12,13 +12,13 @@ class OtherPresenter extends BasePresenter
 	 * @inject
 	 * @var SomeComponentFactory
 	 */
-	public $someComponentFactory;
+	public SomeComponentFactory $someComponentFactory;
 
 	/**
 	 * @inject
 	 * @var OtherComponentFactory
 	 */
-	public $otherComponentFactory;
+	public OtherComponentFactory $otherComponentFactory;
 
 	public function actionDefault(): void
 	{

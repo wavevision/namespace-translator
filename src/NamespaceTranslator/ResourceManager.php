@@ -2,12 +2,14 @@
 
 namespace Wavevision\NamespaceTranslator;
 
-use Kdyby\Translation\Translator;
-use Nette\InvalidStateException;
+use Contributte\Translation\Translator;
 use Nette\SmartObject;
 use Nette\Utils\Finder;
 use ReflectionClass;
+use SplFileInfo;
 use Symfony\Component\Translation\MessageCatalogue;
+use Wavevision\NamespaceTranslator\Exceptions\InvalidState;
+use Wavevision\Utils\Arrays;
 use Wavevision\Utils\Path;
 
 class ResourceManager
@@ -15,45 +17,44 @@ class ResourceManager
 
 	use SmartObject;
 
-	public const DIR = 'translations';
-
-	public const FORMAT = 'neon';
-
 	/**
 	 * @var ResourceLoader
 	 */
-	private $loader;
+	private ResourceLoader $loader;
 
 	/**
 	 * @var string[]
 	 */
 	private $namespaces = [];
 
+	private ParametersManager $pm;
+
 	/**
 	 * @var MessageCatalogue[]
 	 */
 	private $resources = [];
 
-	/**
-	 * @var Translator
-	 */
-	private $translator;
+	private Translator $translator;
 
-	public function __construct(Translator $translator)
+	public function __construct(ResourceLoader $loader, ParametersManager $pm, Translator $translator)
 	{
-		$this->loader = new ResourceLoader();
+		$this->loader = $loader;
+		$this->pm = $pm;
 		$this->translator = $translator;
 	}
 
-	public function findResources(string $namespace): ?Finder
+	/**
+	 * @return Finder<SplFileInfo>|null
+	 */
+	public function findResources(string $namespace): ?iterable
 	{
-		$file = (new ReflectionClass($namespace))->getFileName();
-		if ($file === false) {
-			throw new InvalidStateException("Unable to get filename for namespace '$namespace'.");
+		if (!class_exists($namespace)) {
+			throw new InvalidState("Namespace '$namespace' is not a valid class.");
 		}
-		$dir = Path::join(dirname($file), self::DIR);
-		if (is_dir($dir)) {
-			return Finder::findFiles('*.' . self::FORMAT)->in($dir);
+		$file = (string)(new ReflectionClass($namespace))->getFileName();
+		$dirs = $this->getDirs($file);
+		if (!Arrays::isEmpty($dirs)) {
+			return Finder::findFiles(...$this->getMasks())->in(...$dirs);
 		}
 		return null;
 	}
@@ -78,6 +79,28 @@ class ResourceManager
 	public function setNamespaceLoaded(string $namespace): void
 	{
 		$this->namespaces[] = $namespace;
+	}
+
+	/**
+	 * @return string[]
+	 */
+	private function getDirs(string $file): array
+	{
+		return array_filter(
+			Arrays::map(
+				$this->pm->getTranslationDirNames(),
+				fn(string $dir): string => Path::join(dirname($file), $dir)
+			),
+			'is_dir'
+		);
+	}
+
+	/**
+	 * @return string[]
+	 */
+	private function getMasks(): array
+	{
+		return Arrays::map($this->pm->getFormats(), fn(string $format): string => "*.$format");
 	}
 
 }

@@ -12,35 +12,43 @@ class ParametersManager
 	/**
 	 * @var string[]
 	 */
-	private $exclude;
+	private array $exclude;
 
 	/**
-	 * @var string
+	 * @var mixed[]
 	 */
-	private $exportDir;
+	private array $loaders;
 
 	/**
 	 * @var string[]
 	 */
-	private $rootDirs;
+	private array $rootDirs;
+
+	private string  $rootNamespace;
 
 	/**
-	 * @var string
+	 * @var string[]
 	 */
-	private $rootNamespace;
+	private array $translationDirNames;
 
 	/**
 	 * @param string[] $exclude
-	 * @param string $exportDir
+	 * @param mixed[] $loaders
 	 * @param string[] $rootDirs
-	 * @param string $rootNamespace
+	 * @param string[] $translationDirNames
 	 */
-	public function __construct(array $exclude, string $exportDir, array $rootDirs, string $rootNamespace)
-	{
+	public function __construct(
+		array $exclude,
+		array $loaders,
+		array $rootDirs,
+		string $rootNamespace,
+		array $translationDirNames
+	) {
 		$this->exclude = $exclude;
-		$this->exportDir = $exportDir;
+		$this->loaders = $loaders;
 		$this->rootDirs = $rootDirs;
 		$this->rootNamespace = $rootNamespace;
+		$this->translationDirNames = $translationDirNames;
 	}
 
 	/**
@@ -51,9 +59,20 @@ class ParametersManager
 		return $this->exclude;
 	}
 
-	public function getExportDir(): string
+	/**
+	 * @return string[]
+	 */
+	public function getFormats(): array
 	{
-		return $this->exportDir;
+		return array_keys($this->loaders);
+	}
+
+	/**
+	 * @return mixed[]
+	 */
+	public function getLoaders(): array
+	{
+		return $this->loaders;
 	}
 
 	/**
@@ -67,6 +86,14 @@ class ParametersManager
 	public function getRootNamespace(): string
 	{
 		return $this->rootNamespace;
+	}
+
+	/**
+	 * @return string[]
+	 */
+	public function getTranslationDirNames(): array
+	{
+		return $this->translationDirNames;
 	}
 
 }

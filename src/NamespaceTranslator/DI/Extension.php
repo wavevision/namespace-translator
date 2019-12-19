@@ -5,9 +5,14 @@ namespace Wavevision\NamespaceTranslator\DI;
 use Nette\DI\CompilerExtension;
 use Nette\DI\Helpers;
 use Nette\DI\Statement;
-use Nette\InvalidStateException;
 use Nette\Schema\Expect;
 use Nette\Schema\Schema;
+use ReflectionClass;
+use Wavevision\NamespaceTranslator\Exceptions\InvalidArgument;
+use Wavevision\NamespaceTranslator\Loaders\Loader;
+use Wavevision\NamespaceTranslator\Loaders\Manager;
+use Wavevision\NamespaceTranslator\Loaders\Neon;
+use Wavevision\NamespaceTranslator\Loaders\TranslationClass;
 
 class Extension extends CompilerExtension
 {
@@ -24,18 +29,29 @@ class Extension extends CompilerExtension
 			'Router',
 			'templates',
 		],
-		self::EXPORT_DIR => '%tempDir%/translations-export',
+		self::LOADERS => [Neon::FORMAT => Neon::class, TranslationClass::FORMAT => TranslationClass::class],
 		self::ROOT_DIRS => ['%appDir%'],
 		self::ROOT_NAMESPACE => 'App',
+		self::TRANSLATION_DIR_NAMES => ['translations', 'Translations'],
 	];
 
 	private const EXCLUDE = 'exclude';
 
-	private const EXPORT_DIR = 'exportDir';
+	private const LOADERS = 'loaders';
 
 	private const ROOT_DIRS = 'rootDirs';
 
 	private const ROOT_NAMESPACE = 'rootNamespace';
+
+	private const TRANSLATION_DIR_NAMES = 'translationDirNames';
+
+	private const OPTIONS = [
+		self::EXCLUDE,
+		self::LOADERS,
+		self::ROOT_DIRS,
+		self::ROOT_NAMESPACE,
+		self::TRANSLATION_DIR_NAMES,
+	];
 
 	public function loadConfiguration(): void
 	{
@@ -49,12 +65,22 @@ class Extension extends CompilerExtension
 			}
 		}
 		$this->compiler->loadDefinitionsFromConfig($services);
+		$builder = $this->getContainerBuilder();
+		$manager = $builder
+			->addDefinition($this->prefix('loaderManager'))
+			->setFactory(Manager::class);
+		foreach ($config[self::LOADERS] as $ext => $factory) {
+			$loader = $builder
+				->addDefinition($this->prefix($ext . 'Loader'))
+				->setFactory($factory);
+			$manager->addSetup('addLoader', [$ext, $loader]);
+		}
 	}
 
 	public function getConfigSchema(): Schema
 	{
 		$structure = [];
-		foreach ([self::EXCLUDE, self::EXPORT_DIR, self::ROOT_DIRS, self::ROOT_NAMESPACE] as $item) {
+		foreach (self::OPTIONS as $item) {
 			$structure[$item] = Expect::type(gettype($this->defaults[$item]))->default($this->defaults[$item]);
 		}
 		return Expect::structure($structure)->castTo('array');
@@ -68,9 +94,17 @@ class Extension extends CompilerExtension
 		$builder = $this->getContainerBuilder();
 		/** @var mixed[] $config */
 		$config = $this->getConfig();
+		foreach ($config[self::LOADERS] as $loader) {
+			$loaderReflection = new ReflectionClass($loader);
+			if (!$loaderReflection->implementsInterface(Loader::class)) {
+				throw new InvalidArgument(
+					sprintf("Loader '%s' must implement '%s' interface.", $loaderReflection->getName(), Loader::class)
+				);
+			}
+		}
 		foreach ($config[self::ROOT_DIRS] as $rootDir) {
 			if (!is_dir(Helpers::expand($rootDir, $builder->parameters))) {
-				throw new InvalidStateException("Root dir '$rootDir' does not exist.");
+				throw new InvalidArgument("Root dir '$rootDir' does not exist.");
 			}
 		}
 		return $config;
