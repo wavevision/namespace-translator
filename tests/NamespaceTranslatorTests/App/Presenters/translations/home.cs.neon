@@ -1,3 +1,7 @@
+# Translations for HomePresenter
+# keys are prefixed with 'home'
+# HomePresenter resolves the prefix automatically from its class
+# so you can use both 'title'|translate and 'home.title'|translate (see templates/Home/default.latte)
 title: "Welcome"
 text: "You are here!"
 homeCount: "%count% ks"
