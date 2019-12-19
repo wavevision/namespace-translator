@@ -73,4 +73,4 @@ You can also create and register your own loader, just make sure it implements `
 
 ## Examples
 
-See [tests](./tests/App) for example app implementation.
+See [tests](./tests/NamespaceTranslatorTests/App) for example app implementation.
