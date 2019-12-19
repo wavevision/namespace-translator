@@ -25,8 +25,8 @@ class Messages
 	{
 		$this->locale = $locale;
 		$this->prefix = $prefix;
-		if ($this->getPrefix() !== null) {
-			$this->messages = [$this->prefix => $messages];
+		if ($prefix = $this->getPrefix()) {
+			$this->messages = [$prefix => $messages];
 		} else {
 			$this->messages = $messages;
 		}
