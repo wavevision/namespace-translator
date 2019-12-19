@@ -15,7 +15,12 @@ class HomePresenter extends BasePresenter
 
 	public function actionDefault(): void
 	{
-		$this->template->setParameters(['modelTranslation' => $this->translatedModel->process()]);
+		$this->template->setParameters(
+			[
+				'modelTranslation' => $this->translatedModel->process(),
+				'nestedTranslation' => $this->translatedModel->processNested(),
+			]
+		);
 	}
 
 }

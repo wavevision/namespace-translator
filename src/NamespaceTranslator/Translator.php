@@ -24,13 +24,16 @@ class Translator implements ITranslator
 	}
 
 	/**
-	 * @param Message|NotTranslate|string $message
+	 * @param Message|NotTranslate|string|string[] $message
 	 * @param mixed ...$args
 	 */
 	public function translate($message, ...$args): string
 	{
 		if ($message instanceof NotTranslate) {
 			return $message->message;
+		}
+		if (is_array($message)) {
+			$message = implode(DomainManager::DOMAIN_DELIMITER, $message);
 		}
 		$count = $args[0] ?? null;
 		$parameters = $args[1] ?? [];

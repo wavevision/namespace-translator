@@ -55,7 +55,7 @@ class TranslationClassTest extends TestCase
 		$translationClass = new TranslationClass();
 		$this->expectExceptionObject(
 			new InvalidState(
-				"Translation class '" . InvalidClass::class . "' must extend '" . Translation::class . "'."
+				"Translation class '" . InvalidClass::class . "' must implement '" . Translation::class . "'."
 			)
 		);
 		$translationClass->load(__DIR__ . '/InvalidClass.php');

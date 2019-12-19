@@ -42,8 +42,8 @@ class TranslationClass implements Loader
 		if (!class_exists($class)) {
 			throw new InvalidState("Translation class '$class' does not exist.");
 		}
-		if (!is_subclass_of($class, Translation::class)) {
-			throw new InvalidState(sprintf("Translation class '%s' must extend '%s'.", $class, Translation::class));
+		if (!in_array(Translation::class, class_implements($class))) {
+			throw new InvalidState(sprintf("Translation class '%s' must implement '%s'.", $class, Translation::class));
 		}
 		/** @var Translation $class */
 		$messages = $class::define();

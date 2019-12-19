@@ -2,12 +2,19 @@
 
 namespace Wavevision\NamespaceTranslatorTests\App\Models\Translated\Translations;
 
+use Nette\StaticClass;
 use Wavevision\NamespaceTranslator\Resources\Translation;
 
-class Cs extends Translation
+class Cs implements Translation
 {
 
+	use StaticClass;
+
 	public const SOME_KEY = 'someKey';
+
+	public const SUB = 'sub';
+
+	public const NESTED = 'nested';
 
 	/**
 	 * @inheritDoc
@@ -16,6 +23,9 @@ class Cs extends Translation
 	{
 		return [
 			self::SOME_KEY => 'My chceme modele!',
+			self::SUB => [
+				self::NESTED => 'Nested',
+			],
 		];
 	}
 

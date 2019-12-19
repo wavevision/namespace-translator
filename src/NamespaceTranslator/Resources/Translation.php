@@ -2,16 +2,12 @@
 
 namespace Wavevision\NamespaceTranslator\Resources;
 
-use Nette\StaticClass;
-
-abstract class Translation
+interface Translation
 {
-
-	use StaticClass;
 
 	/**
 	 * @return mixed[]
 	 */
-	abstract public static function define(): array;
+	public static function define(): array;
 
 }
