@@ -19,9 +19,9 @@ trait NamespaceTranslator
 
 	private function setTemplateTranslator(Template $template): Template
 	{
-		$template->setParameters(['translator' => $this->translator]);
-		$template->setTranslator($this->translator);
-		return $template;
+		return $template
+			->setParameters(['translator' => $this->translator])
+			->setTranslator($this->translator);
 	}
 
 }

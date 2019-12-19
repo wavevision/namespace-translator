@@ -53,7 +53,7 @@ Your components (or presenters) can use `Wavevision\NamespaceTranslator\Translat
 
 **Make sure your component has `inject` allowed.**
 
-The trait will provide your component class with `$translator` property. 
+The trait will provide your component class / template with `$translator` property / variable. 
 The translator will look for resources in configured dir names inside component's namespace.
 
 > **Note**: The `translate` macro in component templates will, of course, work too.
