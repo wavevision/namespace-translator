@@ -6,7 +6,9 @@ use Nette\Neon\Neon as NetteNeon;
 use Nette\SmartObject;
 use Wavevision\NamespaceTranslator\DomainManager;
 use Wavevision\NamespaceTranslator\Exceptions\InvalidState;
+use Wavevision\NamespaceTranslator\Resources\LocalePrefixPair;
 use Wavevision\NamespaceTranslator\Resources\Messages;
+use Wavevision\Utils\Arrays;
 
 class Neon implements Loader
 {
@@ -15,33 +17,20 @@ class Neon implements Loader
 
 	public const FORMAT = 'neon';
 
-	/**
-	 * @inheritDoc
-	 */
-	public function load(string $resource): Messages
+	public function load(string $resource, LocalePrefixPair $localePrefixPair): Messages
 	{
-		[$locale, $prefix] = $this->getLocalePrefixPair($resource);
-		if (!$locale) {
-			throw new InvalidState("Unable to detect locale for '$resource'.");
-		}
 		$content = @file_get_contents($resource);
 		if ($content === false) {
 			throw new InvalidState("Unable to read contents of '$resource'.");
 		}
 		$messages = NetteNeon::decode($content) ?: [];
-		return new Messages($messages, $locale, $prefix);
+		return new Messages($messages, $localePrefixPair->getLocale(), $localePrefixPair->getPrefix());
 	}
 
-	/**
-	 * @inheritDoc
-	 */
-	public function getLocalePrefixPair(string $resource): array
+	public function getLocalePrefixPair(string $resourceName): LocalePrefixPair
 	{
-		$parts = explode(
-			DomainManager::DOMAIN_DELIMITER,
-			Manager::getLoaderResourceName($resource, self::FORMAT)
-		);
-		return [array_pop($parts), array_pop($parts)];
+		$parts = explode(DomainManager::DOMAIN_DELIMITER, $resourceName);
+		return new LocalePrefixPair(Arrays::pop($parts), Arrays::pop($parts));
 	}
 
 }

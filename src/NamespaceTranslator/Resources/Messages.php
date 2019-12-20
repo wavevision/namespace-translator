@@ -4,7 +4,7 @@ namespace Wavevision\NamespaceTranslator\Resources;
 
 use Nette\SmartObject;
 
-class Messages
+final class Messages
 {
 
 	use SmartObject;

@@ -5,22 +5,16 @@ namespace Wavevision\NamespaceTranslatorTests\Loaders;
 use PHPUnit\Framework\TestCase;
 use Wavevision\NamespaceTranslator\Exceptions\InvalidState;
 use Wavevision\NamespaceTranslator\Loaders\Neon;
+use Wavevision\NamespaceTranslator\Resources\LocalePrefixPair;
 
 class NeonTest extends TestCase
 {
 
-	public function testLoadThrowsInvalidStateOnLocale(): void
-	{
-		$neon = new Neon();
-		$this->expectExceptionObject(new InvalidState("Unable to detect locale for ''."));
-		$neon->load('');
-	}
-
-	public function testLoadThrowsInvalidStateOnContent(): void
+	public function testLoadThrowsInvalidState(): void
 	{
 		$neon = new Neon();
 		$this->expectExceptionObject(new InvalidState("Unable to read contents of 'resource.cs.neon'."));
-		$neon->load('resource.cs.neon');
+		$neon->load('resource.cs.neon', new LocalePrefixPair('cs'));
 	}
 
 }

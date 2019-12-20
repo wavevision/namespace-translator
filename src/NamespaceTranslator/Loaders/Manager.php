@@ -3,7 +3,6 @@
 namespace Wavevision\NamespaceTranslator\Loaders;
 
 use Nette\SmartObject;
-use Wavevision\NamespaceTranslator\DomainManager;
 use Wavevision\NamespaceTranslator\Exceptions\InvalidArgument;
 
 class Manager
@@ -36,12 +35,6 @@ class Manager
 	public function getLoaders(): array
 	{
 		return $this->loaders;
-	}
-
-	public static function getLoaderResourceName(string $resource, string $format): string
-	{
-		$suffix = DomainManager::DOMAIN_DELIMITER . $format;
-		return basename($resource, $suffix);
 	}
 
 }

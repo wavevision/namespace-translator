@@ -2,6 +2,8 @@
 
 namespace Wavevision\NamespaceTranslator;
 
+use Nette\Schema\Processor;
+use Nette\Schema\Schema;
 use Nette\SmartObject;
 use Symfony\Component\Config\Resource\FileResource;
 use Symfony\Component\Translation\Loader\ArrayLoader;
@@ -18,6 +20,10 @@ class ResourceLoader
 
 	private Manager $manager;
 
+	private Processor $processor;
+
+	private Schema $schema;
+
 	public function __construct(Manager $manager)
 	{
 		$this->arrayLoader = new ArrayLoader();
@@ -26,9 +32,12 @@ class ResourceLoader
 
 	public function load(string $resource, string $domain): MessageCatalogue
 	{
-		$messages = $this->manager
-			->getFormatLoader($this->getResourceFormat($resource))
-			->load($resource);
+		$format = $this->getResourceFormat($resource);
+		$loader = $this->manager->getFormatLoader($format);
+		$messages = $loader->load(
+			$resource,
+			$loader->getLocalePrefixPair($this->getResourceName($resource, $format))
+		);
 		$catalogue = $this->arrayLoader->load($messages->getMessages(), $messages->getLocale(), $domain);
 		$catalogue->addResource(new FileResource($resource));
 		return $catalogue;
@@ -41,6 +50,12 @@ class ResourceLoader
 			return $info['extension'];
 		}
 		throw new InvalidState("Unable to detect format for '$resource'.");
+	}
+
+	private function getResourceName(string $resource, string $format): string
+	{
+		$suffix = DomainManager::DOMAIN_DELIMITER . $format;
+		return basename($resource, $suffix);
 	}
 
 }

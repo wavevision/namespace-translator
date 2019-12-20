@@ -12,7 +12,7 @@ class TranslatedPresenterTest extends PresenterTestCase
 	public function testDefault(): void
 	{
 		$this->assertEquals(
-			"\nSome text\n\nApp\Presenters.\n\ntitle\ntext\n2 ks\nMy chceme modele!\nNested\n",
+			"\nSome text\n\nApp\Presenters.\n\nWelcome\nYou are here!\n2 ks\nMy chceme modele!\nZanořené\n",
 			$this->extractTextResponseContent(
 				$this->runPresenter(
 					new PresenterRequest(HomePresenter::class, HomePresenter::DEFAULT_ACTION, ['locale' => 'cs'])

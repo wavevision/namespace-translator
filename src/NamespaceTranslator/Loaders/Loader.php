@@ -2,16 +2,14 @@
 
 namespace Wavevision\NamespaceTranslator\Loaders;
 
+use Wavevision\NamespaceTranslator\Resources\LocalePrefixPair;
 use Wavevision\NamespaceTranslator\Resources\Messages;
 
 interface Loader
 {
 
-	public function load(string $resource): Messages;
+	public function load(string $resource, LocalePrefixPair $localePrefixPair): Messages;
 
-	/**
-	 * @return array<string|null>
-	 */
-	public function getLocalePrefixPair(string $resource): array;
+	public function getLocalePrefixPair(string $resourceName): LocalePrefixPair;
 
 }

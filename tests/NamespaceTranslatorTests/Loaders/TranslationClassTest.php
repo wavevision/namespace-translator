@@ -2,10 +2,13 @@
 
 namespace Wavevision\NamespaceTranslatorTests\Loaders;
 
+use phpmock\phpunit\PHPMock;
 use PHPUnit\Framework\TestCase;
 use Wavevision\NamespaceTranslator\Exceptions\InvalidState;
 use Wavevision\NamespaceTranslator\Loaders\TranslationClass;
+use Wavevision\NamespaceTranslator\Resources\LocalePrefixPair;
 use Wavevision\NamespaceTranslator\Resources\Translation;
+use Wavevision\Utils\Strings;
 
 /**
  * @covers \Wavevision\NamespaceTranslator\Loaders\TranslationClass
@@ -13,41 +16,21 @@ use Wavevision\NamespaceTranslator\Resources\Translation;
 class TranslationClassTest extends TestCase
 {
 
-	public function testLoadThrowsInvalidStateOnLocale(): void
-	{
-		/** @var TranslationClass $translationClass */
-		$translationClass = $this
-			->getMockBuilder(TranslationClass::class)
-			->setMethodsExcept(['load'])
-			->getMock();
-		$translationClass
-			->expects($this->once())
-			->method('getLocalePrefixPair')
-			->willReturn(['', null]);
-		$this->expectExceptionObject(new InvalidState("Unable to detect locale for ''."));
-		$translationClass->load('');
-	}
-
-	public function testLoadThrowsInvalidStateOnLocaleFormat(): void
-	{
-		$translationClass = new TranslationClass();
-		$this->expectExceptionObject(new InvalidState("Invalid locale format for 'A.php'."));
-		$translationClass->load('A.php');
-	}
+	use PHPMock;
 
 	public function testLoadThrowsInvalidStateOnClassName(): void
 	{
 		$file = __DIR__ . '/../App/translations/app.cs.neon';
 		$translationClass = new TranslationClass();
 		$this->expectExceptionObject(new InvalidState("Unable to get translation class from '$file'."));
-		$translationClass->load($file);
+		$translationClass->load($file, new LocalePrefixPair('cs'));
 	}
 
 	public function testLoadThrowsInvalidStateOnClassExistence(): void
 	{
 		$translationClass = new TranslationClass();
 		$this->expectExceptionObject(new InvalidState("Translation class 'InvalidClass' does not exist."));
-		$translationClass->load(__DIR__ . '/InvalidClass.php.txt');
+		$translationClass->load(__DIR__ . '/InvalidClass.php.txt', new LocalePrefixPair('cs'));
 	}
 
 	public function testLoadThrowsInvalidStateOnClassInheritance(): void
@@ -58,7 +41,17 @@ class TranslationClassTest extends TestCase
 				"Translation class '" . InvalidClass::class . "' must implement '" . Translation::class . "'."
 			)
 		);
-		$translationClass->load(__DIR__ . '/InvalidClass.php');
+		$translationClass->load(__DIR__ . '/InvalidClass.php', new LocalePrefixPair('cs'));
+	}
+
+	public function testGetLocalePrefixPairThrowsInvalidState(): void
+	{
+		$this->getFunctionMock(Strings::getNamespace(TranslationClass::class), 'preg_split')
+			->expects($this->once())
+			->willReturn(false);
+		$translationClass = new TranslationClass();
+		$this->expectException(InvalidState::class);
+		$translationClass->getLocalePrefixPair('');
 	}
 
 }

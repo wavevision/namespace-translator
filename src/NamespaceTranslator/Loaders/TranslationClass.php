@@ -4,6 +4,7 @@ namespace Wavevision\NamespaceTranslator\Loaders;
 
 use Nette\SmartObject;
 use Wavevision\NamespaceTranslator\Exceptions\InvalidState;
+use Wavevision\NamespaceTranslator\Resources\LocalePrefixPair;
 use Wavevision\NamespaceTranslator\Resources\Messages;
 use Wavevision\NamespaceTranslator\Resources\Translation;
 use Wavevision\Utils\Arrays;
@@ -16,8 +17,6 @@ class TranslationClass implements Loader
 
 	public const FORMAT = 'php';
 
-	private const LOCALE_LENGTH = 2;
-
 	private Tokenizer $tokenizer;
 
 	public function __construct()
@@ -25,15 +24,8 @@ class TranslationClass implements Loader
 		$this->tokenizer = new Tokenizer();
 	}
 
-	/**
-	 * @inheritDoc
-	 */
-	public function load(string $resource): Messages
+	public function load(string $resource, LocalePrefixPair $localePrefixPair): Messages
 	{
-		[$locale, $prefix] = $this->getLocalePrefixPair($resource);
-		if (!$locale) {
-			throw new InvalidState("Unable to detect locale for '$resource'.");
-		}
 		$result = $this->tokenizer->getStructureNameFromFile($resource, [T_CLASS]);
 		if ($result === null) {
 			throw new InvalidState("Unable to get translation class from '$resource'.");
@@ -47,26 +39,19 @@ class TranslationClass implements Loader
 		}
 		/** @var Translation $class */
 		$messages = $class::define();
-		return new Messages($messages, $locale, $prefix);
+		return new Messages($messages, $localePrefixPair->getLocale(), $localePrefixPair->getPrefix());
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function getLocalePrefixPair(string $resource): array
+	public function getLocalePrefixPair(string $resourceName): LocalePrefixPair
 	{
-		$name = Manager::getLoaderResourceName($resource, self::FORMAT);
-		$length = strlen($name);
-		if ($length === self::LOCALE_LENGTH) {
-			$pair = [$name, null];
-		} else {
-			$parts = @str_split($name, strlen($name) - self::LOCALE_LENGTH);
-			if ($parts === false) {
-				throw new InvalidState("Invalid locale format for '$resource'.");
-			}
-			$pair = array_reverse($parts);
+		$parts = preg_split('/(?=[A-Z])/', $resourceName);
+		if ($parts === false) {
+			throw new InvalidState("Invalid resource name '$resourceName'.");
 		}
-		return Arrays::map($pair, fn(?string $item): ?string => $item ? lcfirst($item) : $item);
+		return new LocalePrefixPair(Arrays::pop($parts), Arrays::implode($parts, ''));
 	}
 
 }
