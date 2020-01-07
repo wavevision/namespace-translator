@@ -66,6 +66,7 @@ class ResourceManager
 			$this->translator
 				->getCatalogue($catalogue->getLocale())
 				->addCatalogue($catalogue);
+			$this->setFallback($catalogue);
 			$this->resources[$resource] = $catalogue;
 		}
 		return $this->resources[$resource];
@@ -101,6 +102,17 @@ class ResourceManager
 	private function getMasks(): array
 	{
 		return Arrays::map($this->pm->getFormats(), fn(string $format): string => "*.$format");
+	}
+
+	private function setFallback(MessageCatalogue $catalogue): void
+	{
+		foreach ($this->translator->getFallbackLocales() as $fallbackLocale) {
+			if ($catalogue->getLocale() !== $fallbackLocale) {
+				$this->translator
+					->getCatalogue($catalogue->getLocale())
+					->addFallbackCatalogue($this->translator->getCatalogue($fallbackLocale));
+			}
+		}
 	}
 
 }
