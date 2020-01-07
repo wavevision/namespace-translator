@@ -62,7 +62,7 @@ The translator will look for resources in configured dir names inside component'
 
 Even your services can use the translator. Simply use `Wavevision\NamespaceTranslator\NamespaceTranslator`.
 
-**Make sure your service is registered with `inject: on` in your config.**
+**Make sure your service is registered with `inject: true` in your config.**
 
 After that, it works the same as with your components.
 
