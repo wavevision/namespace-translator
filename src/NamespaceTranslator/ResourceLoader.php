@@ -2,8 +2,6 @@
 
 namespace Wavevision\NamespaceTranslator;
 
-use Nette\Schema\Processor;
-use Nette\Schema\Schema;
 use Nette\SmartObject;
 use Symfony\Component\Config\Resource\FileResource;
 use Symfony\Component\Translation\Loader\ArrayLoader;
@@ -19,10 +17,6 @@ class ResourceLoader
 	private ArrayLoader $arrayLoader;
 
 	private Manager $manager;
-
-	private Processor $processor;
-
-	private Schema $schema;
 
 	public function __construct(Manager $manager)
 	{

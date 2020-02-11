@@ -4,7 +4,7 @@ application:
 
 decorator:
 	Nette\Application\UI\Control:
-		inject: on
+		inject: true
 
 session:
 	autoStart: false
@@ -25,4 +25,4 @@ services:
 	- Wavevision\NamespaceTranslatorTests\App\Components\OtherComponent\OtherComponentFactory
 	- Wavevision\NamespaceTranslatorTests\App\Components\SomeComponent\SomeComponentFactory
 	- factory: Wavevision\NamespaceTranslatorTests\App\Models\Translated\Model
-	  inject: on
+	  inject: true

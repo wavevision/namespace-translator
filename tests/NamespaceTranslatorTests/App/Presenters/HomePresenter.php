@@ -9,7 +9,6 @@ class HomePresenter extends BasePresenter
 
 	/**
 	 * @inject
-	 * @var Model
 	 */
 	public Model $translatedModel;
 

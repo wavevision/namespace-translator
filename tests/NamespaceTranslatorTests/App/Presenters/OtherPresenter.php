@@ -10,13 +10,11 @@ class OtherPresenter extends BasePresenter
 
 	/**
 	 * @inject
-	 * @var SomeComponentFactory
 	 */
 	public SomeComponentFactory $someComponentFactory;
 
 	/**
 	 * @inject
-	 * @var OtherComponentFactory
 	 */
 	public OtherComponentFactory $otherComponentFactory;
 

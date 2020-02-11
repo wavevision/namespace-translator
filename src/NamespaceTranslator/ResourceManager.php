@@ -17,22 +17,19 @@ class ResourceManager
 
 	use SmartObject;
 
-	/**
-	 * @var ResourceLoader
-	 */
 	private ResourceLoader $loader;
 
 	/**
 	 * @var string[]
 	 */
-	private $namespaces = [];
+	private array $namespaces = [];
 
 	private ParametersManager $pm;
 
 	/**
 	 * @var MessageCatalogue[]
 	 */
-	private $resources = [];
+	private array $resources = [];
 
 	private Translator $translator;
 
@@ -90,7 +87,9 @@ class ResourceManager
 		return array_filter(
 			Arrays::map(
 				$this->pm->getDirNames(),
-				fn(string $dir): string => Path::join(dirname($file), $dir)
+				function (string $dir) use ($file): string {
+					return Path::join(dirname($file), $dir);
+				}
 			),
 			'is_dir'
 		);

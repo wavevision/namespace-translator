@@ -20,7 +20,7 @@ class Extension extends CompilerExtension
 	/**
 	 * @var mixed[]
 	 */
-	public $defaults = [
+	public array $defaults = [
 		self::DIR_NAMES => [
 			'translations',
 			'Translations',

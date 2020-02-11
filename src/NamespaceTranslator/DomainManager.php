@@ -16,7 +16,7 @@ class DomainManager
 	/**
 	 * @var string[]
 	 */
-	private $domains = [];
+	private array $domains = [];
 
 	public function getDomain(string $namespace): string
 	{
@@ -27,7 +27,7 @@ class DomainManager
 			}
 			$this->domains[$namespace] = implode(
 				self::DOMAIN_DELIMITER,
-				array_map([$this, 'getDomainPart'], $namespaces)
+				array_map(fn(string $part): string => $this->getDomainPart($part), $namespaces)
 			);
 		}
 		return $this->domains[$namespace];
@@ -37,7 +37,7 @@ class DomainManager
 	{
 		return implode(
 			self::NAMESPACE_DELIMITER,
-			array_map([$this, 'getNamespacePart'], explode(self::DOMAIN_DELIMITER, $domain))
+			array_map(fn(string $part) => $this->getNamespacePart($part), explode(self::DOMAIN_DELIMITER, $domain))
 		);
 	}
 

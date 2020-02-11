@@ -20,7 +20,7 @@ class TranslatorFactory
 	/**
 	 * @var Translator[]
 	 */
-	private $translators = [];
+	private array $translators = [];
 
 	public function __construct(
 		DomainManager $domainManager,

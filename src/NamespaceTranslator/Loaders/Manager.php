@@ -13,7 +13,7 @@ class Manager
 	/**
 	 * @var Loader[]
 	 */
-	private $loaders = [];
+	private array $loaders = [];
 
 	public function addLoader(string $format, Loader $loader): self
 	{
