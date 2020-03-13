@@ -3,7 +3,9 @@
 namespace Wavevision\NamespaceTranslator\Loaders;
 
 use Nette\SmartObject;
+use ReflectionClass;
 use Wavevision\NamespaceTranslator\Exceptions\InvalidState;
+use Wavevision\NamespaceTranslator\Exceptions\SkipResource;
 use Wavevision\NamespaceTranslator\Resources\LocalePrefixPair;
 use Wavevision\NamespaceTranslator\Resources\Messages;
 use Wavevision\NamespaceTranslator\Resources\Translation;
@@ -36,6 +38,9 @@ class TranslationClass implements Loader
 		}
 		if (!in_array(Translation::class, class_implements($class))) {
 			throw new InvalidState(sprintf("Translation class '%s' must implement '%s'.", $class, Translation::class));
+		}
+		if ((new ReflectionClass($class))->isAbstract()) {
+			throw new SkipResource();
 		}
 		/** @var Translation $class */
 		$messages = $class::define();

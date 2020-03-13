@@ -2,13 +2,8 @@
 
 namespace Wavevision\NamespaceTranslatorTests\App\Models\Translated\Translations;
 
-use Nette\StaticClass;
-use Wavevision\NamespaceTranslator\Resources\Translation;
-
-class En implements Translation
+class En extends Translation
 {
-
-	use StaticClass;
 
 	/**
 	 * @inheritDoc

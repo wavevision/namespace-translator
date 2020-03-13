@@ -5,6 +5,7 @@ namespace Wavevision\NamespaceTranslator;
 use Contributte\Translation\Translator as ContributteTranslator;
 use Nette\SmartObject;
 use SplFileInfo;
+use Wavevision\NamespaceTranslator\Exceptions\SkipResource;
 
 class TranslatorFactory
 {
@@ -40,7 +41,11 @@ class TranslatorFactory
 			if ($resources = $this->resourceManager->findResources($namespace)) {
 				/** @var SplFileInfo $resource */
 				foreach ($resources as $resource) {
-					$this->resourceManager->loadResource($resource->getPathname(), $domain);
+					try {
+						$this->resourceManager->loadResource($resource->getPathname(), $domain);
+					} catch (SkipResource $e) {
+						// TODO: Better solution for skipping resources
+					}
 				}
 				$this->resourceManager->setNamespaceLoaded($namespace);
 				$this->translators[$domain] = $translator->setDomain($domain);
