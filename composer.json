@@ -39,7 +39,6 @@
     "nette/application": "^3.0",
     "nette/di": "^3.0",
     "nette/neon": "^3.0",
-    "symfony/console": "^4.3",
     "wavevision/utils": "^2.1"
   },
   "require-dev": {
