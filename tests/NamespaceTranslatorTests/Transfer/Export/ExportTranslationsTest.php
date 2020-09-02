@@ -18,9 +18,9 @@ class ExportTranslationsTest extends DIContainerTestCase
 					'key' => 'd1.d2.key',
 					'cs' => '42',
 					'en' => 'eng',
-				]
+				],
 			],
-			$this->exportTranslations->process(__DIR__ . '/../../App')
+			$this->exportTranslations->neon(__DIR__ . '/../../App')
 		);
 	}
 

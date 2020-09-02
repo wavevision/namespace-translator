@@ -59,4 +59,14 @@ class TranslationClass implements Loader
 		return new LocalePrefixPair(Arrays::pop($parts), Arrays::implode($parts, ''));
 	}
 
+	public function suffix(string $locale): string
+	{
+		throw new \Exception('not implemented.');
+	}
+
+	public function loadFlatten(string $filepath): array
+	{
+		throw new \Exception('not implemented.');
+	}
+
 }

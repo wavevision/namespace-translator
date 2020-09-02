@@ -15,6 +15,10 @@ services:
 	  inject: true
 	- factory: Wavevision\NamespaceTranslator\Transfer\Export\ExportTranslations
 	  inject: true
+	- factory: Wavevision\NamespaceTranslator\Transfer\Export\FileSetFactory
+	  inject: true
+	- factory: Wavevision\NamespaceTranslator\Transfer\Locales
+	  inject: true
 	translatorFactory:
 	  factory: Wavevision\NamespaceTranslator\TranslatorFactory
 	  inject: true

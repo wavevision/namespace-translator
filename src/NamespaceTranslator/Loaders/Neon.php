@@ -19,18 +19,32 @@ class Neon implements Loader
 
 	public function load(string $resource, LocalePrefixPair $localePrefixPair): Messages
 	{
-		$content = @file_get_contents($resource);
-		if ($content === false) {
-			throw new InvalidState("Unable to read contents of '$resource'.");
-		}
-		$messages = NetteNeon::decode($content) ?: [];
-		return new Messages($messages, $localePrefixPair->getLocale(), $localePrefixPair->getPrefix());
+		return new Messages($this->loadFile($resource), $localePrefixPair->getLocale(), $localePrefixPair->getPrefix());
 	}
 
 	public function getLocalePrefixPair(string $resourceName): LocalePrefixPair
 	{
 		$parts = explode(DomainManager::DOMAIN_DELIMITER, $resourceName);
 		return new LocalePrefixPair(Arrays::pop($parts), Arrays::pop($parts));
+	}
+
+	public function suffix(string $locale): string
+	{
+		return $locale . '.neon';
+	}
+
+	public function loadFlatten(string $filepath): array
+	{
+		return Arrays::flattenKeys($this->loadFile($filepath));
+	}
+
+	private function loadFile(string $filepath): array
+	{
+		$content = @file_get_contents($filepath);
+		if ($content === false) {
+			throw new InvalidState("Unable to read contents of '$filepath'.");
+		}
+		return NetteNeon::decode($content) ?: [];
 	}
 
 }

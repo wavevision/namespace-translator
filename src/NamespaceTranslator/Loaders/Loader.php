@@ -12,4 +12,8 @@ interface Loader
 
 	public function getLocalePrefixPair(string $resourceName): LocalePrefixPair;
 
+	public function suffix(string $locale): string;
+
+	public function loadFlatten(string $filepath): array;
+
 }
