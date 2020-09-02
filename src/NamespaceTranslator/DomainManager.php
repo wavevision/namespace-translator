@@ -3,7 +3,11 @@
 namespace Wavevision\NamespaceTranslator;
 
 use Nette\SmartObject;
+use Wavevision\DIServiceAnnotation\DIService;
 
+/**
+ * @DIService(name="domainManager")
+ */
 class DomainManager
 {
 

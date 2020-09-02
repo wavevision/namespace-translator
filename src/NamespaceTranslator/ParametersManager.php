@@ -3,7 +3,11 @@
 namespace Wavevision\NamespaceTranslator;
 
 use Nette\SmartObject;
+use Wavevision\DIServiceAnnotation\DIService;
 
+/**
+ * @DIService(name="parametersManager", params={"%dirNames%", "%loaders%"})
+ */
 class ParametersManager
 {
 

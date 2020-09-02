@@ -1,6 +1,18 @@
+# Generated file, do not modify directly!
 services:
-	domainManager: Wavevision\NamespaceTranslator\DomainManager
-	parametersManager: Wavevision\NamespaceTranslator\ParametersManager(%dirNames%, %loaders%)
-	resourceLoader: Wavevision\NamespaceTranslator\ResourceLoader
-	resourceManager:  Wavevision\NamespaceTranslator\ResourceManager
-	translatorFactory: Wavevision\NamespaceTranslator\TranslatorFactory
+	domainManager:
+	  factory: Wavevision\NamespaceTranslator\DomainManager
+	  inject: true
+	parametersManager:
+	  factory: Wavevision\NamespaceTranslator\ParametersManager
+	  arguments: [%dirNames%, %loaders%]
+	  inject: true
+	resourceLoader:
+	  factory: Wavevision\NamespaceTranslator\ResourceLoader
+	  inject: true
+	resourceManager:
+	  factory: Wavevision\NamespaceTranslator\ResourceManager
+	  inject: true
+	translatorFactory:
+	  factory: Wavevision\NamespaceTranslator\TranslatorFactory
+	  inject: true

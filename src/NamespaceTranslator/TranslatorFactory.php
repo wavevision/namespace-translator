@@ -5,8 +5,12 @@ namespace Wavevision\NamespaceTranslator;
 use Contributte\Translation\Translator as ContributteTranslator;
 use Nette\SmartObject;
 use SplFileInfo;
+use Wavevision\DIServiceAnnotation\DIService;
 use Wavevision\NamespaceTranslator\Exceptions\SkipResource;
 
+/**
+ * @DIService(name="translatorFactory")
+ */
 class TranslatorFactory
 {
 

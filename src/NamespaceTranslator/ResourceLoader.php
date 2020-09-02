@@ -6,9 +6,13 @@ use Nette\SmartObject;
 use Symfony\Component\Config\Resource\FileResource;
 use Symfony\Component\Translation\Loader\ArrayLoader;
 use Symfony\Component\Translation\MessageCatalogue;
+use Wavevision\DIServiceAnnotation\DIService;
 use Wavevision\NamespaceTranslator\Exceptions\InvalidState;
 use Wavevision\NamespaceTranslator\Loaders\Manager;
 
+/**
+ * @DIService(name="resourceLoader")
+ */
 class ResourceLoader
 {
 

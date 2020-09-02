@@ -8,10 +8,14 @@ use Nette\Utils\Finder;
 use ReflectionClass;
 use SplFileInfo;
 use Symfony\Component\Translation\MessageCatalogue;
+use Wavevision\DIServiceAnnotation\DIService;
 use Wavevision\NamespaceTranslator\Exceptions\InvalidState;
 use Wavevision\Utils\Arrays;
 use Wavevision\Utils\Path;
 
+/**
+ * @DIService(name="resourceManager")
+ */
 class ResourceManager
 {
 

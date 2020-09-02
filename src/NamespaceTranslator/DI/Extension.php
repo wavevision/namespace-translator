@@ -3,8 +3,8 @@
 namespace Wavevision\NamespaceTranslator\DI;
 
 use Nette\DI\CompilerExtension;
+use Nette\DI\Extensions\InjectExtension;
 use Nette\DI\Helpers;
-use Nette\DI\Statement;
 use Nette\Schema\Expect;
 use Nette\Schema\Schema;
 use ReflectionClass;
@@ -43,16 +43,19 @@ class Extension extends CompilerExtension
 	public function loadConfiguration(): void
 	{
 		$config = $this->validateExtensionConfig();
+		$builder = $this->getContainerBuilder();
 		['services' => $services] = $this->loadFromFile(__DIR__ . '/config.neon');
-		foreach ($services as $service) {
-			if ($service instanceof Statement) {
-				foreach ($service->arguments as $key => $argument) {
-					$service->arguments[$key] = Helpers::expand($argument, $config);
+		foreach ($services as $name => $service) {
+			$definition = $builder
+				->addDefinition($this->prefix($name))
+				->setFactory($service['factory'])
+				->addTag(InjectExtension::TAG_INJECT, $service['inject'] ?? false);
+			if (isset($service['arguments'])) {
+				foreach ($service['arguments'] as $key => $argument) {
+					$definition->setArgument($key, Helpers::expand($argument, $config));
 				}
 			}
 		}
-		$this->compiler->loadDefinitionsFromConfig($services);
-		$builder = $this->getContainerBuilder();
 		$manager = $builder
 			->addDefinition($this->prefix('loaderManager'))
 			->setFactory(Manager::class);
