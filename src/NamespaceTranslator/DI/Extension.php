@@ -47,7 +47,7 @@ class Extension extends CompilerExtension
 		['services' => $services] = $this->loadFromFile(__DIR__ . '/config.neon');
 		foreach ($services as $name => $service) {
 			$definition = $builder
-				->addDefinition($this->prefix($name))
+				->addDefinition($this->prefix(is_int($name) ? 's'. $name : $name))
 				->setFactory($service['factory'])
 				->addTag(InjectExtension::TAG_INJECT, $service['inject'] ?? false);
 			if (isset($service['arguments'])) {

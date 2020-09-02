@@ -6,7 +6,7 @@ use Nette\SmartObject;
 use Wavevision\DIServiceAnnotation\DIService;
 
 /**
- * @DIService(name="parametersManager", params={"%dirNames%", "%loaders%"})
+ * @DIService(generateInject=true, name="parametersManager", params={"%dirNames%", "%loaders%"})
  */
 class ParametersManager
 {

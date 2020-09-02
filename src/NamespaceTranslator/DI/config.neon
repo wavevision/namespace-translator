@@ -13,6 +13,8 @@ services:
 	resourceManager:
 	  factory: Wavevision\NamespaceTranslator\ResourceManager
 	  inject: true
+	- factory: Wavevision\NamespaceTranslator\Transfer\Export\ExportTranslations
+	  inject: true
 	translatorFactory:
 	  factory: Wavevision\NamespaceTranslator\TranslatorFactory
 	  inject: true
