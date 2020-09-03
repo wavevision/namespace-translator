@@ -2,19 +2,24 @@
 
 namespace Wavevision\NamespaceTranslator\Loaders;
 
+use Nette\PhpGenerator\PhpFile;
+use Nette\PhpGenerator\Printer;
 use Nette\SmartObject;
 use ReflectionClass;
 use Wavevision\NamespaceTranslator\Exceptions\InvalidState;
 use Wavevision\NamespaceTranslator\Exceptions\SkipResource;
 use Wavevision\NamespaceTranslator\Resources\LocalePrefixPair;
 use Wavevision\NamespaceTranslator\Resources\Translation;
+use Wavevision\NamespaceTranslator\Transfer\InjectLocales;
 use Wavevision\Utils\Arrays;
 use Wavevision\Utils\Tokenizer\Tokenizer;
+use Wavevision\Utils\Tokenizer\TokenizeResult;
 
 class TranslationClass implements Loader
 {
 
 	use SmartObject;
+	use InjectLocales;
 
 	public const FORMAT = 'php';
 
@@ -30,13 +35,7 @@ class TranslationClass implements Loader
 	 */
 	public function load(string $resource): array
 	{
-		if (!is_file($resource)) {
-			throw new InvalidState("Unable to read file '$resource'.");
-		}
-		$result = $this->tokenizer->getStructureNameFromFile($resource, [T_CLASS]);
-		if ($result === null) {
-			throw new InvalidState("Unable to get translation class from '$resource'.");
-		}
+		$result = $this->tokenizerResult($resource);
 		$class = $result->getFullyQualifiedName();
 		if (!class_exists($class)) {
 			throw new InvalidState("Translation class '$class' does not exist.");
@@ -70,7 +69,32 @@ class TranslationClass implements Loader
 
 	public function save(string $resource, array $content): void
 	{
-
+		$result = $this->tokenizerResult($resource);
+		//todo parse existing file to nette generator, that rewrite
+		$file = new PhpFile();
+		$file->setStrictTypes(true);
+		$namespace = $file->addNamespace($result->getNamespace());
+		$class = $namespace->addClass($result->getName());
+		$class->addImplement(Translation::class);
+		$define = $class->addMethod('define');
+		$define
+			->setStatic(true)
+			->setReturnType('array')
+			->setBody('return ' . var_export($content, true) . ';');
+		$c = (new Printer())->printFile($file);
+		var_dump($c);
+	}
+	
+	private function tokenizerResult(string $resource): TokenizeResult
+	{
+		if (!is_file($resource)) {
+			throw new InvalidState("Unable to read file '$resource'.");
+		}
+		$result = $this->tokenizer->getStructureNameFromFile($resource, [T_CLASS]);
+		if ($result === null) {
+			throw new InvalidState("Unable to get translation class from '$resource'.");
+		}
+		return $result;
 	}
 
 }

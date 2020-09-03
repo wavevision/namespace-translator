@@ -39,6 +39,7 @@
     "nette/application": "^3.0",
     "nette/di": "^3.0",
     "nette/neon": "^3.0",
+    "nette/php-generator": "^3.4",
     "wavevision/di-service-annotation": "^4.0",
     "wavevision/utils": "^2.1"
   },

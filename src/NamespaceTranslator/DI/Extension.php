@@ -62,7 +62,8 @@ class Extension extends CompilerExtension
 		foreach ($config[self::LOADERS] as $format => $factory) {
 			$loader = $builder
 				->addDefinition($this->prefix($format . 'Loader'))
-				->setFactory($factory);
+				->setFactory($factory)
+				->addTag(InjectExtension::TAG_INJECT, true);
 			$manager->addSetup('addLoader', [$format, $loader]);
 		}
 	}
