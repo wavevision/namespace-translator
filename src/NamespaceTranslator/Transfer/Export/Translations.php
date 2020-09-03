@@ -15,6 +15,11 @@ class Translations
 	 */
 	private array $fileSets = [];
 
+	public function __construct(array $fileSets)
+	{
+		$this->fileSets = $fileSets;
+	}
+
 	public function add(FileSet $fileSet): self
 	{
 		$this->fileSets[] = $fileSet;

@@ -16,4 +16,6 @@ interface Loader
 
 	public function fileSuffix(string $locale): string;
 
+	public function save(string $resource, array $content): void;
+
 }

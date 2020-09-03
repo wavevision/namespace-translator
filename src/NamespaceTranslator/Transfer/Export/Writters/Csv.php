@@ -4,7 +4,7 @@ namespace Wavevision\NamespaceTranslator\Transfer\Export\Writters;
 
 use Nette\SmartObject;
 use Wavevision\DIServiceAnnotation\DIService;
-use Wavevision\NamespaceTranslator\Exceptions\InvalidState;
+use Wavevision\Utils\File;
 
 /**
  * @DIService(generateInject=true)
@@ -19,14 +19,11 @@ class Csv
 	 */
 	public function write(string $file, array $lines): void
 	{
-		$fp = fopen($file, 'w');
-		if ($fp === false) {
-			throw new InvalidState("Unable to open file $file.");
-		}
+		$file = File::open($file, 'w');
 		foreach ($lines as $line) {
-			fputcsv($fp, $line);
+			$file->putCsv($line);
 		}
-		fclose($fp);
+		$file->close();
 	}
 
 }

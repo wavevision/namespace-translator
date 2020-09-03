@@ -23,6 +23,14 @@ services:
 	  inject: true
 	- factory: Wavevision\NamespaceTranslator\Transfer\Export\Writters\Csv
 	  inject: true
+	- factory: Wavevision\NamespaceTranslator\Transfer\Import\Importer
+	  inject: true
+	- factory: Wavevision\NamespaceTranslator\Transfer\Import\Readers\ConvertFromLines
+	  inject: true
+	- factory: Wavevision\NamespaceTranslator\Transfer\Import\Readers\Csv
+	  inject: true
+	- factory: Wavevision\NamespaceTranslator\Transfer\Import\SaveFileSet
+	  inject: true
 	- factory: Wavevision\NamespaceTranslator\Transfer\Locales
 	  inject: true
 	translatorFactory:

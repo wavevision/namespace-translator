@@ -32,6 +32,12 @@ class FileSet
 		$this->format = $format;
 	}
 
+	public function addTranslation(string $key, array $value): self
+	{
+		$this->translations[$key] = $value;
+		return $this;
+	}
+
 	/**
 	 * @return array<mixed>
 	 */

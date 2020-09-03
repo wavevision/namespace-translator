@@ -4,6 +4,7 @@ namespace Wavevision\NamespaceTranslator\Loaders;
 
 use Nette\Neon\Neon as NetteNeon;
 use Nette\SmartObject;
+use Nette\Utils\FileSystem;
 use Wavevision\NamespaceTranslator\DomainManager;
 use Wavevision\NamespaceTranslator\Exceptions\InvalidState;
 use Wavevision\NamespaceTranslator\Resources\LocalePrefixPair;
@@ -39,5 +40,9 @@ class Neon implements Loader
 		return $locale . '.neon';
 	}
 
+	public function save(string $resource, array $content): void
+	{
+		FileSystem::write($resource, NetteNeon::encode($content, NetteNeon::BLOCK));
+	}
 
 }

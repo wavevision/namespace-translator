@@ -28,12 +28,7 @@ class ConvertToLines
 	 */
 	public function process(Translations $translations): array
 	{
-		$lines[] = [
-			$this->lock(self::FILE),
-			$this->lock(self::KEY),
-			...$this->locales->allLocales(),
-			$this->lock(self::FORMAT),
-		];
+		$lines[] = $this->createHeader();
 		$defaultLocale = $this->locales->defaultLocale();
 		$optionalLocales = $this->locales->optionalLocales();
 		foreach ($translations->getFileSets() as $fileSet) {
@@ -50,9 +45,19 @@ class ConvertToLines
 		return $lines;
 	}
 
-	private function lock(string $key): string
+	public function createHeader(): array
 	{
-		return sprintf("%s (editing forbidden)", $key);
+		return [
+			self::FILE,
+			self::KEY,
+			...$this->locales->allLocales(),
+			self::FORMAT,
+		];
+	}
+
+	public function headerPosition(string $value): int
+	{
+		return array_search($value, $this->createHeader(), true);
 	}
 
 }
