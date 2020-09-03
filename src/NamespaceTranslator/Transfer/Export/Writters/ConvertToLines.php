@@ -23,6 +23,9 @@ class ConvertToLines
 
 	public const FORMAT = FileSet::FORMAT;
 
+	/**
+	 * @return array<mixed>
+	 */
 	public function process(Translations $translations): array
 	{
 		$lines[] = [

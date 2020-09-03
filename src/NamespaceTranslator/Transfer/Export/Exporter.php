@@ -13,12 +13,12 @@ use Wavevision\NamespaceTranslator\Transfer\Export\Writters\InjectCsv;
 class Exporter
 {
 
-	use SmartObject;
-	use InjectExtractTranslations;
-	use InjectCsv;
 	use InjectConvertToLines;
+	use InjectCsv;
+	use InjectExtractTranslations;
+	use SmartObject;
 
-	public function export(string $directory, string $file): void
+	public function exportCsv(string $directory, string $file): void
 	{
 		$this->csv->write(
 			$file,

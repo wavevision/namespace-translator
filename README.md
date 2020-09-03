@@ -38,6 +38,7 @@ namespaceTranslator:
     loaders: # namespace translations loaders
         neon: Wavevision\NamespaceTranslator\Loaders\Neon
         php: Wavevision\NamespaceTranslator\Loaders\TranslationClass
+    
 ```
 > **Note:** Refer to [Contributte docs](https://contributte.org/packages/contributte/translation.html#configuration) 
 > for further info about configuring `translation`.

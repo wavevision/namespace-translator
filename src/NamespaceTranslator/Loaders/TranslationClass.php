@@ -25,6 +25,9 @@ class TranslationClass implements Loader
 		$this->tokenizer = new Tokenizer();
 	}
 
+	/**
+	 * @return array<mixed>
+	 */
 	public function load(string $resource): array
 	{
 		if (!is_file($resource)) {

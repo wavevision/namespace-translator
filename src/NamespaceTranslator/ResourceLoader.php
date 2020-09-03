@@ -34,7 +34,11 @@ class ResourceLoader
 		$format = $this->getResourceFormat($resource);
 		$loader = $this->manager->getFormatLoader($format);
 		$localePrefixPair = $loader->getLocalePrefixPair($this->getResourceName($resource, $format));
-		$messages = new Messages($loader->load($resource), $localePrefixPair->getLocale(), $localePrefixPair->getPrefix());
+		$messages = new Messages(
+			$loader->load($resource),
+			$localePrefixPair->getLocale(),
+			$localePrefixPair->getPrefix()
+		);
 		$catalogue = $this->arrayLoader->load($messages->getMessages(), $messages->getLocale(), $domain);
 		$catalogue->addResource(new FileResource($resource));
 		return $catalogue;

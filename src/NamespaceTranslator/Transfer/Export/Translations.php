@@ -27,6 +27,9 @@ class Translations
 		return $this;
 	}
 
+	/**
+	 * @return FileSet[]
+	 */
 	public function getFileSets(): array
 	{
 		return $this->fileSets;

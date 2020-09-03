@@ -13,12 +13,18 @@ class FileSet
 
 	public const FORMAT = 'format';
 
+	/**
+	 * @var array<mixed>
+	 */
 	private array $translations;
 
 	private string $file;
 
 	private string $format;
 
+	/**
+	 * @param array<mixed> $translations
+	 */
 	public function __construct(array $translations, string $file, string $format)
 	{
 		$this->translations = $translations;
@@ -26,6 +32,9 @@ class FileSet
 		$this->format = $format;
 	}
 
+	/**
+	 * @return array<mixed>
+	 */
 	public function getTranslations(): array
 	{
 		return $this->translations;

@@ -16,6 +16,9 @@ class Neon implements Loader
 
 	public const FORMAT = 'neon';
 
+	/**
+	 * @return array<mixed>
+	 */
 	public function load(string $resource): array
 	{
 		$content = @file_get_contents($resource);

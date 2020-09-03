@@ -28,6 +28,7 @@ class FileSetFactory
 		//todo add format to loader
 		$translations = new Translations();
 		$suffix = $loader->fileSuffix($this->locales->defaultLocale());
+		/** @var SplFileInfo $resource */
 		foreach ($this->findDirectories($directory) as $resource) {
 			$translationDirectory = $resource->getPathname();
 			/** @var SplFileInfo $file */
@@ -47,6 +48,9 @@ class FileSetFactory
 		return $translations;
 	}
 
+	/**
+	 * @return array<mixed>
+	 */
 	private function fileSet(string $basePathname, Loader $loader): array
 	{
 		$keys = [];
@@ -63,9 +67,6 @@ class FileSetFactory
 		return $keys;
 	}
 
-	/**
-	 * @return SplFileInfo[]
-	 */
 	private function findDirectories(string $directory): Finder
 	{
 		return Finder::findDirectories(...$this->parametersManager->getDirNames())

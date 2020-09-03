@@ -2,7 +2,9 @@
 
 namespace Wavevision\NamespaceTranslatorTests\Transfer\Export;
 
+use Wavevision\NamespaceTranslator\Transfer\Export\FileSet;
 use Wavevision\NamespaceTranslator\Transfer\Export\InjectExtractTranslations;
+use Wavevision\NamespaceTranslator\Transfer\Export\Translations;
 use Wavevision\NetteTests\TestCases\DIContainerTestCase;
 
 class ExportTranslationsTest extends DIContainerTestCase
@@ -12,15 +14,24 @@ class ExportTranslationsTest extends DIContainerTestCase
 
 	public function testProcess(): void
 	{
-		$this->assertSame(
-			[
-				[
-					'key' => 'd1.d2.key',
-					'cs' => '42',
-					'en' => 'eng',
-				],
-			],
-			$this->extractTranslations->process(__DIR__ . '/../../App')
+		$this->assertEquals(
+			(new Translations())->add(
+				new FileSet(
+					[
+						'message' => [
+							'cs' => 'Zpráva',
+							'en' => 'Message',
+						],
+						'otherMessage' => [
+							'cs' => 'Další zpráva',
+							'en' => 'Other message',
+						],
+					],
+					'/translations/',
+					'neon'
+				)
+			),
+			$this->extractTranslations->process(__DIR__ . '/../../App/Components/SomeComponent')
 		);
 	}
 

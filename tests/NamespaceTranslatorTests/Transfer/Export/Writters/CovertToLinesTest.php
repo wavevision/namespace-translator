@@ -14,11 +14,11 @@ class CovertToLinesTest extends DIContainerTestCase
 	use SmartObject;
 	use InjectConvertToLines;
 
-	public function testProcess()
+	public function testProcess(): void
 	{
 		$this->assertSame(
 			[
-				['file', 'key', 'cs', 'en', 'format'],
+				['file (editing forbidden)', 'key (editing forbidden)', 'cs', 'en', 'format (editing forbidden)'],
 				['p', 'one', 'Jedna', 'One', 'neon'],
 				['p', 'two', 'Dva', null, 'neon'],
 			],
@@ -33,7 +33,9 @@ class CovertToLinesTest extends DIContainerTestCase
 							'two' => [
 								'cs' => 'Dva',
 							],
-						], 'p', 'neon'
+						],
+						'p',
+						'neon'
 					)
 				)
 			)

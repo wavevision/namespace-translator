@@ -16,7 +16,7 @@ class ExporterTest extends DIContainerTestCase
 	{
 		$export = __DIR__ . '/export.csv';
 		@unlink($export);
-		$this->exporter->export(__DIR__ . '/../../App', $export);
+		$this->exporter->exportCsv(__DIR__ . '/../../App', $export);
 		$this->assertFileExists($export);
 	}
 

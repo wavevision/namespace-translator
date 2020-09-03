@@ -4,6 +4,7 @@ namespace Wavevision\NamespaceTranslator\Transfer;
 
 use Nette\SmartObject;
 use Wavevision\DIServiceAnnotation\DIService;
+use Wavevision\NamespaceTranslator\Exceptions\InvalidState;
 use Wavevision\NamespaceTranslator\InjectTranslator;
 use Wavevision\Utils\Arrays;
 
@@ -21,14 +22,24 @@ class Locales
 		return $this->translator->getDefaultLocale();
 	}
 
+	/**
+	 * @return array<string>
+	 */
 	public function optionalLocales(): array
 	{
+		$whitelist = $this->translator->getLocalesWhitelist();
+		if ($whitelist === null) {
+			throw new InvalidState('Locale whitelist mus be set.');
+		}
 		return Arrays::filter(
-			$this->translator->getLocalesWhitelist(),
+			$whitelist,
 			fn(string $locale): bool => $locale !== $this->defaultLocale()
 		);
 	}
 
+	/**
+	 * @return array<string>
+	 */
 	public function allLocales(): array
 	{
 		return [$this->defaultLocale(), ...$this->optionalLocales()];

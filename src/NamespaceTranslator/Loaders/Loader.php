@@ -7,6 +7,9 @@ use Wavevision\NamespaceTranslator\Resources\LocalePrefixPair;
 interface Loader
 {
 
+	/**
+	 * @return array<mixed>
+	 */
 	public function load(string $resource): array;
 
 	public function getLocalePrefixPair(string $resourceName): LocalePrefixPair;
