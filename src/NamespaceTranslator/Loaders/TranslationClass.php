@@ -68,4 +68,9 @@ class TranslationClass implements Loader
 		return ucfirst($locale) . '.php';
 	}
 
+	public function save(string $resource, array $content): void
+	{
+
+	}
+
 }

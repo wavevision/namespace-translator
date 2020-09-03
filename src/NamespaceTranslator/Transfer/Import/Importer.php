@@ -13,10 +13,10 @@ use Wavevision\NamespaceTranslator\Transfer\Import\Readers\InjectCsv;
 class Importer
 {
 
-	use SmartObject;
-	use InjectCsv;
 	use InjectConvertFromLines;
+	use InjectCsv;
 	use InjectSaveFileSet;
+	use SmartObject;
 
 	public function importCsv(string $file, string $directory): void
 	{

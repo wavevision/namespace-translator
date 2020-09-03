@@ -20,29 +20,40 @@ class SaveFileSet
 	use InjectManager;
 	use InjectLocales;
 
-	public function process(string $directory, FileSet $fileSet): void
+	public function process(string $directory, FileSet $fileSet): array
 	{
 		$loader = $this->manager->getFormatLoader($fileSet->getFormat());
+		$resources = [];
 		foreach ($this->locales->allLocales() as $locale) {
 			$resource = $directory . $fileSet->getFile() . $loader->fileSuffix($locale);
-			var_dump($resource);
-			$tree = [];
-			foreach ($fileSet->getTranslations() as $key => $localizedValues) {
-				if (isset($localizedValues[$locale])) {
-					$value = trim($localizedValues[$locale]);
-					if ($value !== '') {
-						Arrays::buildTree(
-							explode(DomainManager::DOMAIN_DELIMITER, $key),
-							$value,
-							$tree
-						);
-					}
+			$resourceContent = $this->resourceContent($fileSet, $locale);
+			if (count($resourceContent) > 0) {
+				$loader->save($resource, $resourceContent);
+			} else {
+				if (is_file($resource)) {
+					unlink($resource);
 				}
 			}
-			if (count($tree) > 0) {
-				var_dump($tree);
+		}
+		return $resources;
+	}
+
+	private function resourceContent(FileSet $fileSet, string $locale): array
+	{
+		$tree = [];
+		foreach ($fileSet->getTranslations() as $key => $localizedValues) {
+			if (isset($localizedValues[$locale])) {
+				$value = trim($localizedValues[$locale]);
+				if ($value !== '') {
+					Arrays::buildTree(
+						explode(DomainManager::DOMAIN_DELIMITER, $key),
+						$value,
+						$tree
+					);
+				}
 			}
 		}
+		return $tree;
 	}
 
 }
