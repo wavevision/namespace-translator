@@ -15,4 +15,6 @@ abstract class Translation implements \Wavevision\NamespaceTranslator\Resources\
 
 	public const NESTED = 'nested';
 
+	public const BOOK = 'book';
+
 }

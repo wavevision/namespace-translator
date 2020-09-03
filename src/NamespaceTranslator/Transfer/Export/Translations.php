@@ -15,7 +15,7 @@ class Translations
 	 */
 	private array $fileSets = [];
 
-	public function __construct(array $fileSets)
+	public function __construct(array $fileSets = [])
 	{
 		$this->fileSets = $fileSets;
 	}

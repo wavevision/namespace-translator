@@ -2,9 +2,10 @@
 
 namespace Wavevision\NamespaceTranslator\Loaders;
 
-use Nette\PhpGenerator\PhpFile;
-use Nette\PhpGenerator\Printer;
 use Nette\SmartObject;
+use Nette\Utils\FileSystem;
+use PhpParser\ParserFactory;
+use PhpParser\PrettyPrinter\Standard;
 use ReflectionClass;
 use Wavevision\NamespaceTranslator\Exceptions\InvalidState;
 use Wavevision\NamespaceTranslator\Exceptions\SkipResource;
@@ -69,22 +70,16 @@ class TranslationClass implements Loader
 
 	public function save(string $resource, array $content): void
 	{
-		$result = $this->tokenizerResult($resource);
-		//todo parse existing file to nette generator, that rewrite
-		$file = new PhpFile();
-		$file->setStrictTypes(true);
-		$namespace = $file->addNamespace($result->getNamespace());
-		$class = $namespace->addClass($result->getName());
-		$class->addImplement(Translation::class);
-		$define = $class->addMethod('define');
-		$define
-			->setStatic(true)
-			->setReturnType('array')
-			->setBody('return ' . var_export($content, true) . ';');
-		$c = (new Printer())->printFile($file);
-		var_dump($c);
+		//todo pass source class
+		//https://github.com/nikic/PHP-Parser
+		$parser = (new ParserFactory())->create(ParserFactory::ONLY_PHP7);
+		$parsedFile = $parser->parse(FileSystem::read($resource));
+		$printer = new Standard();
+		//todo update class nodes
+		$x = $printer->prettyPrint($parsedFile);
+		var_dump($x);
 	}
-	
+
 	private function tokenizerResult(string $resource): TokenizeResult
 	{
 		if (!is_file($resource)) {
