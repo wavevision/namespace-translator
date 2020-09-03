@@ -13,9 +13,15 @@ services:
 	resourceManager:
 	  factory: Wavevision\NamespaceTranslator\ResourceManager
 	  inject: true
-	- factory: Wavevision\NamespaceTranslator\Transfer\Export\ExportTranslations
+	- factory: Wavevision\NamespaceTranslator\Transfer\Export\Exporter
+	  inject: true
+	- factory: Wavevision\NamespaceTranslator\Transfer\Export\ExtractTranslations
 	  inject: true
 	- factory: Wavevision\NamespaceTranslator\Transfer\Export\FileSetFactory
+	  inject: true
+	- factory: Wavevision\NamespaceTranslator\Transfer\Export\Writters\ConvertToLines
+	  inject: true
+	- factory: Wavevision\NamespaceTranslator\Transfer\Export\Writters\Csv
 	  inject: true
 	- factory: Wavevision\NamespaceTranslator\Transfer\Locales
 	  inject: true

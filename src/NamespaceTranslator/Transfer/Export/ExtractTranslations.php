@@ -5,7 +5,6 @@ namespace Wavevision\NamespaceTranslator\Transfer\Export;
 use Nette\SmartObject;
 use Wavevision\DIServiceAnnotation\DIService;
 use Wavevision\NamespaceTranslator\Loaders\InjectManager;
-use Wavevision\Utils\Arrays;
 
 /**
  * @DIService(generateInject=true)
@@ -17,12 +16,11 @@ class ExtractTranslations
 	use InjectFileSetFactory;
 	use InjectManager;
 
-	public function process(string $directory): array
+	public function process(string $directory): Translations
 	{
-		$translations = [];
+		$translations = new Translations();
 		foreach ($this->manager->getLoaders() as $format => $loader) {
-			$translations = Arrays::appendAll(
-				$translations,
+			$translations->combine(
 				$this->fileSetFactory->create(
 					$directory,
 					$loader,

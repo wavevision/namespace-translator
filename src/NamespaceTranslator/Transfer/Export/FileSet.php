@@ -9,6 +9,10 @@ class FileSet
 
 	use SmartObject;
 
+	public const FILE = 'file';
+
+	public const FORMAT = 'format';
+
 	private array $translations;
 
 	private string $file;
@@ -36,7 +40,5 @@ class FileSet
 	{
 		return $this->format;
 	}
-
-
 
 }

@@ -23,10 +23,10 @@ class FileSetFactory
 	use InjectLocales;
 	use InjectParametersManager;
 
-	public function create(string $directory, Loader $loader, string $format): array
+	public function create(string $directory, Loader $loader, string $format): Translations
 	{
 		//todo add format to loader
-		$translations = [];
+		$translations = new Translations();
 		$suffix = $loader->fileSuffix($this->locales->defaultLocale());
 		foreach ($this->findDirectories($directory) as $resource) {
 			$translationDirectory = $resource->getPathname();
@@ -35,10 +35,12 @@ class FileSetFactory
 				$pathname = $file->getPathname();
 				//todo replace rtrim
 				$basePathname = str_replace($suffix, '', $pathname);
-				$translations[] = new FileSet(
-					$this->fileSet($basePathname, $loader),
-					str_replace($directory, '', $basePathname),
-					$format
+				$translations->add(
+					new FileSet(
+						$this->fileSet($basePathname, $loader),
+						str_replace($directory, '', $basePathname),
+						$format
+					)
 				);
 			}
 		}
