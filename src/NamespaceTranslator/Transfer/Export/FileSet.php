@@ -13,10 +13,13 @@ class FileSet
 
 	private string $file;
 
-	public function __construct(array $translations, string $file)
+	private string $format;
+
+	public function __construct(array $translations, string $file, string $format)
 	{
 		$this->translations = $translations;
 		$this->file = $file;
+		$this->format = $format;
 	}
 
 	public function getTranslations(): array
@@ -29,8 +32,10 @@ class FileSet
 		return $this->file;
 	}
 
-
-
+	public function getFormat(): string
+	{
+		return $this->format;
+	}
 
 
 

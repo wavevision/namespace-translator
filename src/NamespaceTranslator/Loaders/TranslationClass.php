@@ -7,7 +7,6 @@ use ReflectionClass;
 use Wavevision\NamespaceTranslator\Exceptions\InvalidState;
 use Wavevision\NamespaceTranslator\Exceptions\SkipResource;
 use Wavevision\NamespaceTranslator\Resources\LocalePrefixPair;
-use Wavevision\NamespaceTranslator\Resources\Messages;
 use Wavevision\NamespaceTranslator\Resources\Translation;
 use Wavevision\Utils\Arrays;
 use Wavevision\Utils\Tokenizer\Tokenizer;
@@ -26,8 +25,11 @@ class TranslationClass implements Loader
 		$this->tokenizer = new Tokenizer();
 	}
 
-	public function load(string $resource, LocalePrefixPair $localePrefixPair): Messages
+	public function load(string $resource): array
 	{
+		if (!is_file($resource)) {
+			throw new InvalidState("Unable to read file '$resource'.");
+		}
 		$result = $this->tokenizer->getStructureNameFromFile($resource, [T_CLASS]);
 		if ($result === null) {
 			throw new InvalidState("Unable to get translation class from '$resource'.");
@@ -43,8 +45,7 @@ class TranslationClass implements Loader
 			throw new SkipResource();
 		}
 		/** @var Translation $class */
-		$messages = $class::define();
-		return new Messages($messages, $localePrefixPair->getLocale(), $localePrefixPair->getPrefix());
+		return $class::define();
 	}
 
 	/**
@@ -59,14 +60,9 @@ class TranslationClass implements Loader
 		return new LocalePrefixPair(Arrays::pop($parts), Arrays::implode($parts, ''));
 	}
 
-	public function suffix(string $locale): string
+	public function fileSuffix(string $locale): string
 	{
-		throw new \Exception('not implemented.');
-	}
-
-	public function loadFlatten(string $filepath): array
-	{
-		throw new \Exception('not implemented.');
+		return ucfirst($locale) . '.php';
 	}
 
 }

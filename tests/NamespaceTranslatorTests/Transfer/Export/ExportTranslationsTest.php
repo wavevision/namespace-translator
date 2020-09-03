@@ -2,13 +2,13 @@
 
 namespace Wavevision\NamespaceTranslatorTests\Transfer\Export;
 
-use Wavevision\NamespaceTranslator\Transfer\Export\InjectExportTranslations;
+use Wavevision\NamespaceTranslator\Transfer\Export\InjectExtractTranslations;
 use Wavevision\NetteTests\TestCases\DIContainerTestCase;
 
 class ExportTranslationsTest extends DIContainerTestCase
 {
 
-	use InjectExportTranslations;
+	use InjectExtractTranslations;
 
 	public function testProcess(): void
 	{
@@ -20,7 +20,7 @@ class ExportTranslationsTest extends DIContainerTestCase
 					'en' => 'eng',
 				],
 			],
-			$this->exportTranslations->neon(__DIR__ . '/../../App')
+			$this->extractTranslations->process(__DIR__ . '/../../App')
 		);
 	}
 

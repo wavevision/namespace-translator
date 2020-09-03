@@ -48,7 +48,6 @@ class TranslatorFactory
 					try {
 						$this->resourceManager->loadResource($resource->getPathname(), $domain);
 					} catch (SkipResource $e) {
-						// TODO: Better solution for skipping resources
 					}
 				}
 				$this->resourceManager->setNamespaceLoaded($namespace);

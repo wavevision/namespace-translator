@@ -24,7 +24,7 @@ class Locales
 	public function optionalLocales(): array
 	{
 		return Arrays::filter(
-			$this->translator->getAvailableLocales(),
+			$this->translator->getLocalesWhitelist(),
 			fn(string $locale): bool => $locale !== $this->defaultLocale()
 		);
 	}

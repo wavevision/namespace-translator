@@ -7,7 +7,6 @@ use Nette\SmartObject;
 use Wavevision\NamespaceTranslator\DomainManager;
 use Wavevision\NamespaceTranslator\Exceptions\InvalidState;
 use Wavevision\NamespaceTranslator\Resources\LocalePrefixPair;
-use Wavevision\NamespaceTranslator\Resources\Messages;
 use Wavevision\Utils\Arrays;
 
 class Neon implements Loader
@@ -17,9 +16,13 @@ class Neon implements Loader
 
 	public const FORMAT = 'neon';
 
-	public function load(string $resource, LocalePrefixPair $localePrefixPair): Messages
+	public function load(string $resource): array
 	{
-		return new Messages($this->loadFile($resource), $localePrefixPair->getLocale(), $localePrefixPair->getPrefix());
+		$content = @file_get_contents($resource);
+		if ($content === false) {
+			throw new InvalidState("Unable to read contents of '$resource'.");
+		}
+		return NetteNeon::decode($content) ?: [];
 	}
 
 	public function getLocalePrefixPair(string $resourceName): LocalePrefixPair
@@ -28,23 +31,10 @@ class Neon implements Loader
 		return new LocalePrefixPair(Arrays::pop($parts), Arrays::pop($parts));
 	}
 
-	public function suffix(string $locale): string
+	public function fileSuffix(string $locale): string
 	{
 		return $locale . '.neon';
 	}
 
-	public function loadFlatten(string $filepath): array
-	{
-		return Arrays::flattenKeys($this->loadFile($filepath));
-	}
-
-	private function loadFile(string $filepath): array
-	{
-		$content = @file_get_contents($filepath);
-		if ($content === false) {
-			throw new InvalidState("Unable to read contents of '$filepath'.");
-		}
-		return NetteNeon::decode($content) ?: [];
-	}
 
 }
