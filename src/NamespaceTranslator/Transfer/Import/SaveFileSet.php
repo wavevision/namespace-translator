@@ -28,7 +28,7 @@ class SaveFileSet
 			$resource = $directory . $fileSet->getFile() . $loader->fileSuffix($locale);
 			$resourceContent = $this->resourceContent($fileSet, $locale);
 			if (count($resourceContent) > 0) {
-				$loader->save($resource, $resourceContent);
+				$loader->save($resource, Arrays::mergeAllRecursive($loader->load($resource), $resourceContent));
 			} else {
 				if (is_file($resource)) {
 					unlink($resource);
