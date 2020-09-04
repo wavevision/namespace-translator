@@ -3,6 +3,8 @@ services:
 	domainManager:
 	  factory: Wavevision\NamespaceTranslator\DomainManager
 	  inject: true
+	- factory: Wavevision\NamespaceTranslator\Loaders\TranslationClass\CreateNodeArray
+	  inject: true
 	- factory: Wavevision\NamespaceTranslator\Loaders\TranslationClass\FlattenKeys
 	  inject: true
 	- factory: Wavevision\NamespaceTranslator\Loaders\TranslationClass\GetTranslationArray

@@ -3,7 +3,6 @@
 namespace Wavevision\NamespaceTranslator\Loaders\TranslationClass;
 
 use Nette\SmartObject;
-use PhpParser\ConstExprEvaluator;
 use PhpParser\Node\Expr\Array_;
 use PhpParser\Node\Expr\ArrayItem;
 use PhpParser\Node\Expr\ClassConstFetch;
@@ -25,6 +24,10 @@ class RewriteArray
 		foreach ($array->items as $item) {
 			$key = $this->key($item);
 			$objectValue = $item->value;
+			if (!isset($content[$key])) {
+				$objectValue->value = '';
+				continue;
+			}
 			if ($objectValue instanceof String_) {
 				$objectValue->value = $content[$key];
 			}
@@ -41,7 +44,7 @@ class RewriteArray
 			return $keyObject->value;
 		}
 		if ($keyObject instanceof ClassConstFetch) {
-			return $this->serializeClassConstFetch->process($keyObject);
+			return $this->serializeClassConstFetch->serialize($keyObject);
 		}
 		throw new \Exception();
 	}

@@ -5,7 +5,10 @@ namespace Wavevision\NamespaceTranslator\Transfer\Import;
 use Nette\SmartObject;
 use Wavevision\DIServiceAnnotation\DIService;
 use Wavevision\NamespaceTranslator\DomainManager;
+use Wavevision\NamespaceTranslator\Exceptions\InvalidState;
+use Wavevision\NamespaceTranslator\Exceptions\SkipResource;
 use Wavevision\NamespaceTranslator\Loaders\InjectManager;
+use Wavevision\NamespaceTranslator\Loaders\Loader;
 use Wavevision\NamespaceTranslator\Transfer\Export\FileSet;
 use Wavevision\NamespaceTranslator\Transfer\InjectLocales;
 use Wavevision\Utils\Arrays;
@@ -24,18 +27,43 @@ class SaveFileSet
 	{
 		$loader = $this->manager->getFormatLoader($fileSet->getFormat());
 		$resources = [];
-		foreach ($this->locales->allLocales() as $locale) {
-			$resource = $directory . $fileSet->getFile() . $loader->fileSuffix($locale);
-			$resourceContent = $this->resourceContent($fileSet, $locale);
-			if (count($resourceContent) > 0) {
-				$loader->save($resource, Arrays::mergeAllRecursive($loader->load($resource), $resourceContent));
-			} else {
-				if (is_file($resource)) {
-					unlink($resource);
-				}
-			}
+		$defaultLocale = $this->locales->defaultLocale();
+		$referenceResource = $this->saveLocale($directory, $fileSet, $defaultLocale, $loader);
+		foreach ($this->locales->optionalLocales() as $locale) {
+			$this->saveLocale($directory, $fileSet, $locale, $loader, $referenceResource);
 		}
 		return $resources;
+	}
+
+	private function saveLocale(
+		string $directory,
+		FileSet $fileSet,
+		string $locale,
+		Loader $loader,
+		?string $reference = null
+	): string {
+		$resource = $directory . $fileSet->getFile() . $loader->fileSuffix($locale);
+		$resourceContent = $this->resourceContent($fileSet, $locale);
+		if (count($resourceContent) > 0) {
+			$loader->save($resource, Arrays::mergeAllRecursive($this->load($loader, $resource), $resourceContent), $reference);
+		} else {
+			if ($reference === null) {
+				throw new \Exception('Unable to remove default locale.');
+			}
+			if (is_file($resource)) {
+				unlink($resource);
+			}
+		}
+		return $resource;
+	}
+
+	private function load(Loader $loader, string $resource): array
+	{
+		try {
+			return $loader->load($resource);
+		} catch (InvalidState | SkipResource $e) {
+			return [];
+		}
 	}
 
 	private function resourceContent(FileSet $fileSet, string $locale): array

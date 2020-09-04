@@ -41,7 +41,7 @@ class FlattenKeys
 			return $key->value;
 		}
 		if ($key instanceof ClassConstFetch) {
-			return $this->serializeClassConstFetch->process($key);
+			return $this->serializeClassConstFetch->serialize($key);
 		}
 		throw new \Exception();
 	}

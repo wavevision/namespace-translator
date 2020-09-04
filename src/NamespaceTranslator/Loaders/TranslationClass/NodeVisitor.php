@@ -5,6 +5,7 @@ namespace Wavevision\NamespaceTranslator\Loaders\TranslationClass;
 use Nette\SmartObject;
 use PhpParser\Node;
 use PhpParser\Node\Expr\Array_;
+use PhpParser\Node\Stmt\Return_;
 use PhpParser\NodeVisitorAbstract;
 
 class NodeVisitor extends NodeVisitorAbstract
@@ -14,19 +15,18 @@ class NodeVisitor extends NodeVisitorAbstract
 
 	private Array_ $array;
 
-	public function getArray(): Array_
+	public function __construct(Array_ $array)
 	{
-		return $this->array;
+		$this->array = $array;
 	}
 
 	public function leaveNode(Node $node)
 	{
+		/*if ($node instanceof Node\Identifier && $node->name === $this->className) {
+			$this->classIdentifierNode = $node;
+		}*/
 		if ($node instanceof Node\Stmt\ClassMethod) {
-			/** @var Node\Stmt\Return_ $return */
-			$return = $node->getStmts()[0];
-			/** @var Node\Expr\Array_ $array */
-			$array = $return->expr;
-			$this->array = $array;
+			new Node\Stmt\ClassMethod('define', [new Return_($this->array)]);
 		}
 		return $node;
 	}

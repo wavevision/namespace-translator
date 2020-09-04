@@ -59,9 +59,9 @@ class TranslationClass implements Loader
 		return ucfirst($locale) . '.php';
 	}
 
-	public function save(string $resource, array $content): void
+	public function save(string $resource, array $content, ?string $referenceResource = null): void
 	{
-		$this->saveResource->save($resource, $content);
+		$this->saveResource->save($resource, $content, $referenceResource);
 	}
 
 	public function loadExport(string $resource): array
