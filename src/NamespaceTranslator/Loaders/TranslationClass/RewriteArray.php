@@ -36,7 +36,6 @@ class RewriteArray
 
 	private function key(ArrayItem $item): string
 	{
-		ConstExprEvaluator::class;
 		$keyObject = $item->key;
 		if ($keyObject instanceof String_) {
 			return $keyObject->value;

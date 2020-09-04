@@ -4,7 +4,9 @@ namespace Wavevision\NamespaceTranslator\Loaders\TranslationClass;
 
 use Nette\SmartObject;
 use Nette\Utils\FileSystem;
+use PhpParser\Lexer\Emulative;
 use PhpParser\NodeTraverser;
+use PhpParser\NodeVisitor\CloningVisitor;
 use PhpParser\NodeVisitor\NameResolver;
 use PhpParser\ParserFactory;
 use PhpParser\PrettyPrinter\Standard;
@@ -23,18 +25,24 @@ class SaveResource
 	{
 		//todo pass source class
 		//https://github.com/nikic/PHP-Parser
-		$parser = (new ParserFactory())->create(ParserFactory::ONLY_PHP7);
+		$lexer = new Emulative([
+			'usedAttributes' => [
+				'comments',
+				'startLine', 'endLine',
+				'startTokenPos', 'endTokenPos',
+			],
+		]);
+		$parser = (new ParserFactory())->create(ParserFactory::ONLY_PHP7, $lexer);
 		$parsedFile = $parser->parse(FileSystem::read($resource));
+		$oldTokens = $lexer->getTokens();
 		$traverser = new NodeTraverser();
-		$traverser->addVisitor(new NameResolver());
+		$traverser->addVisitor(new CloningVisitor());
 		$nodeVisitor = new NodeVisitor();
 		$traverser->addVisitor($nodeVisitor);
-		$traverser->traverse($parsedFile);
+		$newStmts = $traverser->traverse($parsedFile);
 		$this->rewriteArray->process($nodeVisitor->getArray(), $content);
 		$printer = new Standard();
-		//todo update class nodes
-		$x = $printer->prettyPrint($parsedFile);
-		var_dump($x);
+		FileSystem::write($resource, $printer->printFormatPreserving($newStmts, $parsedFile, $oldTokens));
 	}
 
 }
