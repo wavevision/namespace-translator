@@ -11,6 +11,13 @@ class PrefixedCs extends Translation
 	public static function define(): array
 	{
 		return [
+			'test' => '123',
+			'one' => [
+				'two' => [
+					'nested' => 'nested',
+				],
+				'one' => 'asd',
+			],
 			self::BOOK => 'The Tale of Scrotie McBoogerballs',
 		];
 	}

@@ -3,6 +3,12 @@ services:
 	domainManager:
 	  factory: Wavevision\NamespaceTranslator\DomainManager
 	  inject: true
+	- factory: Wavevision\NamespaceTranslator\Loaders\TranslationClass\NodeVisitor
+	  inject: true
+	- factory: Wavevision\NamespaceTranslator\Loaders\TranslationClass\RewriteArray
+	  inject: true
+	- factory: Wavevision\NamespaceTranslator\Loaders\TranslationClass\SaveResource
+	  inject: true
 	parametersManager:
 	  factory: Wavevision\NamespaceTranslator\ParametersManager
 	  arguments: [%dirNames%, %loaders%]

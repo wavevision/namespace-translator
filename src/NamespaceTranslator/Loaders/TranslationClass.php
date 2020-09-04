@@ -3,12 +3,10 @@
 namespace Wavevision\NamespaceTranslator\Loaders;
 
 use Nette\SmartObject;
-use Nette\Utils\FileSystem;
-use PhpParser\ParserFactory;
-use PhpParser\PrettyPrinter\Standard;
 use ReflectionClass;
 use Wavevision\NamespaceTranslator\Exceptions\InvalidState;
 use Wavevision\NamespaceTranslator\Exceptions\SkipResource;
+use Wavevision\NamespaceTranslator\Loaders\TranslationClass\InjectSaveResource;
 use Wavevision\NamespaceTranslator\Resources\LocalePrefixPair;
 use Wavevision\NamespaceTranslator\Resources\Translation;
 use Wavevision\NamespaceTranslator\Transfer\InjectLocales;
@@ -21,6 +19,7 @@ class TranslationClass implements Loader
 
 	use SmartObject;
 	use InjectLocales;
+	use InjectSaveResource;
 
 	public const FORMAT = 'php';
 
@@ -70,14 +69,7 @@ class TranslationClass implements Loader
 
 	public function save(string $resource, array $content): void
 	{
-		//todo pass source class
-		//https://github.com/nikic/PHP-Parser
-		$parser = (new ParserFactory())->create(ParserFactory::ONLY_PHP7);
-		$parsedFile = $parser->parse(FileSystem::read($resource));
-		$printer = new Standard();
-		//todo update class nodes
-		$x = $printer->prettyPrint($parsedFile);
-		var_dump($x);
+		$this->saveResource->save($resource, $content);
 	}
 
 	private function tokenizerResult(string $resource): TokenizeResult
