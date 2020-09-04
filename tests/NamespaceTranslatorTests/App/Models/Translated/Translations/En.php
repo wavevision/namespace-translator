@@ -11,7 +11,7 @@ class En extends Translation
 	public static function define(): array
 	{
 		return [
-			Cs::SOME_KEY => 'We want modele!',
+			self::SOME_KEY => 'We want modele!',
 		];
 	}
 

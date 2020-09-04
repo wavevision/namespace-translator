@@ -9,7 +9,6 @@ use PhpParser\Node\Expr\ArrayItem;
 use PhpParser\Node\Expr\ClassConstFetch;
 use PhpParser\Node\Scalar\String_;
 use Wavevision\DIServiceAnnotation\DIService;
-use Wavevision\NamespaceTranslator\Exceptions\InvalidState;
 
 /**
  * @DIService(generateInject=true)
@@ -17,6 +16,7 @@ use Wavevision\NamespaceTranslator\Exceptions\InvalidState;
 class RewriteArray
 {
 
+	use InjectSerializeClassConstFetch;
 	use SmartObject;
 
 	public function process(Array_ $array, array $content): void
@@ -42,20 +42,9 @@ class RewriteArray
 			return $keyObject->value;
 		}
 		if ($keyObject instanceof ClassConstFetch) {
-			var_dump($keyObject);
-			$evaluator = new ConstExprEvaluator();
-			$x = $evaluator->evaluateDirectly($keyObject);
+			return $this->serializeClassConstFetch->process($keyObject);
 		}
-		throw new InvalidState();
-	}
-
-	private function value(ArrayItem $item): String_
-	{
-		$objectValue = $item->value;
-		if ($objectValue instanceof String_) {
-			return $objectValue;
-		}
-		throw new InvalidState();
+		throw new \Exception();
 	}
 
 }

@@ -45,4 +45,9 @@ class Neon implements Loader
 		FileSystem::write($resource, NetteNeon::encode($content, NetteNeon::BLOCK));
 	}
 
+	public function loadExport(string $resource): array
+	{
+		return Arrays::flattenKeys($this->load($resource));
+	}
+
 }

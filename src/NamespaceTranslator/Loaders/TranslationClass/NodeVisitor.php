@@ -4,27 +4,19 @@ namespace Wavevision\NamespaceTranslator\Loaders\TranslationClass;
 
 use Nette\SmartObject;
 use PhpParser\Node;
+use PhpParser\Node\Expr\Array_;
 use PhpParser\NodeVisitorAbstract;
-use Wavevision\DIServiceAnnotation\DIService;
 
-/**
- * @DIService(generateInject=true)
- */
 class NodeVisitor extends NodeVisitorAbstract
 {
 
 	use SmartObject;
-	use InjectRewriteArray;
 
-	private array $content;
+	private Array_ $array;
 
-	/**
-	 * @return static
-	 */
-	public function setContent(array $content)
+	public function getArray(): Array_
 	{
-		$this->content = $content;
-		return $this;
+		return $this->array;
 	}
 
 	public function leaveNode(Node $node)
@@ -34,7 +26,7 @@ class NodeVisitor extends NodeVisitorAbstract
 			$return = $node->getStmts()[0];
 			/** @var Node\Expr\Array_ $array */
 			$array = $return->expr;
-			$this->rewriteArray->process($array, $this->content);
+			$this->array = $array;
 		}
 		return $node;
 	}

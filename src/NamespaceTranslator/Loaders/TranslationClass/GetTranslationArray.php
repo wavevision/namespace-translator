@@ -4,37 +4,29 @@ namespace Wavevision\NamespaceTranslator\Loaders\TranslationClass;
 
 use Nette\SmartObject;
 use Nette\Utils\FileSystem;
+use PhpParser\Node\Expr\Array_;
 use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitor\NameResolver;
 use PhpParser\ParserFactory;
-use PhpParser\PrettyPrinter\Standard;
 use Wavevision\DIServiceAnnotation\DIService;
 
 /**
  * @DIService(generateInject=true)
  */
-class SaveResource
+class GetTranslationArray
 {
 
 	use SmartObject;
-	use InjectRewriteArray;
 
-	public function save(string $resource, array $content): void
+	public function process(string $resource): Array_
 	{
-		//todo pass source class
-		//https://github.com/nikic/PHP-Parser
 		$parser = (new ParserFactory())->create(ParserFactory::ONLY_PHP7);
 		$parsedFile = $parser->parse(FileSystem::read($resource));
 		$traverser = new NodeTraverser();
-		$traverser->addVisitor(new NameResolver());
 		$nodeVisitor = new NodeVisitor();
 		$traverser->addVisitor($nodeVisitor);
 		$traverser->traverse($parsedFile);
-		$this->rewriteArray->process($nodeVisitor->getArray(), $content);
-		$printer = new Standard();
-		//todo update class nodes
-		$x = $printer->prettyPrint($parsedFile);
-		var_dump($x);
+		return $nodeVisitor->getArray();
 	}
 
 }

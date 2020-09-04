@@ -6,6 +6,7 @@ use Nette\SmartObject;
 use ReflectionClass;
 use Wavevision\NamespaceTranslator\Exceptions\InvalidState;
 use Wavevision\NamespaceTranslator\Exceptions\SkipResource;
+use Wavevision\NamespaceTranslator\Loaders\TranslationClass\InjectLoadExport;
 use Wavevision\NamespaceTranslator\Loaders\TranslationClass\InjectSaveResource;
 use Wavevision\NamespaceTranslator\Resources\LocalePrefixPair;
 use Wavevision\NamespaceTranslator\Resources\Translation;
@@ -20,6 +21,7 @@ class TranslationClass implements Loader
 	use SmartObject;
 	use InjectLocales;
 	use InjectSaveResource;
+	use InjectLoadExport;
 
 	public const FORMAT = 'php';
 
@@ -35,17 +37,7 @@ class TranslationClass implements Loader
 	 */
 	public function load(string $resource): array
 	{
-		$result = $this->tokenizerResult($resource);
-		$class = $result->getFullyQualifiedName();
-		if (!class_exists($class)) {
-			throw new InvalidState("Translation class '$class' does not exist.");
-		}
-		if (!in_array(Translation::class, class_implements($class))) {
-			throw new InvalidState(sprintf("Translation class '%s' must implement '%s'.", $class, Translation::class));
-		}
-		if ((new ReflectionClass($class))->isAbstract()) {
-			throw new SkipResource();
-		}
+		$class = $this->getClass($resource);
 		/** @var Translation $class */
 		return $class::define();
 	}
@@ -72,6 +64,12 @@ class TranslationClass implements Loader
 		$this->saveResource->save($resource, $content);
 	}
 
+	public function loadExport(string $resource): array
+	{
+		$this->getClass($resource);
+		return $this->loadExport->process($resource);
+	}
+
 	private function tokenizerResult(string $resource): TokenizeResult
 	{
 		if (!is_file($resource)) {
@@ -82,6 +80,22 @@ class TranslationClass implements Loader
 			throw new InvalidState("Unable to get translation class from '$resource'.");
 		}
 		return $result;
+	}
+
+	private function getClass(string $resource): string
+	{
+		$result = $this->tokenizerResult($resource);
+		$class = $result->getFullyQualifiedName();
+		if (!class_exists($class)) {
+			throw new InvalidState("Translation class '$class' does not exist.");
+		}
+		if (!in_array(Translation::class, class_implements($class))) {
+			throw new InvalidState(sprintf("Translation class '%s' must implement '%s'.", $class, Translation::class));
+		}
+		if ((new ReflectionClass($class))->isAbstract()) {
+			throw new SkipResource();
+		}
+		return $class;
 	}
 
 }

@@ -56,8 +56,8 @@ class FileSetFactory
 		$keys = [];
 		foreach ($this->locales->allLocales() as $locale) {
 			try {
-				$flattenFileContent = Arrays::flattenKeys($loader->load($basePathname . $loader->fileSuffix($locale)));
-				foreach ($flattenFileContent as $key => $value) {
+				$keyValueContent = $loader->loadExport($basePathname . $loader->fileSuffix($locale));
+				foreach ($keyValueContent as $key => $value) {
 					$keys[$key][$locale] = $value;
 				}
 			} catch (SkipResource | InvalidState $e) {

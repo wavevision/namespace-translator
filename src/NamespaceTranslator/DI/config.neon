@@ -3,11 +3,17 @@ services:
 	domainManager:
 	  factory: Wavevision\NamespaceTranslator\DomainManager
 	  inject: true
-	- factory: Wavevision\NamespaceTranslator\Loaders\TranslationClass\NodeVisitor
+	- factory: Wavevision\NamespaceTranslator\Loaders\TranslationClass\FlattenKeys
+	  inject: true
+	- factory: Wavevision\NamespaceTranslator\Loaders\TranslationClass\GetTranslationArray
+	  inject: true
+	- factory: Wavevision\NamespaceTranslator\Loaders\TranslationClass\LoadExport
 	  inject: true
 	- factory: Wavevision\NamespaceTranslator\Loaders\TranslationClass\RewriteArray
 	  inject: true
 	- factory: Wavevision\NamespaceTranslator\Loaders\TranslationClass\SaveResource
+	  inject: true
+	- factory: Wavevision\NamespaceTranslator\Loaders\TranslationClass\SerializeClassConstFetch
 	  inject: true
 	parametersManager:
 	  factory: Wavevision\NamespaceTranslator\ParametersManager
