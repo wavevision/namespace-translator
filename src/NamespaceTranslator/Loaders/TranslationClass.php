@@ -56,18 +56,23 @@ class TranslationClass implements Loader
 
 	public function fileSuffix(string $locale): string
 	{
-		return ucfirst($locale) . '.php';
+		return ucfirst($locale) . $this->fileExtension();
 	}
 
 	public function save(string $resource, array $content, ?string $referenceResource = null): void
 	{
-		$this->saveResource->save($resource, $content, $referenceResource);
+		$this->saveResource->save($resource, $content, $this->fileExtension(), $referenceResource);
 	}
 
 	public function loadExport(string $resource): array
 	{
 		$this->getClass($resource);
 		return $this->loadExport->process($resource);
+	}
+
+	private function fileExtension(): string
+	{
+		return '.php';
 	}
 
 	private function tokenizerResult(string $resource): TokenizeResult
