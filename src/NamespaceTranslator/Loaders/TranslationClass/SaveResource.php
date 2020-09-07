@@ -64,6 +64,7 @@ class SaveResource
 		//	$nodeVisitor->getClassIdentifierNode()->name = $this->getClassFromResource($output);
 		$printer = new Standard();
 		//FileSystem::write($filename, $printer->printFormatPreserving($newStmts, $parsedFile, $oldTokens));
+		//todo callback for reformat
 		FileSystem::write($output, $printer->prettyPrintFile($newStmts));
 	}
 

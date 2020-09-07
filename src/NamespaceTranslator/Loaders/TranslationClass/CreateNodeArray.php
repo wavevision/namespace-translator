@@ -45,7 +45,7 @@ class CreateNodeArray
 
 	private function createArray(array $items): Array_
 	{
-		return new Array_($items, [Array_::KIND_SHORT]);
+		return new Array_($items, ['shortArraySyntax' => Array_::KIND_SHORT]);
 	}
 
 }
