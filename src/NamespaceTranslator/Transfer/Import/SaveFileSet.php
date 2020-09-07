@@ -60,7 +60,7 @@ class SaveFileSet
 	private function load(Loader $loader, string $resource): array
 	{
 		try {
-			return $loader->load($resource);
+			return $loader->loadExport($resource);
 		} catch (InvalidState | SkipResource $e) {
 			return [];
 		}

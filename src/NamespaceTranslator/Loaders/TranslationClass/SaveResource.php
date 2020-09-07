@@ -23,7 +23,6 @@ class SaveResource
 
 	public function save(string $resource, array $content, ?string $referenceResource = null): void
 	{
-		print_r($content);
 		if ($referenceResource === null) {
 			$this->resource($resource, $this->createNodeArray->process($content), $resource);
 		} else {

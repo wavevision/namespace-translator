@@ -19,7 +19,7 @@ class LoadExport
 
 	public function process(string $resource): array
 	{
-		return Arrays::flattenKeys($this->flattenKeys->process($this->getTranslationArray->process($resource)));
+		return $this->flattenKeys->process($this->getTranslationArray->process($resource));
 	}
 
 }

@@ -6,7 +6,6 @@ use Nette\SmartObject;
 use Nette\Utils\FileSystem;
 use PhpParser\Node\Expr\Array_;
 use PhpParser\NodeTraverser;
-use PhpParser\NodeVisitor\NameResolver;
 use PhpParser\ParserFactory;
 use Wavevision\DIServiceAnnotation\DIService;
 
@@ -23,10 +22,10 @@ class GetTranslationArray
 		$parser = (new ParserFactory())->create(ParserFactory::ONLY_PHP7);
 		$parsedFile = $parser->parse(FileSystem::read($resource));
 		$traverser = new NodeTraverser();
-		$nodeVisitor = new NodeVisitor();
-		$traverser->addVisitor($nodeVisitor);
+		$arrayExtractor = new ArrayExtractor();
+		$traverser->addVisitor($arrayExtractor);
 		$traverser->traverse($parsedFile);
-		return $nodeVisitor->getArray();
+		return $arrayExtractor->getArray();
 	}
 
 }

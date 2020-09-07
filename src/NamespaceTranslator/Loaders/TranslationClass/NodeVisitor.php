@@ -6,6 +6,7 @@ use Nette\SmartObject;
 use PhpParser\Node;
 use PhpParser\Node\Expr\Array_;
 use PhpParser\Node\Stmt\Return_;
+use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitorAbstract;
 
 class NodeVisitor extends NodeVisitorAbstract
@@ -20,15 +21,19 @@ class NodeVisitor extends NodeVisitorAbstract
 		$this->array = $array;
 	}
 
-	public function leaveNode(Node $node)
+	public function enterNode(Node $node)
 	{
 		/*if ($node instanceof Node\Identifier && $node->name === $this->className) {
 			$this->classIdentifierNode = $node;
 		}*/
 		if ($node instanceof Node\Stmt\ClassMethod) {
-			new Node\Stmt\ClassMethod('define', [new Return_($this->array)]);
+			$replacement = clone $node;
+			/** @var Return_ $return */
+			$return = $node->getStmts()[0];
+			/** @var Array_ $array */
+			$return->expr = $this->array;
+			return NodeTraverser::STOP_TRAVERSAL;
 		}
-		return $node;
 	}
 
 }

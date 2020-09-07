@@ -47,7 +47,7 @@ class Neon implements Loader
 
 	public function loadExport(string $resource): array
 	{
-		return Arrays::flattenKeys($this->load($resource));
+		return $this->load($resource);
 	}
 
 }
