@@ -13,9 +13,13 @@ services:
 	  inject: true
 	- factory: Wavevision\NamespaceTranslator\Loaders\TranslationClass\RewriteArray
 	  inject: true
+	- factory: Wavevision\NamespaceTranslator\Loaders\TranslationClass\SaveFileAst
+	  inject: true
 	- factory: Wavevision\NamespaceTranslator\Loaders\TranslationClass\SaveResource
 	  inject: true
 	- factory: Wavevision\NamespaceTranslator\Loaders\TranslationClass\SerializeClassConstFetch
+	  inject: true
+	- factory: Wavevision\NamespaceTranslator\Loaders\TranslationClass\TraverseFileAst
 	  inject: true
 	parametersManager:
 	  factory: Wavevision\NamespaceTranslator\ParametersManager
