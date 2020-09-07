@@ -23,6 +23,9 @@ class SaveFileSet
 	use InjectManager;
 	use InjectLocales;
 
+	/**
+	 * @return array<mixed>
+	 */
 	public function process(string $directory, FileSet $fileSet): array
 	{
 		$loader = $this->manager->getFormatLoader($fileSet->getFormat());
@@ -45,7 +48,11 @@ class SaveFileSet
 		$resource = $directory . $fileSet->getFile() . $loader->fileSuffix($locale);
 		$resourceContent = $this->resourceContent($fileSet, $locale);
 		if (count($resourceContent) > 0) {
-			$loader->save($resource, Arrays::mergeAllRecursive($this->load($loader, $resource), $resourceContent), $reference);
+			$loader->save(
+				$resource,
+				Arrays::mergeAllRecursive($this->load($loader, $resource), $resourceContent),
+				$reference
+			);
 		} else {
 			if ($reference === null) {
 				throw new \Exception('Unable to remove default locale.');
@@ -57,6 +64,9 @@ class SaveFileSet
 		return $resource;
 	}
 
+	/**
+	 * @return array<mixed>
+	 */
 	private function load(Loader $loader, string $resource): array
 	{
 		try {
@@ -66,6 +76,9 @@ class SaveFileSet
 		}
 	}
 
+	/**
+	 * @return array<mixed>
+	 */
 	private function resourceContent(FileSet $fileSet, string $locale): array
 	{
 		$tree = [];

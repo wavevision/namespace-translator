@@ -18,11 +18,18 @@ class CreateNodeArray
 	use SmartObject;
 	use InjectSerializeClassConstFetch;
 
+	/**
+	 * @param array<mixed> $content
+	 */
 	public function process(array $content): Array_
 	{
 		return $this->createArray($this->items($content));
 	}
 
+	/**
+	 * @param array<mixed> $content
+	 * @return ArrayItem[]
+	 */
 	private function items(array $content): array
 	{
 		$items = [];
@@ -43,6 +50,9 @@ class CreateNodeArray
 		return new String_($key);
 	}
 
+	/**
+	 * @param ArrayItem[] $items
+	 */
 	private function createArray(array $items): Array_
 	{
 		return new Array_($items, ['shortArraySyntax' => Array_::KIND_SHORT]);

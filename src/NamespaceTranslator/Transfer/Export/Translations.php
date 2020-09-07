@@ -15,6 +15,9 @@ class Translations
 	 */
 	private array $fileSets = [];
 
+	/**
+	 * @param FileSet[] $fileSets
+	 */
 	public function __construct(array $fileSets = [])
 	{
 		$this->fileSets = $fileSets;

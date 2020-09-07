@@ -24,7 +24,7 @@ class ConvertToLines
 	public const FORMAT = FileSet::FORMAT;
 
 	/**
-	 * @return array<mixed>
+	 * @return array<array<string>>
 	 */
 	public function process(Translations $translations): array
 	{
@@ -45,6 +45,9 @@ class ConvertToLines
 		return $lines;
 	}
 
+	/**
+	 * @return array<string>
+	 */
 	public function createHeader(): array
 	{
 		return [
@@ -57,7 +60,11 @@ class ConvertToLines
 
 	public function headerPosition(string $value): int
 	{
-		return array_search($value, $this->createHeader(), true);
+		$position = array_search($value, $this->createHeader(), true);
+		if (is_int($position)) {
+			return $position;
+		}
+		throw new \Exception('todo');
 	}
 
 }

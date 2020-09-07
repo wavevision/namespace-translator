@@ -40,11 +40,17 @@ class Neon implements Loader
 		return $locale . '.neon';
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public function save(string $resource, array $content, ?string $referenceResource = null): void
 	{
 		FileSystem::write($resource, NetteNeon::encode($content, NetteNeon::BLOCK));
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public function loadExport(string $resource): array
 	{
 		return $this->load($resource);

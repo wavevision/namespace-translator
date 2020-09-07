@@ -20,14 +20,14 @@ class SerializeClassConstFetch
 
 	private const D_CLASS_PART_SEPARATOR = '\\';
 
-	public const D_SEPARATOR = '-';
+	private const D_SEPARATOR = '-';
 
 	public function serialize(ClassConstFetch $classConstFetch): string
 	{
 		return self::C . implode(
 			self::D_CLASS_PART_SEPARATOR,
-			$classConstFetch->class->parts
-		) . self::D_SEPARATOR . $classConstFetch->name->name;
+			$this->parts($classConstFetch),
+		) . self::D_SEPARATOR . $this->name($classConstFetch);
 	}
 
 	public function isSerialized(string $string): bool
@@ -40,6 +40,27 @@ class SerializeClassConstFetch
 		$string = substr($string, strlen(self::C), strlen($string));
 		[$class, $name] = explode(self::D_SEPARATOR, $string);
 		return new ClassConstFetch(new Name(explode(self::D_CLASS_PART_SEPARATOR, $class)), new Identifier($name));
+	}
+
+	/**
+	 * @return array<string>
+	 */
+	private function parts(ClassConstFetch $classConstFetch): array
+	{
+		$class = $classConstFetch->class;
+		if ($class instanceof Name) {
+			return $class->parts;
+		}
+		throw new \Exception('todo');
+	}
+
+	private function name(ClassConstFetch $classConstFetch): string
+	{
+		$name = $classConstFetch->name;
+		if ($name instanceof Identifier) {
+			return $name->name;
+		}
+		throw new \Exception('todo');
 	}
 
 }

@@ -15,6 +15,9 @@ class LoadExport
 	use InjectGetTranslationArray;
 	use InjectFlattenKeys;
 
+	/**
+	 * @return array<mixed>
+	 */
 	public function process(string $resource): array
 	{
 		return $this->flattenKeys->process($this->getTranslationArray->process($resource));

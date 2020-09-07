@@ -1,0 +1,17 @@
+file,key,cs,en,format
+/Presenters/translations/other.,title,"Titulek presenteru","Presenter title",neon
+/Presenters/translations/home.,title,Vítejte,,neon
+/Presenters/translations/home.,text,"You are here!",,neon
+/Presenters/translations/home.,homeCount,"%count% ks",,neon
+/Presenters/translations/,message,"App\Presenters.",,neon
+/Components/SomeComponent/translations/,message,Zpráva,Message,neon
+/Components/SomeComponent/translations/,otherMessage,"Další zpráva","Other message",neon
+/translations/app.,someText,"Some text",,neon
+/translations/app.,messageWithCount,"Celkem %count% kusů",,neon
+/translations/app.,nested1.nested2,42,,neon
+/Models/Translated/Translations/Prefixed,test,123,,php
+/Models/Translated/Translations/Prefixed,one.two.nested,nested,,php
+/Models/Translated/Translations/Prefixed,one.one,asd,,php
+/Models/Translated/Translations/Prefixed,c:self-BOOK,"The Tale of Scrotie McBoogerballs",,php
+/Models/Translated/Translations/,c:self-SOME_KEY,"My chceme modele!","We want modele!",php
+/Models/Translated/Translations/,c:self-SUB.c:self-NESTED,Zanořené,,php

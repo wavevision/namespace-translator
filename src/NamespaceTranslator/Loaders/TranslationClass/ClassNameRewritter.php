@@ -6,7 +6,6 @@ use Nette\SmartObject;
 use PhpParser\Node;
 use PhpParser\Node\Identifier;
 use PhpParser\Node\Stmt\Class_;
-use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitorAbstract;
 
 class ClassNameRewritter extends NodeVisitorAbstract
@@ -21,6 +20,9 @@ class ClassNameRewritter extends NodeVisitorAbstract
 		$this->newClassName = $newClassName;
 	}
 
+	/**
+	 * @return mixed
+	 */
 	public function enterNode(Node $node)
 	{
 		if ($node instanceof Class_) {

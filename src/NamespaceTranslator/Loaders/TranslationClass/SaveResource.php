@@ -3,7 +3,6 @@
 namespace Wavevision\NamespaceTranslator\Loaders\TranslationClass;
 
 use Nette\SmartObject;
-use PhpParser\Node\Expr\Array_;
 use Wavevision\DIServiceAnnotation\DIService;
 
 /**
@@ -12,13 +11,14 @@ use Wavevision\DIServiceAnnotation\DIService;
 class SaveResource
 {
 
-	use SmartObject;
-	use InjectRewriteArray;
-	use InjectGetTranslationArray;
 	use InjectCreateNodeArray;
-	use InjectTraverseFileAst;
 	use InjectSaveFileAst;
+	use InjectTraverseFileAst;
+	use SmartObject;
 
+	/**
+	 * @param array<mixed> $content
+	 */
 	public function save(
 		string $resource,
 		array $content,
@@ -26,18 +26,16 @@ class SaveResource
 		?string $referenceResource = null
 	): void {
 		if ($referenceResource === null) {
-			$this->resource($resource, $this->createNodeArray->process($content), $fileExtension, $resource);
+			$this->resource($resource, $content, $fileExtension, $resource);
 		} else {
-			$this->resource(
-				$referenceResource,
-				$this->createNodeArray->process($content),
-				$fileExtension,
-				$resource
-			);
+			$this->resource($referenceResource, $content, $fileExtension, $resource);
 		}
 	}
 
-	private function resource(string $source, Array_ $content, string $fileExtension, string $output): void
+	/**
+	 * @param array<mixed> $content
+	 */
+	private function resource(string $source, array $content, string $fileExtension, string $output): void
 	{
 		$returnFinder = new ReturnFinder();
 		$ast = $this->traverseFileAst->process(
@@ -45,7 +43,7 @@ class SaveResource
 			new ClassNameRewritter(basename($output, $fileExtension)),
 			$returnFinder
 		);
-		$returnFinder->getReturn()->expr = $content;
+		$returnFinder->getReturn()->expr = $this->createNodeArray->process($content);
 		$this->saveFileAst->process($output, $ast);
 	}
 

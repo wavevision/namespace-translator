@@ -59,11 +59,17 @@ class TranslationClass implements Loader
 		return ucfirst($locale) . $this->fileExtension();
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public function save(string $resource, array $content, ?string $referenceResource = null): void
 	{
 		$this->saveResource->save($resource, $content, $this->fileExtension(), $referenceResource);
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public function loadExport(string $resource): array
 	{
 		$this->getClass($resource);

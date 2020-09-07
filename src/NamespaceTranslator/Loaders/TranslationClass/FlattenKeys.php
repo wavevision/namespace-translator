@@ -18,6 +18,9 @@ class FlattenKeys
 	use SmartObject;
 	use InjectSerializeClassConstFetch;
 
+	/**
+	 * @return array<mixed>
+	 */
 	public function process(Array_ $array): array
 	{
 		$output = [];
@@ -34,7 +37,7 @@ class FlattenKeys
 		return $output;
 	}
 
-	private function key(ArrayItem $item)
+	private function key(ArrayItem $item): string
 	{
 		$key = $item->key;
 		if ($key instanceof String_) {
@@ -43,7 +46,7 @@ class FlattenKeys
 		if ($key instanceof ClassConstFetch) {
 			return $this->serializeClassConstFetch->serialize($key);
 		}
-		throw new \Exception();
+		throw new \Exception('todo');
 	}
 
 }

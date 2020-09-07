@@ -11,8 +11,6 @@ services:
 	  inject: true
 	- factory: Wavevision\NamespaceTranslator\Loaders\TranslationClass\LoadExport
 	  inject: true
-	- factory: Wavevision\NamespaceTranslator\Loaders\TranslationClass\RewriteArray
-	  inject: true
 	- factory: Wavevision\NamespaceTranslator\Loaders\TranslationClass\SaveFileAst
 	  inject: true
 	- factory: Wavevision\NamespaceTranslator\Loaders\TranslationClass\SaveResource

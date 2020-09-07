@@ -5,6 +5,7 @@ namespace Wavevision\NamespaceTranslatorTests\Transfer\Export\Writters;
 use Nette\SmartObject;
 use Wavevision\NamespaceTranslator\Transfer\Export\FileSet;
 use Wavevision\NamespaceTranslator\Transfer\Export\Translations;
+use Wavevision\NamespaceTranslator\Transfer\Export\Writters\ConvertToLines;
 use Wavevision\NamespaceTranslator\Transfer\Export\Writters\InjectConvertToLines;
 use Wavevision\NetteTests\TestCases\DIContainerTestCase;
 
@@ -18,7 +19,7 @@ class CovertToLinesTest extends DIContainerTestCase
 	{
 		$this->assertSame(
 			[
-				['file (editing forbidden)', 'key (editing forbidden)', 'cs', 'en', 'format (editing forbidden)'],
+				[ConvertToLines::FILE, ConvertToLines::KEY, 'cs', 'en', ConvertToLines::FORMAT],
 				['p', 'one', 'Jedna', 'One', 'neon'],
 				['p', 'two', 'Dva', null, 'neon'],
 			],

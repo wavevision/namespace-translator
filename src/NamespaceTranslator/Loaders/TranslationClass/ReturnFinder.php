@@ -13,12 +13,18 @@ class ReturnFinder extends NodeVisitorAbstract
 
 	private Return_ $return;
 
+	/**
+	 * @return mixed
+	 */
 	public function leaveNode(Node $node)
 	{
 		if ($node instanceof ClassMethod) {
-			/** @var Return_ $return */
-			$return = $node->getStmts()[0];
-			$this->return = $return;
+			$stmts = $node->getStmts();
+			if (isset($stmts[0])) {
+				/** @var Return_ $return */
+				$return = $stmts[0];
+				$this->return = $return;
+			}
 			return NodeTraverser::STOP_TRAVERSAL;
 		}
 	}

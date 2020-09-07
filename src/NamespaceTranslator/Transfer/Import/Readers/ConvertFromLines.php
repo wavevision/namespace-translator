@@ -21,6 +21,9 @@ class ConvertFromLines
 	use InjectConvertToLines;
 	use InjectLocales;
 
+	/**
+	 * @param array<mixed> $lines
+	 */
 	public function process(array $lines): Translations
 	{
 		if (!isset($lines[0])) {
@@ -41,6 +44,10 @@ class ConvertFromLines
 		return new Translations($this->getFileSets($lines));
 	}
 
+	/**
+	 * @param array<mixed> $lines
+	 * @return array<mixed>
+	 */
 	private function getFileSets(array $lines): array
 	{
 		$fileSets = [];
@@ -60,11 +67,17 @@ class ConvertFromLines
 		return $fileSets;
 	}
 
+	/**
+	 * @param array<string> $line
+	 */
 	private function lineElement(array $line, string $key): string
 	{
 		return $line[$this->convertToLines->headerPosition($key)];
 	}
 
+	/**
+	 * @param array<string> $header
+	 */
 	private function formatHeader(array $header): string
 	{
 		return sprintf('[%s]', implode(', ', $header));
