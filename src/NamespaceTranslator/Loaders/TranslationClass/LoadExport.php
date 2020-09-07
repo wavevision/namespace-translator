@@ -4,8 +4,6 @@ namespace Wavevision\NamespaceTranslator\Loaders\TranslationClass;
 
 use Nette\SmartObject;
 use Wavevision\DIServiceAnnotation\DIService;
-use Wavevision\NamespaceTranslator\Exceptions\SkipResource;
-use Wavevision\Utils\Arrays;
 
 /**
  * @DIService(generateInject=true)

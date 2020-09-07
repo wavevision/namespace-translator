@@ -25,9 +25,9 @@ class SerializeClassConstFetch
 	public function serialize(ClassConstFetch $classConstFetch): string
 	{
 		return self::C . implode(
-				self::D_CLASS_PART_SEPARATOR,
-				$classConstFetch->class->parts
-			) . self::D_SEPARATOR . $classConstFetch->name->name;
+			self::D_CLASS_PART_SEPARATOR,
+			$classConstFetch->class->parts
+		) . self::D_SEPARATOR . $classConstFetch->name->name;
 	}
 
 	public function isSerialized(string $string): bool
@@ -37,7 +37,7 @@ class SerializeClassConstFetch
 
 	public function deserialize(string $string): ClassConstFetch
 	{
-		$string = substr($string,  strlen(self::C), strlen($string));
+		$string = substr($string, strlen(self::C), strlen($string));
 		[$class, $name] = explode(self::D_SEPARATOR, $string);
 		return new ClassConstFetch(new Name(explode(self::D_CLASS_PART_SEPARATOR, $class)), new Identifier($name));
 	}

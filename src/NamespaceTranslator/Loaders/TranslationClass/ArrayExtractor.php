@@ -13,7 +13,7 @@ class ArrayExtractor extends NodeVisitorAbstract
 
 	private Array_ $array;
 
-	public function leaveNode(Node $node)
+	public function leaveNode(Node $node): void
 	{
 		if ($node instanceof ClassMethod) {
 			/** @var Return_ $return */
