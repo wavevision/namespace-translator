@@ -9,6 +9,10 @@ abstract class Translation implements \Wavevision\NamespaceTranslator\Resources\
 
 	use StaticClass;
 
+	public const NAME = 'name';
+
+	public const HELLO = 'hello';
+
 	public const SOME_KEY = 'someKey';
 
 	public const SUB = 'sub';

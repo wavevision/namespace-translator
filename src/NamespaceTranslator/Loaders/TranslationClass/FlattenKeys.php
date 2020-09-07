@@ -7,9 +7,11 @@ use PhpParser\Node\Expr\Array_;
 use PhpParser\Node\Expr\ArrayItem;
 use PhpParser\Node\Expr\ClassConstFetch;
 use PhpParser\Node\Scalar\String_;
+use PhpParser\PrettyPrinter\Standard;
 use Wavevision\DIServiceAnnotation\DIService;
 
 /**
+ * @todo rename
  * @DIService(generateInject=true)
  */
 class FlattenKeys
@@ -26,15 +28,24 @@ class FlattenKeys
 		$output = [];
 		/** @var ArrayItem $item */
 		foreach ($array->items as $item) {
-			$key = $this->key($item);
-			if ($item->value instanceof String_) {
-				$output[$key] = $item->value->value;
-			}
-			if ($item->value instanceof Array_) {
-				$output[$key] = $this->process($item->value);
-			}
+			$output[$this->key($item)] = $this->value($item);
 		}
 		return $output;
+	}
+
+	/**
+	 * @return array<mixed>|string
+	 */
+	private function value(ArrayItem $item)
+	{
+		$value = $item->value;
+		if ($value instanceof String_) {
+			return $value->value;
+		} elseif ($value instanceof Array_) {
+			return $this->process($value);
+		} else {
+			return (new Standard())->prettyPrintExpr($value);
+		}
 	}
 
 	private function key(ArrayItem $item): string

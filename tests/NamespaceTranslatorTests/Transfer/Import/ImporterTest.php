@@ -19,7 +19,7 @@ class ImporterTest extends DIContainerTestCase
 		$root = vfsStream::setup('r');
 		vfsStream::copyFromFileSystem(__DIR__ . '/../../App', $root);
 		$this->importer->importCsv(__DIR__ . '/export.csv', $root->url());
-		$files = ['Cs', 'En', 'PrefixedCs', 'PrefixedEn'];
+		$files = ['Cs', 'En', 'PrefixedCs', 'PrefixedEn', 'OneCs'];
 		foreach ($files as $file) {
 			$this->checkFile($file);
 		}

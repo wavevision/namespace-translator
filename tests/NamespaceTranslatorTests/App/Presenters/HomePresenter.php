@@ -18,6 +18,7 @@ class HomePresenter extends BasePresenter
 			[
 				'modelTranslation' => $this->translatedModel->process(),
 				'nestedTranslation' => $this->translatedModel->processNested(),
+				'paramTranslation' => $this->translatedModel->process(),
 			]
 		);
 	}
