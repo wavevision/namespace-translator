@@ -17,6 +17,8 @@ services:
 	  inject: true
 	- factory: Wavevision\NamespaceTranslator\Loaders\TranslationClass\SerializeClassConstFetch
 	  inject: true
+	- factory: Wavevision\NamespaceTranslator\Loaders\TranslationClass\SerializeMessage
+	  inject: true
 	- factory: Wavevision\NamespaceTranslator\Loaders\TranslationClass\TraverseFileAst
 	  inject: true
 	parametersManager:

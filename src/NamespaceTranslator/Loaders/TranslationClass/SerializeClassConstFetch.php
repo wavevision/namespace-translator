@@ -16,11 +16,11 @@ class SerializeClassConstFetch
 
 	use SmartObject;
 
-	private const C = 'c:';
+	public const C = 'c:';
 
-	private const D_CLASS_PART_SEPARATOR = '\\';
+	public const D_CLASS_PART_SEPARATOR = '\\';
 
-	private const D_SEPARATOR = '-';
+	public const D_SEPARATOR = '-';
 
 	public function serialize(ClassConstFetch $classConstFetch): string
 	{
