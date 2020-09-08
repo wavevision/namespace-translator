@@ -33,6 +33,8 @@ services:
 	  inject: true
 	- factory: Wavevision\NamespaceTranslator\Transfer\Export\Exporter
 	  inject: true
+	- factory: Wavevision\NamespaceTranslator\Transfer\Export\ExtractTranslationLines
+	  inject: true
 	- factory: Wavevision\NamespaceTranslator\Transfer\Export\ExtractTranslations
 	  inject: true
 	- factory: Wavevision\NamespaceTranslator\Transfer\Export\FileSetFactory
@@ -40,6 +42,8 @@ services:
 	- factory: Wavevision\NamespaceTranslator\Transfer\Export\Writters\ConvertToLines
 	  inject: true
 	- factory: Wavevision\NamespaceTranslator\Transfer\Export\Writters\Csv
+	  inject: true
+	- factory: Wavevision\NamespaceTranslator\Transfer\Export\Writters\GoogleSheet
 	  inject: true
 	- factory: Wavevision\NamespaceTranslator\Transfer\Import\Importer
 	  inject: true
@@ -50,6 +54,8 @@ services:
 	- factory: Wavevision\NamespaceTranslator\Transfer\Import\SaveFileSet
 	  inject: true
 	- factory: Wavevision\NamespaceTranslator\Transfer\Locales
+	  inject: true
+	- factory: Wavevision\NamespaceTranslator\Transfer\Storages\Google\GoogleSheetWritter
 	  inject: true
 	translatorFactory:
 	  factory: Wavevision\NamespaceTranslator\TranslatorFactory

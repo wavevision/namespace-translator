@@ -36,6 +36,7 @@
   "require": {
     "php": ">=7.4",
     "contributte/translation": "^0.6.0",
+    "google/apiclient": "^2.7",
     "nette/application": "^3.0",
     "nette/di": "^3.0",
     "nette/neon": "^3.0",

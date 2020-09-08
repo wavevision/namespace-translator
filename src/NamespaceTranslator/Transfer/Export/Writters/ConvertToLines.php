@@ -37,7 +37,7 @@ class ConvertToLines
 			foreach ($fileSet->getTranslations() as $key => $translation) {
 				$fields = [$path, $key, $translation[$defaultLocale]];
 				foreach ($optionalLocales as $locale) {
-					$fields[] = $translation[$locale] ?? null;
+					$fields[] = $translation[$locale] ?? '';
 				}
 				$lines[] = [...$fields, $format];
 			}
