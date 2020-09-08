@@ -7,9 +7,6 @@ use PhpParser\Node\Expr;
 use PhpParser\Node\Expr\Array_;
 use PhpParser\Node\Expr\ArrayItem;
 use PhpParser\Node\Scalar\String_;
-use PhpParser\Node\Stmt\Expression;
-use PhpParser\ParserFactory;
-use ReflectionClass;
 use Wavevision\DIServiceAnnotation\DIService;
 
 /**
@@ -18,8 +15,9 @@ use Wavevision\DIServiceAnnotation\DIService;
 class CreateNodeArray
 {
 
-	use SmartObject;
 	use InjectSerializeClassConstFetch;
+	use InjectSerializeMessage;
+	use SmartObject;
 
 	/**
 	 * @param array<mixed> $content
@@ -53,20 +51,11 @@ class CreateNodeArray
 		return new String_($key);
 	}
 
-	/**
-	 * @return mixed
-	 */
-	private function value(string $value)
+	private function value(string $value): Expr
 	{
-		if (strpos($value, (new ReflectionClass(Message::class))->getShortName() . '::') === 0) {
-			//todo better
-			$stmts = (new ParserFactory())->create(ParserFactory::ONLY_PHP7)->parse('<?php ' . $value . ';');
-			if (isset($stmts[0])) {
-				$stmt = $stmts[0];
-				if ($stmt instanceof Expression) {
-					return $stmt->expr;
-				}
-			}
+		$deserialized = $this->serializeMessage->deserialize($value);
+		if ($deserialized) {
+			return $deserialized;
 		}
 		return new String_($value);
 	}

@@ -7,7 +7,6 @@ use PhpParser\Node\Expr\Array_;
 use PhpParser\Node\Expr\ArrayItem;
 use PhpParser\Node\Expr\ClassConstFetch;
 use PhpParser\Node\Scalar\String_;
-use PhpParser\PrettyPrinter\Standard;
 use Wavevision\DIServiceAnnotation\DIService;
 
 /**
@@ -16,8 +15,9 @@ use Wavevision\DIServiceAnnotation\DIService;
 class FormatTranslationArray
 {
 
-	use SmartObject;
 	use InjectSerializeClassConstFetch;
+	use InjectSerializeMessage;
+	use SmartObject;
 
 	/**
 	 * @return array<mixed>
@@ -43,7 +43,7 @@ class FormatTranslationArray
 		} elseif ($value instanceof Array_) {
 			return $this->process($value);
 		} else {
-			return (new Standard())->prettyPrintExpr($value);
+			return $this->serializeMessage->serialize($value);
 		}
 	}
 
