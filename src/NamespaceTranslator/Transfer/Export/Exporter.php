@@ -20,9 +20,13 @@ class Exporter
 
 	public function exportCsv(string $directory, string $file): void
 	{
+		$translations = $this->extractTranslations->process($directory);
+		$translations->sort(
+			fn(FileSet $a, FileSet $b): int => $a->getFile() <=> $b->getFile()
+		);
 		$this->csv->write(
 			$file,
-			$this->convertToLines->process($this->extractTranslations->process($directory))
+			$this->convertToLines->process($translations)
 		);
 	}
 

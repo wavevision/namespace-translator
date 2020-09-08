@@ -43,4 +43,9 @@ class Translations
 		return $this->fileSets;
 	}
 
+	public function sort(callable $sort): void
+	{
+		usort($this->fileSets, $sort);
+	}
+
 }
