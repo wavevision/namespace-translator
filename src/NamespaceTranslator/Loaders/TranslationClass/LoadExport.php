@@ -13,14 +13,14 @@ class LoadExport
 
 	use SmartObject;
 	use InjectGetTranslationArray;
-	use InjectFlattenKeys;
+	use InjectFormatTranslationArray;
 
 	/**
 	 * @return array<mixed>
 	 */
 	public function process(string $resource): array
 	{
-		return $this->flattenKeys->process($this->getTranslationArray->process($resource));
+		return $this->formatTranslationArray->process($this->getTranslationArray->process($resource));
 	}
 
 }

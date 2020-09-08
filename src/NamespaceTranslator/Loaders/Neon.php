@@ -6,7 +6,7 @@ use Nette\Neon\Neon as NetteNeon;
 use Nette\SmartObject;
 use Nette\Utils\FileSystem;
 use Wavevision\NamespaceTranslator\DomainManager;
-use Wavevision\NamespaceTranslator\Exceptions\InvalidState;
+use Wavevision\NamespaceTranslator\Exceptions\MissingResource;
 use Wavevision\NamespaceTranslator\Resources\LocalePrefixPair;
 use Wavevision\Utils\Arrays;
 
@@ -24,7 +24,7 @@ class Neon implements Loader
 	{
 		$content = @file_get_contents($resource);
 		if ($content === false) {
-			throw new InvalidState("Unable to read contents of '$resource'.");
+			throw new MissingResource("Unable to read contents of '$resource'.");
 		}
 		return NetteNeon::decode($content) ?: [];
 	}

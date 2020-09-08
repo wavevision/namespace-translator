@@ -5,6 +5,7 @@ namespace Wavevision\NamespaceTranslator\Loaders;
 use Nette\SmartObject;
 use ReflectionClass;
 use Wavevision\NamespaceTranslator\Exceptions\InvalidState;
+use Wavevision\NamespaceTranslator\Exceptions\MissingResource;
 use Wavevision\NamespaceTranslator\Exceptions\SkipResource;
 use Wavevision\NamespaceTranslator\Loaders\TranslationClass\InjectLoadExport;
 use Wavevision\NamespaceTranslator\Loaders\TranslationClass\InjectSaveResource;
@@ -18,10 +19,10 @@ use Wavevision\Utils\Tokenizer\TokenizeResult;
 class TranslationClass implements Loader
 {
 
-	use SmartObject;
+	use InjectLoadExport;
 	use InjectLocales;
 	use InjectSaveResource;
-	use InjectLoadExport;
+	use SmartObject;
 
 	public const FORMAT = 'php';
 
@@ -84,7 +85,7 @@ class TranslationClass implements Loader
 	private function tokenizerResult(string $resource): TokenizeResult
 	{
 		if (!is_file($resource)) {
-			throw new InvalidState("Unable to read file '$resource'.");
+			throw new MissingResource("Unable to read file '$resource'.");
 		}
 		$result = $this->tokenizer->getStructureNameFromFile($resource, [T_CLASS]);
 		if ($result === null) {

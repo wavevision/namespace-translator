@@ -5,7 +5,7 @@ namespace Wavevision\NamespaceTranslator\Transfer\Export;
 use Nette\SmartObject;
 use SplFileInfo;
 use Wavevision\DIServiceAnnotation\DIService;
-use Wavevision\NamespaceTranslator\Exceptions\InvalidState;
+use Wavevision\NamespaceTranslator\Exceptions\MissingResource;
 use Wavevision\NamespaceTranslator\Exceptions\SkipResource;
 use Wavevision\NamespaceTranslator\InjectParametersManager;
 use Wavevision\NamespaceTranslator\Loaders\Loader;
@@ -62,8 +62,7 @@ class FileSetFactory
 				foreach ($keyValueContent as $key => $value) {
 					$keys[$key][$locale] = $value;
 				}
-			} catch (SkipResource | InvalidState $e) {
-				// todo split invalid state
+			} catch (SkipResource | MissingResource $e) {
 			}
 		}
 		return $keys;

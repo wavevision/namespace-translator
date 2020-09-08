@@ -11,10 +11,9 @@ use PhpParser\PrettyPrinter\Standard;
 use Wavevision\DIServiceAnnotation\DIService;
 
 /**
- * @todo rename
  * @DIService(generateInject=true)
  */
-class FlattenKeys
+class FormatTranslationArray
 {
 
 	use SmartObject;

@@ -5,7 +5,7 @@ services:
 	  inject: true
 	- factory: Wavevision\NamespaceTranslator\Loaders\TranslationClass\CreateNodeArray
 	  inject: true
-	- factory: Wavevision\NamespaceTranslator\Loaders\TranslationClass\FlattenKeys
+	- factory: Wavevision\NamespaceTranslator\Loaders\TranslationClass\FormatTranslationArray
 	  inject: true
 	- factory: Wavevision\NamespaceTranslator\Loaders\TranslationClass\GetTranslationArray
 	  inject: true

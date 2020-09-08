@@ -5,7 +5,7 @@ namespace Wavevision\NamespaceTranslator\Transfer\Import;
 use Nette\SmartObject;
 use Wavevision\DIServiceAnnotation\DIService;
 use Wavevision\NamespaceTranslator\DomainManager;
-use Wavevision\NamespaceTranslator\Exceptions\InvalidState;
+use Wavevision\NamespaceTranslator\Exceptions\MissingResource;
 use Wavevision\NamespaceTranslator\Exceptions\SkipResource;
 use Wavevision\NamespaceTranslator\Loaders\InjectManager;
 use Wavevision\NamespaceTranslator\Loaders\Loader;
@@ -71,7 +71,7 @@ class SaveFileSet
 	{
 		try {
 			return $loader->loadExport($resource);
-		} catch (InvalidState | SkipResource $e) {
+		} catch (SkipResource | MissingResource $e) {
 			return [];
 		}
 	}

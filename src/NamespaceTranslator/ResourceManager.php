@@ -47,12 +47,12 @@ class ResourceManager
 	/**
 	 * @return Finder<SplFileInfo>|null
 	 */
-	public function findResources(string $namespace): ?iterable
+	public function findResources(string $className): ?iterable
 	{
-		if (!class_exists($namespace)) {
-			throw new InvalidState("Namespace '$namespace' is not a valid class.");
+		if (!class_exists($className)) {
+			throw new InvalidState("'$className' is not a valid class.");
 		}
-		$file = (string)(new ReflectionClass($namespace))->getFileName();
+		$file = (string)(new ReflectionClass($className))->getFileName();
 		$dirs = $this->getDirs($file);
 		if (!Arrays::isEmpty($dirs)) {
 			return Finder::findFiles(...$this->getMasks())->in(...$dirs);
