@@ -1,6 +1,6 @@
 <?php declare (strict_types = 1);
 
-namespace Wavevision\NamespaceTranslator\Transfer\Import\Readers;
+namespace Wavevision\NamespaceTranslator\Transfer\Import;
 
 trait InjectConvertFromLines
 {

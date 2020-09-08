@@ -4,7 +4,8 @@ namespace Wavevision\NamespaceTranslator\Transfer\Export\Writters;
 
 use Nette\SmartObject;
 use Wavevision\DIServiceAnnotation\DIService;
-use Wavevision\Utils\File;
+use Wavevision\NamespaceTranslator\Transfer\Export\InjectExtractTranslationLines;
+use Wavevision\NamespaceTranslator\Transfer\Storages\Csv\InjectCsvWritter;
 
 /**
  * @DIService(generateInject=true)
@@ -12,18 +13,13 @@ use Wavevision\Utils\File;
 class Csv
 {
 
+	use InjectCsvWritter;
+	use InjectExtractTranslationLines;
 	use SmartObject;
 
-	/**
-	 * @param array<mixed> $lines
-	 */
-	public function write(string $file, array $lines): void
+	public function write(string $directory, string $file): void
 	{
-		$file = File::open($file, 'w');
-		foreach ($lines as $line) {
-			$file->putCsv($line);
-		}
-		$file->close();
+		$this->csvWritter->write($file, $this->extractTranslationLines->process($directory));
 	}
 
 }

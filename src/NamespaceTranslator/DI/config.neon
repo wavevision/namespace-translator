@@ -31,7 +31,7 @@ services:
 	resourceManager:
 	  factory: Wavevision\NamespaceTranslator\ResourceManager
 	  inject: true
-	- factory: Wavevision\NamespaceTranslator\Transfer\Export\Exporter
+	- factory: Wavevision\NamespaceTranslator\Transfer\Export\ConvertToLines
 	  inject: true
 	- factory: Wavevision\NamespaceTranslator\Transfer\Export\ExtractTranslationLines
 	  inject: true
@@ -39,21 +39,21 @@ services:
 	  inject: true
 	- factory: Wavevision\NamespaceTranslator\Transfer\Export\FileSetFactory
 	  inject: true
-	- factory: Wavevision\NamespaceTranslator\Transfer\Export\Writters\ConvertToLines
-	  inject: true
 	- factory: Wavevision\NamespaceTranslator\Transfer\Export\Writters\Csv
 	  inject: true
 	- factory: Wavevision\NamespaceTranslator\Transfer\Export\Writters\GoogleSheet
 	  inject: true
-	- factory: Wavevision\NamespaceTranslator\Transfer\Import\Importer
-	  inject: true
-	- factory: Wavevision\NamespaceTranslator\Transfer\Import\Readers\ConvertFromLines
+	- factory: Wavevision\NamespaceTranslator\Transfer\Import\ConvertFromLines
 	  inject: true
 	- factory: Wavevision\NamespaceTranslator\Transfer\Import\Readers\Csv
 	  inject: true
 	- factory: Wavevision\NamespaceTranslator\Transfer\Import\SaveFileSet
 	  inject: true
 	- factory: Wavevision\NamespaceTranslator\Transfer\Locales
+	  inject: true
+	- factory: Wavevision\NamespaceTranslator\Transfer\Storages\Csv\CsvReader
+	  inject: true
+	- factory: Wavevision\NamespaceTranslator\Transfer\Storages\Csv\CsvWritter
 	  inject: true
 	- factory: Wavevision\NamespaceTranslator\Transfer\Storages\Google\GoogleSheetWritter
 	  inject: true

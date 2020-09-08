@@ -17,7 +17,7 @@ class Sheet
 	private array $data;
 
 	/**
-	 * @param array<mixed>
+	 * @param array<mixed> $data
 	 */
 	public function __construct(string $name, array $data)
 	{
@@ -30,6 +30,9 @@ class Sheet
 		return $this->name;
 	}
 
+	/**
+	 * @return array<mixed>
+	 */
 	public function getData(): array
 	{
 		return $this->data;

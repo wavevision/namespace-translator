@@ -1,12 +1,12 @@
 <?php declare(strict_types = 1);
 
-namespace Wavevision\NamespaceTranslatorTests\Transfer\Export\Writters;
+namespace Wavevision\NamespaceTranslatorTests\Transfer\Export;
 
 use Nette\SmartObject;
+use Wavevision\NamespaceTranslator\Transfer\Export\ConvertToLines;
 use Wavevision\NamespaceTranslator\Transfer\Export\FileSet;
+use Wavevision\NamespaceTranslator\Transfer\Export\InjectConvertToLines;
 use Wavevision\NamespaceTranslator\Transfer\Export\Translations;
-use Wavevision\NamespaceTranslator\Transfer\Export\Writters\ConvertToLines;
-use Wavevision\NamespaceTranslator\Transfer\Export\Writters\InjectConvertToLines;
 use Wavevision\NetteTests\TestCases\DIContainerTestCase;
 
 class CovertToLinesTest extends DIContainerTestCase
@@ -21,7 +21,7 @@ class CovertToLinesTest extends DIContainerTestCase
 			[
 				[ConvertToLines::FILE, ConvertToLines::KEY, 'cs', 'en', ConvertToLines::FORMAT],
 				['p', 'one', 'Jedna', 'One', 'neon'],
-				['p', 'two', 'Dva', null, 'neon'],
+				['p', 'two', 'Dva', '', 'neon'],
 			],
 			$this->convertToLines->process(
 				(new Translations())->add(

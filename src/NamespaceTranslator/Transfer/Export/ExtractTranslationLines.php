@@ -4,7 +4,6 @@ namespace Wavevision\NamespaceTranslator\Transfer\Export;
 
 use Nette\SmartObject;
 use Wavevision\DIServiceAnnotation\DIService;
-use Wavevision\NamespaceTranslator\Transfer\Export\Writters\InjectConvertToLines;
 
 /**
  * @DIService(generateInject=true)
@@ -12,9 +11,9 @@ use Wavevision\NamespaceTranslator\Transfer\Export\Writters\InjectConvertToLines
 class ExtractTranslationLines
 {
 
-	use SmartObject;
-	use InjectExtractTranslations;
 	use InjectConvertToLines;
+	use InjectExtractTranslations;
+	use SmartObject;
 
 	/**
 	 * @return array<array<string>>

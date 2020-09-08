@@ -13,15 +13,12 @@ class CsvTest extends DIContainerTestCase
 	use SmartObject;
 	use InjectCsv;
 
-	public function testWrite(): void
+	public function testExport(): void
 	{
 		vfsStream::setup('r');
-		$file = vfsStream::url('r/f.csv');
-		$this->csv->write(
-			$file,
-			[['one', 'two']]
-		);
-		$this->assertEquals(file_get_contents($file), "one,two\n");
+		$exportFile = vfsStream::url('r/export.csv');
+		$this->csv->write(__DIR__ . '/../../../App', $exportFile);
+		$this->assertFileEquals(__DIR__ . '/export.csv', $exportFile);
 	}
 
 }

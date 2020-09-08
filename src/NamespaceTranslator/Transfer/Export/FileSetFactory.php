@@ -25,7 +25,6 @@ class FileSetFactory
 
 	public function create(string $directory, Loader $loader, string $format): Translations
 	{
-		//todo add format to loader
 		$translations = new Translations();
 		$suffix = $loader->fileSuffix($this->locales->defaultLocale());
 		/** @var SplFileInfo $resource */

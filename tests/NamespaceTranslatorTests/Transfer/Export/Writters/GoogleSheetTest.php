@@ -15,11 +15,13 @@ class GoogleSheetTest extends DIContainerTestCase
 	{
 		$this->googleSheet->write(
 			new Config(
-				__DIR__ . '/../../../../../temp/credentials.json', '1yyLcWaBh5OiLcouMr0xhCqu4o_xLrJKc2tIuupVW8LE'
+				__DIR__ . '/../../../../../temp/credentials.json',
+				'1yyLcWaBh5OiLcouMr0xhCqu4o_xLrJKc2tIuupVW8LE'
 			),
 			__DIR__ . '/../../../App',
 			'test-sheet'
 		);
+		$this->assertEquals(1, 1);
 	}
 
 }

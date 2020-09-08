@@ -1,14 +1,14 @@
 <?php declare(strict_types = 1);
 
-namespace Wavevision\NamespaceTranslator\Transfer\Import\Readers;
+namespace Wavevision\NamespaceTranslator\Transfer\Import;
 
 use Nette\SmartObject;
 use Wavevision\DIServiceAnnotation\DIService;
 use Wavevision\NamespaceTranslator\Exceptions\InvalidState;
+use Wavevision\NamespaceTranslator\Transfer\Export\ConvertToLines;
 use Wavevision\NamespaceTranslator\Transfer\Export\FileSet;
+use Wavevision\NamespaceTranslator\Transfer\Export\InjectConvertToLines;
 use Wavevision\NamespaceTranslator\Transfer\Export\Translations;
-use Wavevision\NamespaceTranslator\Transfer\Export\Writters\ConvertToLines;
-use Wavevision\NamespaceTranslator\Transfer\Export\Writters\InjectConvertToLines;
 use Wavevision\NamespaceTranslator\Transfer\InjectLocales;
 
 /**
@@ -18,8 +18,8 @@ class ConvertFromLines
 {
 
 	use SmartObject;
-	use InjectConvertToLines;
 	use InjectLocales;
+	use InjectConvertToLines;
 
 	/**
 	 * @param array<mixed> $lines

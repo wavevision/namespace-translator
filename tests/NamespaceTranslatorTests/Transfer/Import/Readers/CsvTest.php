@@ -1,24 +1,24 @@
 <?php declare(strict_types = 1);
 
-namespace Wavevision\NamespaceTranslatorTests\Transfer\Import;
+namespace Wavevision\NamespaceTranslatorTests\Transfer\Import\Readers;
 
 use Nette\SmartObject;
 use org\bovigo\vfs\vfsStream;
-use Wavevision\NamespaceTranslator\Transfer\Import\InjectImporter;
+use Wavevision\NamespaceTranslator\Transfer\Import\Readers\InjectCsv;
 use Wavevision\NetteTests\TestCases\DIContainerTestCase;
 use Wavevision\Utils\Path;
 
-class ImporterTest extends DIContainerTestCase
+class CsvTest extends DIContainerTestCase
 {
 
 	use SmartObject;
-	use InjectImporter;
+	use InjectCsv;
 
-	public function testImportCsv(): void
+	public function testRead(): void
 	{
 		$root = vfsStream::setup('r');
-		vfsStream::copyFromFileSystem(__DIR__ . '/../../App', $root);
-		$this->importer->importCsv(__DIR__ . '/export.csv', $root->url());
+		vfsStream::copyFromFileSystem(__DIR__ . '/../../../App', $root);
+		$this->csv->read(__DIR__ . '/export.csv', $root->url());
 		$files = ['Cs', 'En', 'PrefixedCs', 'PrefixedEn', 'OneCs'];
 		foreach ($files as $file) {
 			$this->checkFile($file);

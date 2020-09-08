@@ -1,11 +1,9 @@
 <?php declare(strict_types = 1);
 
-namespace Wavevision\NamespaceTranslator\Transfer\Export\Writters;
+namespace Wavevision\NamespaceTranslator\Transfer\Export;
 
 use Nette\SmartObject;
 use Wavevision\DIServiceAnnotation\DIService;
-use Wavevision\NamespaceTranslator\Transfer\Export\FileSet;
-use Wavevision\NamespaceTranslator\Transfer\Export\Translations;
 use Wavevision\NamespaceTranslator\Transfer\InjectLocales;
 
 /**
