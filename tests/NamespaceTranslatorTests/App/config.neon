@@ -26,3 +26,5 @@ services:
 	- Wavevision\NamespaceTranslatorTests\App\Components\SomeComponent\SomeComponentFactory
 	- factory: Wavevision\NamespaceTranslatorTests\App\Models\Translated\Model
 	  inject: true
+	- factory: Wavevision\NamespaceTranslatorTests\App\Models\Translated\Other
+	  inject: true

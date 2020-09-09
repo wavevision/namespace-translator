@@ -29,8 +29,7 @@ class DomainManager
 			if (class_exists($namespace)) {
 				array_pop($namespaces);
 			}
-			$this->domains[$namespace] = implode(
-				self::DOMAIN_DELIMITER,
+			$this->domains[$namespace] = Helpers::key(
 				array_map(fn(string $part): string => $this->getDomainPart($part), $namespaces)
 			);
 		}
