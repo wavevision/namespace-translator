@@ -17,6 +17,22 @@ use Wavevision\NamespaceTranslator\Loaders\TranslationClass;
 class Extension extends CompilerExtension
 {
 
+	public const GOOGLE = 'google';
+
+	public const CSV = 'csv';
+
+	public const PARTS = 'parts';
+
+	public const DIRECTORY = 'directory';
+
+	public const FILENAME = 'filename';
+
+	public const TAB_NAME = 'tabName';
+
+	public const CREDENTIALS = 'credentials';
+
+	public const SHEET_ID = 'sheetId';
+
 	/**
 	 * @var mixed[]
 	 */
@@ -47,7 +63,7 @@ class Extension extends CompilerExtension
 		['services' => $services] = $this->loadFromFile(__DIR__ . '/config.neon');
 		foreach ($services as $name => $service) {
 			$definition = $builder
-				->addDefinition($this->prefix(is_int($name) ? 's'. $name : $name))
+				->addDefinition($this->prefix(is_int($name) ? 's' . $name : $name))
 				->setFactory($service['factory'])
 				->addTag(InjectExtension::TAG_INJECT, $service['inject'] ?? false);
 			if (isset($service['arguments'])) {
@@ -74,6 +90,36 @@ class Extension extends CompilerExtension
 		foreach (self::OPTIONS as $item) {
 			$structure[$item] = Expect::type(gettype($this->defaults[$item]))->default($this->defaults[$item]);
 		}
+		$structure['export'] = Expect::array(
+			[
+				self::GOOGLE => Expect::array(
+					[
+						self::CREDENTIALS => Expect::string(),
+						self::TAB_NAME => Expect::string(),
+						self::PARTS => Expect::arrayOf(
+							Expect::array(
+								[
+									self::DIRECTORY => Expect::string(),
+									self::TAB_NAME => Expect::string(),
+								]
+							)
+						),
+					]
+				)->required(false),
+				self::CSV => Expect::array(
+					[
+						self::PARTS => Expect::arrayOf(
+							Expect::array(
+								[
+									self::DIRECTORY => Expect::string()->required(),
+									self::FILENAME => Expect::string()->required(),
+								]
+							)
+						)->required(),
+					]
+				)->required(false),
+			]
+		)->required(false);
 		return Expect::structure($structure)->castTo('array');
 	}
 
@@ -92,6 +138,7 @@ class Extension extends CompilerExtension
 				);
 			}
 		}
+
 		return $config;
 	}
 

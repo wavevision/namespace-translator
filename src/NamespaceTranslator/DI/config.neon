@@ -1,5 +1,7 @@
 # Generated file, do not modify directly!
 services:
+	- factory: Wavevision\NamespaceTranslator\Console\ExportCommand
+	  inject: true
 	domainManager:
 	  factory: Wavevision\NamespaceTranslator\DomainManager
 	  inject: true
@@ -33,6 +35,9 @@ services:
 	  inject: true
 	- factory: Wavevision\NamespaceTranslator\Transfer\Export\ConvertToLines
 	  inject: true
+	- factory: Wavevision\NamespaceTranslator\Transfer\Export\Exporter
+	  arguments: [%export%]
+	  inject: true
 	- factory: Wavevision\NamespaceTranslator\Transfer\Export\ExtractTranslationLines
 	  inject: true
 	- factory: Wavevision\NamespaceTranslator\Transfer\Export\ExtractTranslations
@@ -56,6 +61,8 @@ services:
 	- factory: Wavevision\NamespaceTranslator\Transfer\Storages\Csv\CsvWritter
 	  inject: true
 	- factory: Wavevision\NamespaceTranslator\Transfer\Storages\Google\GoogleSheetWritter
+	  inject: true
+	- factory: Wavevision\NamespaceTranslator\Transfer\Storages\Google\SheetServiceFactory
 	  inject: true
 	translatorFactory:
 	  factory: Wavevision\NamespaceTranslator\TranslatorFactory

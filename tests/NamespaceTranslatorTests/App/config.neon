@@ -20,6 +20,19 @@ translation:
 		whitelist: [cs, en]
 	dirs: [%appDir%/translations]
 
+namespaceTranslator:
+	export:
+		google:
+			credentials: %vendorDir%/../temp/credentials.json
+			sheetId: '1yyLcWaBh5OiLcouMr0xhCqu4o_xLrJKc2tIuupVW8LE'
+			parts:
+				- directory: %vendorDir%/../tests/NamespaceTranslatorTests/App
+				  tabName: App
+		csv:
+			parts:
+				- directory: %vendorDir%/../tests/NamespaceTranslatorTests/App
+				  filename: %vendorDir%/../temp/export.csv
+
 services:
 	router: Wavevision\NamespaceTranslatorTests\App\Router\RouterFactory::createRouter
 	- Wavevision\NamespaceTranslatorTests\App\Components\OtherComponent\OtherComponentFactory
