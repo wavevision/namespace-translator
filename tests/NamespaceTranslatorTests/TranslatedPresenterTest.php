@@ -3,6 +3,7 @@
 namespace Wavevision\NamespaceTranslatorTests;
 
 use Wavevision\NamespaceTranslatorTests\App\Presenters\HomePresenter;
+use Wavevision\NamespaceTranslatorTests\App\Presenters\PrefixedPresenter;
 use Wavevision\NetteTests\Runners\PresenterRequest;
 use Wavevision\NetteTests\TestCases\PresenterTestCase;
 
@@ -28,6 +29,22 @@ class TranslatedPresenterTest extends PresenterTestCase
 			$this->extractTextResponseContent(
 				$this->runPresenter(
 					new PresenterRequest(HomePresenter::class, HomePresenter::DEFAULT_ACTION, ['locale' => 'en'])
+				)
+			)
+		);
+	}
+
+	public function testPrefixed(): void
+	{
+		$this->assertEquals(
+			"This message is prefixed.\nThis nested message is also prefixed.\nmessage\n",
+			$this->extractTextResponseContent(
+				$this->runPresenter(
+					new PresenterRequest(
+						PrefixedPresenter::class,
+						PrefixedPresenter::DEFAULT_ACTION,
+						['locale' => 'cs']
+					)
 				)
 			)
 		);
