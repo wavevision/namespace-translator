@@ -4,8 +4,7 @@ namespace Wavevision\NamespaceTranslator\Transfer\Import\Readers;
 
 use Nette\SmartObject;
 use Wavevision\DIServiceAnnotation\DIService;
-use Wavevision\NamespaceTranslator\Transfer\Import\InjectConvertFromLines;
-use Wavevision\NamespaceTranslator\Transfer\Import\InjectSaveFileSet;
+use Wavevision\NamespaceTranslator\Transfer\Import\InjectSaveLines;
 use Wavevision\NamespaceTranslator\Transfer\Storages\Csv\InjectCsvReader;
 
 /**
@@ -14,17 +13,13 @@ use Wavevision\NamespaceTranslator\Transfer\Storages\Csv\InjectCsvReader;
 class Csv
 {
 
-	use InjectConvertFromLines;
 	use InjectCsvReader;
-	use InjectSaveFileSet;
+	use InjectSaveLines;
 	use SmartObject;
 
 	public function read(string $file, string $directory): void
 	{
-		$translations = $this->convertFromLines->process($this->csvReader->read($file));
-		foreach ($translations->getFileSets() as $fileSet) {
-			$this->saveFileSet->process($directory, $fileSet);
-		}
+		$this->saveLines->process($directory, $this->csvReader->read($file));
 	}
 
 }

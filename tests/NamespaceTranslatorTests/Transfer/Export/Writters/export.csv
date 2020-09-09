@@ -4,6 +4,8 @@ file,key,cs,en,format
 /Models/Translated/Translations/,c:self-SOME_KEY,"My chceme modele!","We want modele!",php
 /Models/Translated/Translations/,c:self-SUB.c:self-NESTED,Zanořené,,php
 /Models/Translated/Translations/One,c:self-HELLO,"Ahoj {c:self-NAME}!",,php
+/Models/Translated/Translations/Other,c:self-MESSAGE,"This message is prefixed.",,php
+/Models/Translated/Translations/Other,c:self-NESTED.c:self-MESSAGE,"This nested message is also prefixed.",,php
 /Models/Translated/Translations/Prefixed,test,123,,php
 /Models/Translated/Translations/Prefixed,one.two.nested,nested,,php
 /Models/Translated/Translations/Prefixed,one.one,asd,,php

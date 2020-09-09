@@ -44,9 +44,12 @@ class Exporter
 				case Extension::GOOGLE:
 					foreach ($config[Extension::PARTS] as $part) {
 						$this->googleSheet->write(
-							new Config($config[Extension::CREDENTIALS], $config[Extension::SHEET_ID]),
+							new Config(
+								$config[Extension::CREDENTIALS],
+								$config[Extension::SHEET_ID],
+								$part[Extension::TAB_NAME]
+							),
 							$part[Extension::DIRECTORY],
-							$part[Extension::TAB_NAME]
 						);
 					}
 					break;

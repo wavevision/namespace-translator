@@ -7,7 +7,6 @@ use Wavevision\DIServiceAnnotation\DIService;
 use Wavevision\NamespaceTranslator\Transfer\Export\InjectExtractTranslationLines;
 use Wavevision\NamespaceTranslator\Transfer\Storages\Google\Config;
 use Wavevision\NamespaceTranslator\Transfer\Storages\Google\InjectGoogleSheetWritter;
-use Wavevision\NamespaceTranslator\Transfer\Storages\Google\Sheet;
 
 /**
  * @DIService(generateInject=true)
@@ -19,11 +18,11 @@ class GoogleSheet
 	use InjectGoogleSheetWritter;
 	use InjectExtractTranslationLines;
 
-	public function write(Config $config, string $directory, string $tabName): void
+	public function write(Config $config, string $directory): void
 	{
 		$this->googleSheetWritter->write(
 			$config,
-			new Sheet($tabName, $this->extractTranslationLines->process($directory))
+			$this->extractTranslationLines->process($directory)
 		);
 	}
 

@@ -52,7 +52,11 @@ services:
 	  inject: true
 	- factory: Wavevision\NamespaceTranslator\Transfer\Import\Readers\Csv
 	  inject: true
+	- factory: Wavevision\NamespaceTranslator\Transfer\Import\Readers\GoogleSheet
+	  inject: true
 	- factory: Wavevision\NamespaceTranslator\Transfer\Import\SaveFileSet
+	  inject: true
+	- factory: Wavevision\NamespaceTranslator\Transfer\Import\SaveLines
 	  inject: true
 	- factory: Wavevision\NamespaceTranslator\Transfer\Locales
 	  inject: true
@@ -60,7 +64,11 @@ services:
 	  inject: true
 	- factory: Wavevision\NamespaceTranslator\Transfer\Storages\Csv\CsvWritter
 	  inject: true
+	- factory: Wavevision\NamespaceTranslator\Transfer\Storages\Google\GoogleSheetReader
+	  inject: true
 	- factory: Wavevision\NamespaceTranslator\Transfer\Storages\Google\GoogleSheetWritter
+	  inject: true
+	- factory: Wavevision\NamespaceTranslator\Transfer\Storages\Google\RangeFactory
 	  inject: true
 	- factory: Wavevision\NamespaceTranslator\Transfer\Storages\Google\SheetServiceFactory
 	  inject: true
