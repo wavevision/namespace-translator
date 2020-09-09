@@ -7,6 +7,7 @@ use Contributte\Translation\Wrappers\Message;
 use Contributte\Translation\Wrappers\NotTranslate;
 use Nette\Localization\ITranslator;
 use Nette\SmartObject;
+use Wavevision\Utils\Strings;
 
 class Translator implements ITranslator
 {
@@ -25,28 +26,32 @@ class Translator implements ITranslator
 
 	/**
 	 * @param Message|NotTranslate|string|string[] $message
-	 * @param mixed ...$args
+	 * @param mixed ...$parameters
 	 */
-	public function translate($message, ...$args): string
+	public function translate($message, ...$parameters): string
 	{
 		if ($message instanceof NotTranslate) {
 			return $message->message;
 		}
-		if (is_array($message)) {
-			$message = implode(DomainManager::DOMAIN_DELIMITER, $message);
+		if ($message instanceof Message) {
+			$parameters = $message->getParameters();
+			$message = $message->getMessage();
 		}
-		$count = $args[0] ?? null;
-		$parameters = $args[1] ?? [];
-		$domain = $args[2] ?? null;
-		$locale = $args[3] ?? null;
+		if (is_array($message)) {
+			$message = Helpers::key($message);
+		}
+		$count = $parameters[0] ?? null;
+		$params = $parameters[1] ?? [];
+		$domain = $parameters[2] ?? null;
+		$locale = $parameters[3] ?? null;
 		if ($this->messageExists($message, $locale)) {
 			$domain = $this->getDomain();
 		}
 		if (is_array($count)) {
-			$parameters = $count;
+			$params = $count;
 			$count = null;
 		}
-		return $this->translator->translate($message, $count, $parameters, $domain, $locale);
+		return $this->translator->translate($message, $count, $params, $domain, $locale);
 	}
 
 	public function getDomain(): ?string
@@ -65,28 +70,24 @@ class Translator implements ITranslator
 		return $this->translator;
 	}
 
-	/**
-	 * @param Message|string $message
-	 */
-	private function getPureMessage($message): string
+	public function classPrefixed(string $className): PrefixedTranslator
 	{
-		if ($message instanceof Message) {
-			return $message->message;
-		}
-		return $message;
+		return $this->prefixed(Strings::getClassName($className, true));
 	}
 
-	/**
-	 * @param Message|string $message
-	 */
-	private function messageExists($message, ?string $locale): bool
+	public function prefixed(string ...$prefixes): PrefixedTranslator
+	{
+		return new PrefixedTranslator($this, Helpers::key($prefixes));
+	}
+
+	private function messageExists(string $message, ?string $locale): bool
 	{
 		if ($this->domain === null) {
 			return false;
 		}
 		return $this->translator
 			->getCatalogue($locale)
-			->has($this->getPureMessage($message), $this->domain);
+			->has($message, $this->domain);
 	}
 
 }
