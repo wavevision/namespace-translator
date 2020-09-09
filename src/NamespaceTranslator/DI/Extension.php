@@ -90,7 +90,7 @@ class Extension extends CompilerExtension
 		foreach (self::OPTIONS as $item) {
 			$structure[$item] = Expect::type(gettype($this->defaults[$item]))->default($this->defaults[$item]);
 		}
-		$structure['export'] = Expect::array(
+		$structure['transfer'] = Expect::array(
 			[
 				self::GOOGLE => Expect::array(
 					[

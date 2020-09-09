@@ -21,7 +21,7 @@ translation:
 	dirs: [%appDir%/translations]
 
 namespaceTranslator:
-	export:
+	transfer:
 		google:
 			credentials: %vendorDir%/../temp/credentials.json
 			sheetId: '1yyLcWaBh5OiLcouMr0xhCqu4o_xLrJKc2tIuupVW8LE'

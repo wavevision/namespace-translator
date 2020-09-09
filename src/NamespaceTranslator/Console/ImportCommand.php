@@ -6,17 +6,17 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Wavevision\DIServiceAnnotation\DIService;
-use Wavevision\NamespaceTranslator\Transfer\Export\InjectExporter;
+use Wavevision\NamespaceTranslator\Transfer\Import\InjectImporter;
 
 /**
  * @DIService
  */
-class ExportCommand extends Command
+class ImportCommand extends Command
 {
 
-	use InjectExporter;
+	use InjectImporter;
 
-	public const NAME = 'namespace-translator:export';
+	public const NAME = 'namespace-translator:import';
 
 	/**
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint
@@ -26,12 +26,12 @@ class ExportCommand extends Command
 
 	protected function configure(): void
 	{
-		$this->setDescription('Export translation to configured storage.');
+		$this->setDescription('Import translations from configured storage.');
 	}
 
 	protected function execute(InputInterface $input, OutputInterface $output): int
 	{
-		$this->exporter->export();
+		$this->importer->import();
 		//todo result
 		$output->writeln('done');
 		return 0;

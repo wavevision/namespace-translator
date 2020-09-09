@@ -2,6 +2,8 @@
 services:
 	- factory: Wavevision\NamespaceTranslator\Console\ExportCommand
 	  inject: true
+	- factory: Wavevision\NamespaceTranslator\Console\ImportCommand
+	  inject: true
 	domainManager:
 	  factory: Wavevision\NamespaceTranslator\DomainManager
 	  inject: true
@@ -36,7 +38,6 @@ services:
 	- factory: Wavevision\NamespaceTranslator\Transfer\Export\ConvertToLines
 	  inject: true
 	- factory: Wavevision\NamespaceTranslator\Transfer\Export\Exporter
-	  arguments: [%export%]
 	  inject: true
 	- factory: Wavevision\NamespaceTranslator\Transfer\Export\ExtractTranslationLines
 	  inject: true
@@ -49,6 +50,8 @@ services:
 	- factory: Wavevision\NamespaceTranslator\Transfer\Export\Writters\GoogleSheet
 	  inject: true
 	- factory: Wavevision\NamespaceTranslator\Transfer\Import\ConvertFromLines
+	  inject: true
+	- factory: Wavevision\NamespaceTranslator\Transfer\Import\Importer
 	  inject: true
 	- factory: Wavevision\NamespaceTranslator\Transfer\Import\Readers\Csv
 	  inject: true
@@ -71,6 +74,9 @@ services:
 	- factory: Wavevision\NamespaceTranslator\Transfer\Storages\Google\RangeFactory
 	  inject: true
 	- factory: Wavevision\NamespaceTranslator\Transfer\Storages\Google\SheetServiceFactory
+	  inject: true
+	- factory: Wavevision\NamespaceTranslator\Transfer\TransferWalker
+	  arguments: [%transfer%]
 	  inject: true
 	translatorFactory:
 	  factory: Wavevision\NamespaceTranslator\TranslatorFactory
