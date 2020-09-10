@@ -34,24 +34,22 @@ class TransferWalker
 			if ($config === null) {
 				continue;
 			}
-			switch ($type) {
-				case Extension::CSV:
-					foreach ($config[Extension::PARTS] as $part) {
-						$csv($part[Extension::DIRECTORY], $part[Extension::FILENAME]);
-					}
-					break;
-				case Extension::GOOGLE:
-					foreach ($config[Extension::PARTS] as $part) {
-						$google(
-							new Config(
-								$config[Extension::CREDENTIALS],
-								$config[Extension::SHEET_ID],
-								$part[Extension::TAB_NAME]
-							),
-							$part[Extension::DIRECTORY]
-						);
-					}
-					break;
+			if ($type === Extension::CSV) {
+				foreach ($config[Extension::PARTS] as $part) {
+					$csv($part[Extension::DIRECTORY], $part[Extension::FILENAME]);
+				}
+			}
+			if ($type === Extension::GOOGLE) {
+				foreach ($config[Extension::PARTS] as $part) {
+					$google(
+						new Config(
+							$config[Extension::CREDENTIALS],
+							$config[Extension::SHEET_ID],
+							$part[Extension::TAB_NAME]
+						),
+						$part[Extension::DIRECTORY]
+					);
+				}
 			}
 		}
 	}

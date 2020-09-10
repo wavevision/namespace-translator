@@ -7,6 +7,7 @@ use Wavevision\DIServiceAnnotation\DIService;
 use Wavevision\NamespaceTranslator\Transfer\Export\InjectConvertToLines;
 
 /**
+ * @codeCoverageIgnore
  * @DIService(generateInject=true)
  */
 class GoogleSheetReader

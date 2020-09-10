@@ -9,6 +9,7 @@ use Wavevision\DIServiceAnnotation\DIService;
 use Wavevision\NamespaceTranslator\Transfer\Export\InjectExporter;
 
 /**
+ * @codeCoverageIgnore
  * @DIService
  */
 class ExportCommand extends Command

@@ -70,10 +70,8 @@ class SerializeMessage
 		if (!$result) {
 			return null;
 		}
+		/** @var string $firstArgument */
 		$firstArgument = preg_replace($regex, '%s', $serialized);
-		if (!$firstArgument) {
-			return null;
-		}
 		return new StaticCall(
 			new Name(self::CLASS_NAME),
 			new Identifier(self::FUNCTION_NAME),

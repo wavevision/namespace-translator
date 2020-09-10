@@ -3,6 +3,7 @@
 namespace Wavevision\NamespaceTranslatorTests\Transfer\Export;
 
 use Nette\SmartObject;
+use Wavevision\NamespaceTranslator\Exceptions\InvalidState;
 use Wavevision\NamespaceTranslator\Transfer\Export\ConvertToLines;
 use Wavevision\NamespaceTranslator\Transfer\Export\FileSet;
 use Wavevision\NamespaceTranslator\Transfer\Export\InjectConvertToLines;
@@ -41,6 +42,18 @@ class CovertToLinesTest extends DIContainerTestCase
 				)
 			)
 		);
+	}
+
+	public function testHeaderPosition(): void
+	{
+		$this->assertEquals(0, $this->convertToLines->headerPosition(ConvertToLines::FILE));
+	}
+
+	public function testInvalidHeaderPosition(): void
+	{
+		$this->expectException(InvalidState::class);
+		$this->expectExceptionMessage("Unable to find '42' in header.");
+		$this->convertToLines->headerPosition('42');
 	}
 
 }

@@ -29,7 +29,7 @@ class Locales
 	{
 		$whitelist = $this->translator->getLocalesWhitelist();
 		if ($whitelist === null) {
-			throw new InvalidState('Locale whitelist mus be set.');
+			throw new InvalidState('Locale whitelist must be set.');
 		}
 		return Arrays::filter(
 			$whitelist,

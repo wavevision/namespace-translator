@@ -10,6 +10,7 @@ use Nette\SmartObject;
 use Wavevision\DIServiceAnnotation\DIService;
 
 /**
+ * @codeCoverageIgnore
  * @DIService(generateInject=true)
  */
 class GoogleSheetWritter

@@ -9,6 +9,7 @@ use Wavevision\DIServiceAnnotation\DIService;
 use Wavevision\NamespaceTranslator\Transfer\Import\InjectImporter;
 
 /**
+ * @codeCoverageIgnore
  * @DIService
  */
 class ImportCommand extends Command

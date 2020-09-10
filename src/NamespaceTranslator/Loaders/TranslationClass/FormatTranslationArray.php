@@ -8,6 +8,7 @@ use PhpParser\Node\Expr\ArrayItem;
 use PhpParser\Node\Expr\ClassConstFetch;
 use PhpParser\Node\Scalar\String_;
 use Wavevision\DIServiceAnnotation\DIService;
+use Wavevision\NamespaceTranslator\Exceptions\InvalidState;
 
 /**
  * @DIService(generateInject=true)
@@ -56,7 +57,7 @@ class FormatTranslationArray
 		if ($key instanceof ClassConstFetch) {
 			return $this->serializeClassConstFetch->serialize($key);
 		}
-		throw new \Exception('todo');
+		throw new InvalidState('Key should be string or class constant.');
 	}
 
 }

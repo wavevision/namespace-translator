@@ -7,6 +7,7 @@ use PhpParser\Node\Expr\ClassConstFetch;
 use PhpParser\Node\Identifier;
 use PhpParser\Node\Name;
 use Wavevision\DIServiceAnnotation\DIService;
+use Wavevision\NamespaceTranslator\Exceptions\InvalidState;
 
 /**
  * @DIService(generateInject=true)
@@ -25,9 +26,9 @@ class SerializeClassConstFetch
 	public function serialize(ClassConstFetch $classConstFetch): string
 	{
 		return self::C . implode(
-			self::D_CLASS_PART_SEPARATOR,
-			$this->parts($classConstFetch),
-		) . self::D_SEPARATOR . $this->name($classConstFetch);
+				self::D_CLASS_PART_SEPARATOR,
+				$this->parts($classConstFetch),
+			) . self::D_SEPARATOR . $this->name($classConstFetch);
 	}
 
 	public function isSerialized(string $string): bool
@@ -51,7 +52,7 @@ class SerializeClassConstFetch
 		if ($class instanceof Name) {
 			return $class->parts;
 		}
-		throw new \Exception('todo');
+		throw $this->unsupported();
 	}
 
 	private function name(ClassConstFetch $classConstFetch): string
@@ -60,7 +61,12 @@ class SerializeClassConstFetch
 		if ($name instanceof Identifier) {
 			return $name->name;
 		}
-		throw new \Exception('todo');
+		throw $this->unsupported();
+	}
+
+	private function unsupported(): InvalidState
+	{
+		return new InvalidState('Unsupported const format. Allowed format is self::NAME or Class::NAME.');
 	}
 
 }

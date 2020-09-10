@@ -23,7 +23,7 @@ class SheetServiceFactory
 	private function client(Config $config): Google_Client
 	{
 		$client = new Google_Client();
-		$client->setApplicationName('flowgate');
+		$client->setApplicationName('42');
 		$client->setScopes(Google_Service_Sheets::SPREADSHEETS);
 		$client->setAuthConfig($config->getCredentials());
 		$client->setAccessType('offline');

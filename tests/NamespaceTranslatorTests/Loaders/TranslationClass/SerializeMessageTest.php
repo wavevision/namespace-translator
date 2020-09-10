@@ -4,10 +4,9 @@ namespace Wavevision\NamespaceTranslatorTests\Loaders\TranslationClass;
 
 use Nette\SmartObject;
 use PhpParser\Node\Expr;
-use PhpParser\ParserFactory;
-use PhpParser\PrettyPrinter\Standard;
 use Wavevision\NamespaceTranslator\Exceptions\InvalidState;
 use Wavevision\NamespaceTranslator\Loaders\TranslationClass\InjectSerializeMessage;
+use Wavevision\NamespaceTranslatorTests\Helpers;
 use Wavevision\NetteTests\TestCases\DIContainerTestCase;
 
 class SerializeMessageTest extends DIContainerTestCase
@@ -48,12 +47,24 @@ class SerializeMessageTest extends DIContainerTestCase
 		$this->serializeMessage->serialize($this->expr("''.''"));
 	}
 
+	public function testSerializeMessageNotString(): void
+	{
+		$this->expectException(InvalidState::class);
+		$this->serializeMessage->serialize($this->expr("Message::create(1, self::NAME)"));
+	}
+
+	public function testSerializeArgNotConst(): void
+	{
+		$this->expectException(InvalidState::class);
+		$this->serializeMessage->serialize($this->expr("Message::create('test', 'asd')"));
+	}
+
 	public function testDeserialize(): void
 	{
 		$expr = $this->serializeMessage->deserialize('Hello there {c:self-NAME} {c:A-B_X}!');
 		$this->assertEquals(
 			"Message::create('Hello there %s %s!', self::NAME, A::B_X)",
-			(new Standard())->prettyPrintExpr($expr)
+			Helpers::exprToString($expr)
 		);
 	}
 
@@ -69,10 +80,7 @@ class SerializeMessageTest extends DIContainerTestCase
 
 	private function expr(string $expr): Expr
 	{
-		$ast = (new ParserFactory())->create(ParserFactory::ONLY_PHP7)->parse(
-			"<?php $expr;"
-		);
-		return $ast[0]->expr;
+		return Helpers::stringToExpr($expr);
 	}
 
 }

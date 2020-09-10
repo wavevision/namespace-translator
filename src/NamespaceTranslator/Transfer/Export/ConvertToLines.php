@@ -4,6 +4,7 @@ namespace Wavevision\NamespaceTranslator\Transfer\Export;
 
 use Nette\SmartObject;
 use Wavevision\DIServiceAnnotation\DIService;
+use Wavevision\NamespaceTranslator\Exceptions\InvalidState;
 use Wavevision\NamespaceTranslator\Transfer\InjectLocales;
 
 /**
@@ -62,7 +63,7 @@ class ConvertToLines
 		if (is_int($position)) {
 			return $position;
 		}
-		throw new \Exception('todo');
+		throw new InvalidState("Unable to find '$value' in header.");
 	}
 
 }

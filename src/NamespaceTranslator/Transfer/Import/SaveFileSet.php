@@ -5,6 +5,7 @@ namespace Wavevision\NamespaceTranslator\Transfer\Import;
 use Nette\SmartObject;
 use Wavevision\DIServiceAnnotation\DIService;
 use Wavevision\NamespaceTranslator\DomainManager;
+use Wavevision\NamespaceTranslator\Exceptions\InvalidState;
 use Wavevision\NamespaceTranslator\Exceptions\MissingResource;
 use Wavevision\NamespaceTranslator\Exceptions\SkipResource;
 use Wavevision\NamespaceTranslator\Loaders\InjectManager;
@@ -55,7 +56,7 @@ class SaveFileSet
 			);
 		} else {
 			if ($reference === null) {
-				throw new \Exception('Unable to remove default locale.');
+				throw new InvalidState('Unable to remove default locale.');
 			}
 			if (is_file($resource)) {
 				unlink($resource);

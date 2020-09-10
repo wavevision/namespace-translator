@@ -27,7 +27,7 @@ class ConvertFromLines
 	public function process(array $lines): Translations
 	{
 		if (!isset($lines[0])) {
-			throw new InvalidState('Missing header line');
+			throw new InvalidState('Missing header line.');
 		}
 		$header = $lines[0];
 		$originalHeader = $this->convertToLines->createHeader();
