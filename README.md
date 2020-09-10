@@ -83,7 +83,7 @@ You can also create and register your own loader, just make sure it implements `
 
 ## Export \ Import
 
-For exporting translation to CSV or GoogleSheet (or both) configure following:
+For exporting translation to CSV or GoogleSheet (or both) configure 
 
 ```neon
 namespaceTranslator:
@@ -100,13 +100,13 @@ namespaceTranslator:
 				  filename: %vendorDir%/../temp/front-module.csv
 ```
 
-run following command to export translations
+run command to export translations
 
 ```bash
 php {bin/console} namespace-translator:export
 ``` 
 
-update translations, then run following command to import them
+update translations, then run command to import them
 
 ```bash
 php {bin/console} namespace-translator:import
@@ -157,15 +157,16 @@ file,           key,          en,                  de,                  format
 /Translations/, c:self-HELLO, Hello {c:self-Name}, ,                    php
 ```
 
-columns file, key and format shouldn't be modified. 
+columns `file`, `key` and `format` shouldn't be modified. 
 
 For details see example [export.csv](./tests/NamespaceTranslatorTests/Transfer/Export/Writters/export.csv)
 
 ### Limitation of TranslationClass
 
-* Define function must have inside it's body only one expression and that should look like this `return [...]`
+* Define function must have only one statement (`return [...]`)
 * Array keys must be strings or class constants
-* Array values must be arrays, strings or Message::create function calls
+* Array values must be arrays, strings or `Message::create()` function calls
+* Php files should be linted after import
 
 ## Examples
 
