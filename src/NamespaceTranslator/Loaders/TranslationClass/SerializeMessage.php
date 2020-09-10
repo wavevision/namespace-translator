@@ -55,7 +55,7 @@ class SerializeMessage
 	public function deserialize(string $serialized): ?Expr
 	{
 		$regex = sprintf(
-			'({%s[a-zA-Z%s]*%s[a-zA-Z]*})',
+			'({%s[a-zA-Z%s]*%s[a-zA-Z_]*})',
 			...Arrays::map(
 				[
 				SerializeClassConstFetch::C,

@@ -18,6 +18,7 @@ class ReturnFinder extends NodeVisitorAbstract
 	 */
 	public function leaveNode(Node $node)
 	{
+		//todo validate single return
 		if ($node instanceof ClassMethod) {
 			$stmts = $node->getStmts();
 			if (isset($stmts[0])) {

@@ -12,6 +12,7 @@ class Message
 
 	public static function create(string $value, string ...$params): string
 	{
+		//escape %%
 		return sprintf($value, ...Arrays::map($params, fn(string $p) => "%$p%"));
 	}
 
