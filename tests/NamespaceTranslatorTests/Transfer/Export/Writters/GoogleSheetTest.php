@@ -4,6 +4,7 @@ namespace Wavevision\NamespaceTranslatorTests\Transfer\Export\Writters;
 
 use Wavevision\NamespaceTranslator\Transfer\Export\Writters\InjectGoogleSheet;
 use Wavevision\NamespaceTranslator\Transfer\Storages\Google\Config;
+use Wavevision\NamespaceTranslator\Transfer\Storages\Google\GoogleSheetWritter;
 use Wavevision\NetteTests\TestCases\DIContainerTestCase;
 
 class GoogleSheetTest extends DIContainerTestCase
@@ -13,6 +14,7 @@ class GoogleSheetTest extends DIContainerTestCase
 
 	public function test(): void
 	{
+		$this->mockGoogleSheet();
 		$this->googleSheet->write(
 			new Config(
 				__DIR__ . '/../../../../../temp/credentials.json',
@@ -21,7 +23,13 @@ class GoogleSheetTest extends DIContainerTestCase
 			),
 			__DIR__ . '/../../../App',
 		);
-		$this->assertEquals(1, 1);
+	}
+
+	private function mockGoogleSheet(): void
+	{
+		$writter = $this->createMock(GoogleSheetWritter::class);
+		$writter->expects($this->once())->method('write');
+		$this->googleSheet->injectGoogleSheetWritter($writter);
 	}
 
 }
