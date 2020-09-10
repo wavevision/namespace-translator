@@ -83,7 +83,7 @@ You can also create and register your own loader, just make sure it implements `
 
 ## Export \ Import
 
-For exporting translation to CSV or GoogleSheet (or both) update configuration file. 
+For exporting \ importing translations to \ from CSV or GoogleSheet (or both) update configuration file
 
 ```neon
 namespaceTranslator:
