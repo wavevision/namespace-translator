@@ -130,8 +130,7 @@ hello: Hello %name%
 hello: Hallo %name%
 ```
 ```php
-<?php
-//file Translations/Cs.php
+<?php declare(strict_types=1); //file Translations/Cs.php
 
 use Wavevision\NamespaceTranslator\Resources\Translation;
 use Wavevision\NamespaceTranslator\Loaders\TranslationClass\Message;
@@ -154,13 +153,13 @@ export should look like this
 ```csv
 
 file,           key,          en,                  de,                  format
-/translations/, helloNeon,    Hello %name%,        Hallo %name%,        neon
+/translations/, hello,        Hello %name%,        Hallo %name%,        neon
 /Translations/, c:self-HELLO, Hello {c:self-Name}, ,                    php
 ```
 
 columns file, key and format shouldn't be modified. 
 
-see [example export](./tests/NamespaceTranslatorTests/Transfer/Export/Writters/export.csv)
+For details see example [export.csv](./tests/NamespaceTranslatorTests/Transfer/Export/Writters/export.csv)
 
 ### Limitation of TranslationClass
 
