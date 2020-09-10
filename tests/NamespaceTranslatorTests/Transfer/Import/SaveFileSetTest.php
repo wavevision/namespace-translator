@@ -36,7 +36,9 @@ class SaveFileSetTest extends DIContainerTestCase
 					'one' => [
 						'cs' => 'Jedna',
 					],
-				], '', Neon::FORMAT
+				],
+				'',
+				Neon::FORMAT
 			)
 		);
 		$this->assertFileNotExists($file);

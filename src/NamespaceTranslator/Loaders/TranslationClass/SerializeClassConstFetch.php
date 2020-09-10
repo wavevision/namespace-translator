@@ -26,9 +26,9 @@ class SerializeClassConstFetch
 	public function serialize(ClassConstFetch $classConstFetch): string
 	{
 		return self::C . implode(
-				self::D_CLASS_PART_SEPARATOR,
-				$this->parts($classConstFetch),
-			) . self::D_SEPARATOR . $this->name($classConstFetch);
+			self::D_CLASS_PART_SEPARATOR,
+			$this->parts($classConstFetch),
+		) . self::D_SEPARATOR . $this->name($classConstFetch);
 	}
 
 	public function isSerialized(string $string): bool
