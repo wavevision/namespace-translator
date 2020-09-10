@@ -83,13 +83,13 @@ You can also create and register your own loader, just make sure it implements `
 
 ## Export \ Import
 
-For exporting translation to CSV or GoogleSheet (or both) configure 
+For exporting translation to CSV or GoogleSheet (or both) update configuration file. 
 
 ```neon
 namespaceTranslator:
 	transfer:
 		google:
-			credentials: credentials.json
+.			credentials: credentials.json
 			sheetId: googleSheetId
 			parts:
 				- directory: %vendorDir%/../App/AdminModule
@@ -159,7 +159,7 @@ file,           key,          en,                  de,                  format
 
 columns `file`, `key` and `format` shouldn't be modified. 
 
-For details see example [export.csv](./tests/NamespaceTranslatorTests/Transfer/Export/Writters/export.csv)
+For details see example [export.csv](./tests/NamespaceTranslatorTests/Transfer/Export/Writters/export.csv).
 
 ### Limitation of TranslationClass
 
