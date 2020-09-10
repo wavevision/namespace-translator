@@ -81,6 +81,93 @@ Using PHP classes is useful when you want to refer to your translations using co
 
 You can also create and register your own loader, just make sure it implements `Wavevision\NamespaceTranslator\Loaders\Loader`.
 
+## Export \ Import
+
+For exporting translation to CSV or GoogleSheet (or both) configure following:
+
+```neon
+namespaceTranslator:
+	transfer:
+		google:
+			credentials: credentials.json
+			sheetId: googleSheetId
+			parts:
+				- directory: %vendorDir%/../App/AdminModule
+				  tabName: admin-module
+		csv:
+			parts:
+				- directory: %vendorDir%/../App/FrontModule
+				  filename: %vendorDir%/../temp/front-module.csv
+```
+
+run following command to export translations
+
+```bash
+php {bin/console} namespace-translator:export
+``` 
+
+update translations, then run following command to import them
+
+```bash
+php {bin/console} namespace-translator:import
+``` 
+
+### Google Sheet
+
+For accessing Google sheet you will need [server-to-server API key](https://developers.google.com/sheets/api/guides/authorizing?authuser=1#APIKey) and [sheet ID](https://support.asinzen.com/article/516-how-do-i-get-my-google-spreadsheet-id).
+ 
+
+### Export example
+
+From files
+
+```neon
+# file translations/en.neon
+hello: Hello %name%
+```
+```neon
+# file translations/de.neon
+hello: Hallo %name%
+```
+```php
+<?php
+//file Translations/Cs.php
+
+use Wavevision\NamespaceTranslator\Resources\Translation;
+use Wavevision\NamespaceTranslator\Loaders\TranslationClass\Message;
+
+class Cs implements Translation
+{
+    public const HELLO = 'hello';
+
+    public const NAME = 'name';
+
+    public static function define() : array
+    {
+        return [self::HELLO => Message::create('Hello %s', self::NAME)]; 
+    }
+}
+```
+
+export should look like this
+
+```csv
+
+file,           key,          en,                  de,                  format
+/translations/, helloNeon,    Hello %name%,        Hallo %name%,        neon
+/Translations/, c:self-HELLO, Hello {c:self-Name}, ,                    php
+```
+
+columns file, key and format shouldn't be modified. 
+
+see [example export](./tests/NamespaceTranslatorTests/Transfer/Export/Writters/export.csv)
+
+### Limitation of TranslationClass
+
+* Define function must have inside it's body only one expression and that should look like this `return [...]`
+* Array keys must be strings or class constants
+* Array values must be arrays, strings or Message::create function calls
+
 ## Examples
 
 See [tests](./tests/NamespaceTranslatorTests/App) for example app implementation.
