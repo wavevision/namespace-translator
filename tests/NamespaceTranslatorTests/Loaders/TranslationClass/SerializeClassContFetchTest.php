@@ -33,12 +33,16 @@ class SerializeClassContFetchTest extends DIContainerTestCase
 	{
 		$this->expectException(InvalidState::class);
 		$this->expectExceptionMessage('Unsupported const format.');
-		$this->serializeClassConstFetch->serialize(new ClassConstFetch(new Name('name'), 1));
+		/** @var mixed $name */
+		$name = 1;
+		$this->serializeClassConstFetch->serialize(new ClassConstFetch(new Name('name'), $name));
 	}
 
 	private function classConstFetch(string $string): ClassConstFetch
 	{
-		return Helpers::stringToExpr($string);
+		/** @var ClassConstFetch $expr */
+		$expr = Helpers::stringToExpr($string);
+		return $expr;
 	}
 
 }

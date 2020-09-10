@@ -3,8 +3,12 @@
 namespace Wavevision\NamespaceTranslatorTests\App\Components\OtherComponent;
 
 use Nette\Application\UI\Control;
+use Nette\Bridges\ApplicationLatte\Template;
 use Wavevision\NamespaceTranslator\TranslatedComponent;
 
+/**
+ * @property Template $template
+ */
 class OtherComponent extends Control
 {
 

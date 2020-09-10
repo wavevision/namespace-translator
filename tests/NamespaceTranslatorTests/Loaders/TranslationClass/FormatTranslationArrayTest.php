@@ -3,6 +3,7 @@
 namespace Wavevision\NamespaceTranslatorTests\Loaders\TranslationClass;
 
 use Nette\SmartObject;
+use PhpParser\Node\Expr\Array_;
 use Wavevision\NamespaceTranslator\Exceptions\InvalidState;
 use Wavevision\NamespaceTranslator\Loaders\TranslationClass\InjectFormatTranslationArray;
 use Wavevision\NamespaceTranslatorTests\Helpers;
@@ -18,7 +19,7 @@ class FormatTranslationArrayTest extends DIContainerTestCase
 	{
 		$this->assertEquals(
 			['one' => 'two'],
-			$this->formatTranslationArray->process(Helpers::stringToExpr("['one' => 'two']"))
+			$this->formatTranslationArray->process($this->expr("['one' => 'two']"))
 		);
 	}
 
@@ -26,7 +27,14 @@ class FormatTranslationArrayTest extends DIContainerTestCase
 	{
 		$this->expectException(InvalidState::class);
 		$this->expectExceptionMessage('Key should be');
-		$this->formatTranslationArray->process(Helpers::stringToExpr("['o'. 'one' => 'two']"));
+		$this->formatTranslationArray->process($this->expr("['o'. 'one' => 'two']"));
+	}
+
+	private function expr(string $string): Array_
+	{
+		/** @var Array_ $array */
+		$array = Helpers::stringToExpr($string);
+		return $array;
 	}
 
 }
