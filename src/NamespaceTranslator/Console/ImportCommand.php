@@ -31,9 +31,7 @@ class ImportCommand extends Command
 
 	protected function execute(InputInterface $input, OutputInterface $output): int
 	{
-		$this->importer->import();
-		//todo result
-		$output->writeln('done');
+		$this->importer->import($output);
 		return 0;
 	}
 

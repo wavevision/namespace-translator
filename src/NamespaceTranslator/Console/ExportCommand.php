@@ -31,9 +31,7 @@ class ExportCommand extends Command
 
 	protected function execute(InputInterface $input, OutputInterface $output): int
 	{
-		$this->exporter->export();
-		//todo result
-		$output->writeln('done');
+		$this->exporter->export($output);
 		return 0;
 	}
 

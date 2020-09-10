@@ -90,36 +90,42 @@ class Extension extends CompilerExtension
 		foreach (self::OPTIONS as $item) {
 			$structure[$item] = Expect::type(gettype($this->defaults[$item]))->default($this->defaults[$item]);
 		}
-		$structure['transfer'] = Expect::array(
+		$structure['transfer'] = Expect::structure(
 			[
-				self::GOOGLE => Expect::array(
-					[
-						self::CREDENTIALS => Expect::string(),
-						self::TAB_NAME => Expect::string(),
-						self::PARTS => Expect::arrayOf(
-							Expect::array(
-								[
-									self::DIRECTORY => Expect::string(),
-									self::TAB_NAME => Expect::string(),
-								]
-							)
-						),
-					]
-				)->required(false),
-				self::CSV => Expect::array(
-					[
-						self::PARTS => Expect::arrayOf(
-							Expect::array(
-								[
-									self::DIRECTORY => Expect::string()->required(),
-									self::FILENAME => Expect::string()->required(),
-								]
-							)
-						)->required(),
-					]
-				)->required(false),
+				self::GOOGLE => Expect::anyOf(
+					Expect::structure(
+						[
+							self::CREDENTIALS => Expect::string()->required(),
+							self::SHEET_ID => Expect::string()->required(),
+							self::PARTS => Expect::arrayOf(
+								Expect::structure(
+									[
+										self::DIRECTORY => Expect::string()->required(),
+										self::TAB_NAME => Expect::string()->required(),
+									]
+								)->castTo('array')
+							)->required()->min(1),
+						]
+					)->required(false)->castTo('array'),
+					Expect::null()
+				),
+				self::CSV => Expect::anyOf(
+					Expect::structure(
+						[
+							self::PARTS => Expect::arrayOf(
+								Expect::structure(
+									[
+										self::DIRECTORY => Expect::string()->required(),
+										self::FILENAME => Expect::string()->required(),
+									]
+								)->castTo('array'),
+							)->required()->min(1),
+						]
+					)->required(false)->castTo('array'),
+					Expect::null()
+				),
 			]
-		)->required(false);
+		)->required(false)->castTo('array');
 		return Expect::structure($structure)->castTo('array');
 	}
 
@@ -138,7 +144,6 @@ class Extension extends CompilerExtension
 				);
 			}
 		}
-
 		return $config;
 	}
 

@@ -31,6 +31,9 @@ class TransferWalker
 	public function execute(callable $csv, callable $google): void
 	{
 		foreach ($this->config as $type => $config) {
+			if ($config === null) {
+				continue;
+			}
 			switch ($type) {
 				case Extension::CSV:
 					foreach ($config[Extension::PARTS] as $part) {
