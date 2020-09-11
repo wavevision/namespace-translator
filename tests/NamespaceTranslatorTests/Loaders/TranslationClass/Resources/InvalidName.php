@@ -1,0 +1,16 @@
+<?php declare(strict_types = 1);
+
+namespace Wavevision\NamespaceTranslatorTests\Loaders\TranslationClass\Resources;
+
+class InvalidName
+{
+
+	/**
+	 * @return array<mixed>
+	 */
+	public static function hello(): array
+	{
+		return [];
+	}
+
+}

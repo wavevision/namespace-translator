@@ -33,8 +33,7 @@ class FileSetFactory
 			/** @var SplFileInfo $file */
 			foreach (Finder::findFiles('*' . $suffix)->in($translationDirectory) as $file) {
 				$pathname = $file->getPathname();
-				//todo replace rtrim
-				$basePathname = str_replace($suffix, '', $pathname);
+				$basePathname = substr_replace($pathname, '', -strlen($suffix));
 				$translations->add(
 					new FileSet(
 						$this->fileSet($basePathname, $loader),
