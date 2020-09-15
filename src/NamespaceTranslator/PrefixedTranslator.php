@@ -23,7 +23,7 @@ class PrefixedTranslator implements ITranslator
 	}
 
 	/**
-	 * @param Message|NotTranslate|string|string[] $message
+	 * @param Message|NotTranslate|int|int[]|string|string[] $message
 	 * @param mixed ...$parameters
 	 */
 	public function translate($message, ...$parameters): string
@@ -34,7 +34,7 @@ class PrefixedTranslator implements ITranslator
 		if (is_array($message)) {
 			$message = [$this->prefix, ...$message];
 		}
-		if (is_string($message)) {
+		if (is_int($message) || is_string($message)) {
 			$message = Helpers::key([$this->prefix, $message]);
 		}
 		return $this->translator->translate($message, ...$parameters);

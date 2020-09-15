@@ -17,6 +17,11 @@ class Model
 		return $this->translator->translate(Cs::SOME_KEY);
 	}
 
+	public function processInteger(): string
+	{
+		return $this->translator->translate(1);
+	}
+
 	public function processNested(): string
 	{
 		return $this->translator->translate([Cs::SUB, Cs::NESTED]);

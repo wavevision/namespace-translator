@@ -19,8 +19,14 @@ class HomePresenter extends BasePresenter
 				'modelTranslation' => $this->translatedModel->process(),
 				'nestedTranslation' => $this->translatedModel->processNested(),
 				'paramTranslation' => $this->translatedModel->process(),
+				'integerTranslation' => $this->translatedModel->processInteger(),
 			]
 		);
+	}
+
+	public function actionInteger(): void
+	{
+		$this->template->setParameters(['translation' => $this->translatedModel->processInteger()]);
 	}
 
 }

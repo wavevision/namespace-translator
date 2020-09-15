@@ -11,6 +11,7 @@ class Cs extends Translation
 	public static function define(): array
 	{
 		return [
+			1 => 'Jedna!',
 			self::SOME_KEY => 'My chceme modele!',
 			self::SUB => [
 				self::NESTED => 'Zanořené',

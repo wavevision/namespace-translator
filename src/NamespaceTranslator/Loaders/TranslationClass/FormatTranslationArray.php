@@ -6,6 +6,7 @@ use Nette\SmartObject;
 use PhpParser\Node\Expr\Array_;
 use PhpParser\Node\Expr\ArrayItem;
 use PhpParser\Node\Expr\ClassConstFetch;
+use PhpParser\Node\Scalar\LNumber;
 use PhpParser\Node\Scalar\String_;
 use Wavevision\DIServiceAnnotation\DIService;
 use Wavevision\NamespaceTranslator\Exceptions\InvalidState;
@@ -48,16 +49,22 @@ class FormatTranslationArray
 		}
 	}
 
-	private function key(ArrayItem $item): string
+	/**
+	 * @return int|string
+	 */
+	private function key(ArrayItem $item)
 	{
 		$key = $item->key;
+		if ($key instanceof LNumber) {
+			return $key->value;
+		}
 		if ($key instanceof String_) {
 			return $key->value;
 		}
 		if ($key instanceof ClassConstFetch) {
 			return $this->serializeClassConstFetch->serialize($key);
 		}
-		throw new InvalidState('Key should be string or class constant.');
+		throw new InvalidState('Key should be integer, string or class constant.');
 	}
 
 }

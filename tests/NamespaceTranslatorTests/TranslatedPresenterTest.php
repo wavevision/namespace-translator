@@ -50,4 +50,24 @@ class TranslatedPresenterTest extends PresenterTestCase
 		);
 	}
 
+	public function testInteger(): void
+	{
+		$this->assertEquals(
+			"Jedna!\n",
+			$this->extractTextResponseContent(
+				$this->runPresenter(new PresenterRequest(HomePresenter::class, 'integer', ['locale' => 'cs']))
+			)
+		);
+	}
+
+	public function testIntegerEn(): void
+	{
+		$this->assertEquals(
+			"One!\n",
+			$this->extractTextResponseContent(
+				$this->runPresenter(new PresenterRequest(HomePresenter::class, 'integer', ['locale' => 'en']))
+			)
+		);
+	}
+
 }

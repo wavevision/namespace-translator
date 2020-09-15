@@ -25,7 +25,7 @@ class Translator implements ITranslator
 	}
 
 	/**
-	 * @param Message|NotTranslate|string|string[] $message
+	 * @param Message|NotTranslate|int|int[]|string|string[] $message
 	 * @param mixed ...$parameters
 	 */
 	public function translate($message, ...$parameters): string
@@ -40,6 +40,7 @@ class Translator implements ITranslator
 		if (is_array($message)) {
 			$message = Helpers::key($message);
 		}
+		$message = Helpers::filter($message);
 		$count = $parameters[0] ?? null;
 		$params = $parameters[1] ?? [];
 		$domain = $parameters[2] ?? null;

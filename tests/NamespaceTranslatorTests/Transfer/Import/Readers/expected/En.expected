@@ -10,6 +10,6 @@ class En extends Translation
      */
     public static function define() : array
     {
-        return array(self::SOME_KEY => 'We want modele!', self::SUB => array(self::NESTED => 'nested'));
+        return array(1 => 'One!', self::SOME_KEY => 'We want modele!', self::SUB => array(self::NESTED => 'nested'));
     }
 }

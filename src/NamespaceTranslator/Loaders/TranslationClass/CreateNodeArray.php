@@ -6,6 +6,7 @@ use Nette\SmartObject;
 use PhpParser\Node\Expr;
 use PhpParser\Node\Expr\Array_;
 use PhpParser\Node\Expr\ArrayItem;
+use PhpParser\Node\Scalar\LNumber;
 use PhpParser\Node\Scalar\String_;
 use Wavevision\DIServiceAnnotation\DIService;
 
@@ -43,8 +44,14 @@ class CreateNodeArray
 		return $items;
 	}
 
-	private function key(string $key): Expr
+	/**
+	 * @param int|string $key
+	 */
+	private function key($key): Expr
 	{
+		if (is_int($key)) {
+			return new LNumber($key);
+		}
 		if ($this->serializeClassConstFetch->isSerialized($key)) {
 			return $this->serializeClassConstFetch->deserialize($key);
 		}
