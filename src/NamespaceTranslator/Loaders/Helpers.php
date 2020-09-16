@@ -32,4 +32,38 @@ class Helpers
 		return new LocalePrefixPair(Arrays::pop($parts), Arrays::pop($parts));
 	}
 
+	/**
+	 * @param int|string $key
+	 * @param array<mixed> $content
+	 */
+	public function buildTree($key, string $value, array &$content): void
+	{
+		Arrays::buildTree(
+			$this->explode($key),
+			$value,
+			$content
+		);
+	}
+
+	/**
+	 * @param int|string $key
+	 * @return array<int|string>
+	 */
+	private function explode($key): array
+	{
+		return Arrays::map(
+			explode(DomainManager::DOMAIN_DELIMITER, (string)$key),
+			fn(string $part) => $this->part($part)
+		);
+	}
+
+	/**
+	 * @return int|string
+	 */
+	private function part(string $value)
+	{
+		$result = filter_var($value, FILTER_VALIDATE_INT);
+		return $result === false ? $value : $result;
+	}
+
 }

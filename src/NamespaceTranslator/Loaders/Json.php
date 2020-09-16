@@ -47,8 +47,17 @@ class Json implements Loader
 	 */
 	public function save(string $resource, array $content, ?string $referenceResource = null): void
 	{
+		/** @var string $encodedJson */
 		$encodedJson = WavevisionJson::encodePretty($content, WavevisionJson::INDENT_JS);
 		FileSystem::write($resource, $encodedJson);
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function saveKeyValue($key, string $value, array &$content): void
+	{
+		$content[$key] = $value;
 	}
 
 }

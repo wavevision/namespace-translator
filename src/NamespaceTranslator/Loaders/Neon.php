@@ -49,4 +49,12 @@ class Neon implements Loader
 		return $this->load($resource);
 	}
 
+	/**
+	 * @inheritDoc
+	 */
+	public function saveKeyValue($key, string $value, array &$content): void
+	{
+		$this->helpers->buildTree($key, $value, $content);
+	}
+
 }

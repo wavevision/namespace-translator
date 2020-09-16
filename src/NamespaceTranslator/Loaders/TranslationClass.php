@@ -19,6 +19,7 @@ use Wavevision\Utils\Tokenizer\TokenizeResult;
 class TranslationClass implements Loader
 {
 
+	use InjectHelpers;
 	use InjectLoadExport;
 	use InjectLocales;
 	use InjectSaveResource;
@@ -75,6 +76,14 @@ class TranslationClass implements Loader
 	{
 		$this->getClass($resource);
 		return $this->loadExport->process($resource);
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function saveKeyValue($key, string $value, array &$content): void
+	{
+		$this->helpers->buildTree($key, $value, $content);
 	}
 
 	private function fileExtension(): string

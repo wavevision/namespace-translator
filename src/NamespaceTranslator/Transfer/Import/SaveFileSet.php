@@ -4,7 +4,6 @@ namespace Wavevision\NamespaceTranslator\Transfer\Import;
 
 use Nette\SmartObject;
 use Wavevision\DIServiceAnnotation\DIService;
-use Wavevision\NamespaceTranslator\DomainManager;
 use Wavevision\NamespaceTranslator\Exceptions\InvalidState;
 use Wavevision\NamespaceTranslator\Exceptions\MissingResource;
 use Wavevision\NamespaceTranslator\Exceptions\SkipResource;
@@ -47,7 +46,7 @@ class SaveFileSet
 		?string $reference = null
 	): string {
 		$resource = $directory . $fileSet->getFile() . $loader->fileSuffix($locale);
-		$resourceContent = $this->resourceContent($fileSet, $locale);
+		$resourceContent = $this->resourceContent($loader, $fileSet, $locale);
 		if (count($resourceContent) > 0) {
 			$loader->save(
 				$resource,
@@ -80,43 +79,18 @@ class SaveFileSet
 	/**
 	 * @return array<mixed>
 	 */
-	private function resourceContent(FileSet $fileSet, string $locale): array
+	private function resourceContent(Loader $loader, FileSet $fileSet, string $locale): array
 	{
 		$tree = [];
 		foreach ($fileSet->getTranslations() as $key => $localizedValues) {
 			if (isset($localizedValues[$locale])) {
 				$value = trim($localizedValues[$locale]);
 				if ($value !== '') {
-					Arrays::buildTree(
-						$this->explode($key),
-						$value,
-						$tree
-					);
+					$loader->saveKeyValue($key, $value, $tree);
 				}
 			}
 		}
 		return $tree;
-	}
-
-	/**
-	 * @param int|string $key
-	 * @return array<int|string>
-	 */
-	private function explode($key): array
-	{
-		return Arrays::map(
-			explode(DomainManager::DOMAIN_DELIMITER, (string)$key),
-			fn(string $part) => $this->part($part)
-		);
-	}
-
-	/**
-	 * @return int|string
-	 */
-	private function part(string $value)
-	{
-		$result = filter_var($value, FILTER_VALIDATE_INT);
-		return $result === false ? $value : $result;
 	}
 
 }

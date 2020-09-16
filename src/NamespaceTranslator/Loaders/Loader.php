@@ -26,4 +26,10 @@ interface Loader
 	 */
 	public function save(string $resource, array $content, ?string $referenceResource = null): void;
 
+	/**
+	 * @param int|string $key
+	 * @param array<mixed> $content
+	 */
+	public function saveKeyValue($key, string $value, array &$content): void;
+
 }
