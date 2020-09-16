@@ -9,6 +9,7 @@ use Nette\Schema\Expect;
 use Nette\Schema\Schema;
 use ReflectionClass;
 use Wavevision\NamespaceTranslator\Exceptions\InvalidArgument;
+use Wavevision\NamespaceTranslator\Loaders\Json;
 use Wavevision\NamespaceTranslator\Loaders\Loader;
 use Wavevision\NamespaceTranslator\Loaders\Manager;
 use Wavevision\NamespaceTranslator\Loaders\Neon;
@@ -44,6 +45,7 @@ class Extension extends CompilerExtension
 		self::LOADERS => [
 			Neon::FORMAT => Neon::class,
 			TranslationClass::FORMAT => TranslationClass::class,
+			Json::FORMAT => Json::class,
 		],
 	];
 

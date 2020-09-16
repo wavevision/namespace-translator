@@ -7,6 +7,8 @@ services:
 	domainManager:
 	  factory: Wavevision\NamespaceTranslator\DomainManager
 	  inject: true
+	- factory: Wavevision\NamespaceTranslator\Loaders\Helpers
+	  inject: true
 	- factory: Wavevision\NamespaceTranslator\Loaders\TranslationClass\CreateNodeArray
 	  inject: true
 	- factory: Wavevision\NamespaceTranslator\Loaders\TranslationClass\FormatTranslationArray

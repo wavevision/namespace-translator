@@ -1,4 +1,6 @@
 file,key,cs,en,format
+/Presenters/translations/,jsonMessage,"Hello Json Cs","Hello Json En",json
+/Presenters/translations/prefixed.,jsonMessage,PrefixedJson,,json
 /Presenters/translations/other.,title,"Titulek presenteru","Presenter title",neon
 /Presenters/translations/home.,title,Vítejte,,neon
 /Presenters/translations/home.,text,"You are here!",,neon

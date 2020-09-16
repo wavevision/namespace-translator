@@ -1,26 +1,34 @@
-<?php declare (strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace Wavevision\NamespaceTranslator\Loaders;
 
-use Nette\Neon\Neon as NetteNeon;
 use Nette\SmartObject;
 use Nette\Utils\FileSystem;
+use Nette\Utils\Json as NetteJson;
 use Wavevision\NamespaceTranslator\Resources\LocalePrefixPair;
 
-class Neon implements Loader
+class Json implements Loader
 {
 
 	use SmartObject;
 	use InjectHelpers;
 
-	public const FORMAT = 'neon';
+	public const FORMAT = 'json';
 
 	/**
 	 * @inheritDoc
 	 */
 	public function load(string $resource): array
 	{
-		return NetteNeon::decode($this->helpers->readResourceContent($resource)) ?: [];
+		return NetteJson::decode($this->helpers->readResourceContent($resource), NetteJson::FORCE_ARRAY);
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function loadExport(string $resource): array
+	{
+		return $this->load($resource);
 	}
 
 	public function getLocalePrefixPair(string $resourceName): LocalePrefixPair
@@ -30,7 +38,7 @@ class Neon implements Loader
 
 	public function fileSuffix(string $locale): string
 	{
-		return $locale . '.neon';
+		return $locale . '.json';
 	}
 
 	/**
@@ -38,15 +46,7 @@ class Neon implements Loader
 	 */
 	public function save(string $resource, array $content, ?string $referenceResource = null): void
 	{
-		FileSystem::write($resource, NetteNeon::encode($content, NetteNeon::BLOCK));
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function loadExport(string $resource): array
-	{
-		return $this->load($resource);
+		FileSystem::write($resource, NetteJson::encode($content, NetteJson::PRETTY));
 	}
 
 }
