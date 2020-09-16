@@ -9,6 +9,7 @@ file,key,cs,en,format
 /translations/app.,someText,"Some text",,neon
 /translations/app.,messageWithCount,"Celkem %count% kusů",,neon
 /translations/app.,nested1.nested2,42,,neon
+/Models/Translated/Translations/,1,Jedna!,One!,php
 /Models/Translated/Translations/Prefixed,test,123,eng123,php
 /Models/Translated/Translations/Prefixed,one.two.nested,nested,,php
 /Models/Translated/Translations/Prefixed,one.one,asd,,php

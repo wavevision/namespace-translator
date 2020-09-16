@@ -88,7 +88,7 @@ class SaveFileSet
 				$value = trim($localizedValues[$locale]);
 				if ($value !== '') {
 					Arrays::buildTree(
-						explode(DomainManager::DOMAIN_DELIMITER, $key),
+						$this->explode($key),
 						$value,
 						$tree
 					);
@@ -96,6 +96,23 @@ class SaveFileSet
 			}
 		}
 		return $tree;
+	}
+
+	private function explode($key): array
+	{
+		return Arrays::map(
+			explode(DomainManager::DOMAIN_DELIMITER, (string)$key),
+			fn(string $part) => $this->part($part)
+		);
+	}
+
+	/**
+	 * @return int|string
+	 */
+	private function part(string $value)
+	{
+		$result = filter_var($value, FILTER_VALIDATE_INT);
+		return $result === false ? $value : $result;
 	}
 
 }
