@@ -98,6 +98,10 @@ class SaveFileSet
 		return $tree;
 	}
 
+	/**
+	 * @param int|string $key
+	 * @return array<int|string>
+	 */
 	private function explode($key): array
 	{
 		return Arrays::map(
