@@ -29,6 +29,16 @@ class Manager
 		throw new InvalidArgument("No loader for '$format' format exists.");
 	}
 
+	public function getFormatLoaderByExtension(string $extension): Loader
+	{
+		foreach ($this->getLoaders() as $loader) {
+			if ($loader->getFileExtension() === $extension) {
+				return $loader;
+			}
+		}
+		throw new InvalidArgument("No loader for extension '$extension' exists.");
+	}
+
 	/**
 	 * @return Loader[]
 	 */

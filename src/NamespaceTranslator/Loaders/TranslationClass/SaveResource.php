@@ -40,7 +40,7 @@ class SaveResource
 		$returnFinder = new ReturnFinder();
 		$ast = $this->traverseFileAst->process(
 			$source,
-			new ClassNameRewritter(basename($output, $fileExtension)),
+			new ClassNameRewritter(basename($output, '.' . $fileExtension)),
 			$returnFinder
 		);
 		$returnFinder->getReturn()->expr = $this->createNodeArray->process($content);

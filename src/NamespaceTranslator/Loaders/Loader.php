@@ -21,6 +21,8 @@ interface Loader
 
 	public function fileSuffix(string $locale): string;
 
+	public function getFileExtension(): string;
+
 	/**
 	 * @param array<mixed> $content
 	 */

@@ -16,6 +16,12 @@ class ManagerTest extends TestCase
 		(new Manager())->getFormatLoader('');
 	}
 
+	public function testGetFormatLoaderByExtensionThrowsInvalidArgument(): void
+	{
+		$this->expectException(InvalidArgument::class);
+		(new Manager())->getFormatLoaderByExtension('');
+	}
+
 	public function testGetLoaders(): void
 	{
 		$manager = new Manager();

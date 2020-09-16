@@ -10,6 +10,8 @@ use SplFileInfo;
 use Symfony\Component\Translation\MessageCatalogue;
 use Wavevision\DIServiceAnnotation\DIService;
 use Wavevision\NamespaceTranslator\Exceptions\InvalidState;
+use Wavevision\NamespaceTranslator\Loaders\InjectManager;
+use Wavevision\NamespaceTranslator\Loaders\Loader;
 use Wavevision\Utils\Arrays;
 use Wavevision\Utils\Path;
 
@@ -20,6 +22,7 @@ class ResourceManager
 {
 
 	use SmartObject;
+	use InjectManager;
 
 	private ResourceLoader $loader;
 
@@ -104,7 +107,9 @@ class ResourceManager
 	 */
 	private function getMasks(): array
 	{
-		return Arrays::map($this->pm->getFormats(), fn(string $format): string => "*.$format");
+		return array_values(
+			Arrays::map($this->manager->getLoaders(), fn(Loader $loader): string => "*." . $loader->getFileExtension())
+		);
 	}
 
 	private function setFallback(MessageCatalogue $catalogue): void

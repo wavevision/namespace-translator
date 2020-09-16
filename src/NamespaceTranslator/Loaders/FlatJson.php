@@ -8,13 +8,13 @@ use Nette\Utils\Json as NetteJson;
 use Wavevision\NamespaceTranslator\Resources\LocalePrefixPair;
 use Wavevision\Utils\Json as WavevisionJson;
 
-class Json implements Loader
+class FlatJson implements Loader
 {
 
 	use SmartObject;
 	use InjectHelpers;
 
-	public const FORMAT = 'json';
+	public const FORMAT = 'flatJson';
 
 	/**
 	 * @inheritDoc
@@ -39,7 +39,12 @@ class Json implements Loader
 
 	public function fileSuffix(string $locale): string
 	{
-		return $locale . '.json';
+		return $locale . '.' . $this->getFileExtension();
+	}
+
+	public function getFileExtension(): string
+	{
+		return 'json';
 	}
 
 	/**

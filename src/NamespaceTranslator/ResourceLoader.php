@@ -32,7 +32,7 @@ class ResourceLoader
 	public function load(string $resource, string $domain): MessageCatalogue
 	{
 		$format = $this->getResourceFormat($resource);
-		$loader = $this->manager->getFormatLoader($format);
+		$loader = $this->manager->getFormatLoaderByExtension($format);
 		$localePrefixPair = $loader->getLocalePrefixPair($this->getResourceName($resource, $format));
 		$messages = new Messages(
 			$loader->load($resource),

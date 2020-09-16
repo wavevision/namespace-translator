@@ -30,7 +30,7 @@ class Neon implements Loader
 
 	public function fileSuffix(string $locale): string
 	{
-		return $locale . '.neon';
+		return $locale . '.' . $this->getFileExtension();
 	}
 
 	/**
@@ -55,6 +55,11 @@ class Neon implements Loader
 	public function saveKeyValue($key, string $value, array &$content): void
 	{
 		$this->helpers->buildTree($key, $value, $content);
+	}
+
+	public function getFileExtension(): string
+	{
+		return 'neon';
 	}
 
 }

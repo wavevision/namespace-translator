@@ -46,14 +46,6 @@ class ParametersManager
 	/**
 	 * @return string[]
 	 */
-	public function getFormats(): array
-	{
-		return array_keys($this->loaders);
-	}
-
-	/**
-	 * @return string[]
-	 */
 	public function getLoaders(): array
 	{
 		return $this->loaders;

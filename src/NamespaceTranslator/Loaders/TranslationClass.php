@@ -58,7 +58,7 @@ class TranslationClass implements Loader
 
 	public function fileSuffix(string $locale): string
 	{
-		return ucfirst($locale) . $this->fileExtension();
+		return ucfirst($locale) . '.' . $this->getFileExtension();
 	}
 
 	/**
@@ -66,7 +66,7 @@ class TranslationClass implements Loader
 	 */
 	public function save(string $resource, array $content, ?string $referenceResource = null): void
 	{
-		$this->saveResource->save($resource, $content, $this->fileExtension(), $referenceResource);
+		$this->saveResource->save($resource, $content, $this->getFileExtension(), $referenceResource);
 	}
 
 	/**
@@ -86,9 +86,9 @@ class TranslationClass implements Loader
 		$this->helpers->buildTree($key, $value, $content);
 	}
 
-	private function fileExtension(): string
+	public function getFileExtension(): string
 	{
-		return '.php';
+		return 'php';
 	}
 
 	private function tokenizerResult(string $resource): TokenizeResult

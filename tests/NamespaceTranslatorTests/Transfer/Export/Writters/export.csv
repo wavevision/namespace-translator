@@ -1,8 +1,8 @@
 file,key,cs,en,format
 /Components/SomeComponent/translations/,message,Zpráva,Message,neon
 /Components/SomeComponent/translations/,otherMessage,"Další zpráva","Other message",neon
-/Models/Json/translations/,jsonMessage,"Hello Json Cs",,json
-/Models/Json/translations/,nested1.nested2,"Nested12 Cs",,json
+/Models/Json/translations/,jsonMessage,"Hello Json Cs",,flatJson
+/Models/Json/translations/,nested1.nested2,"Nested12 Cs",,flatJson
 /Models/Translated/Translations/,1,Jedna!,One!,php
 /Models/Translated/Translations/,c:self-SOME_KEY,"My chceme modele!","We want modele!",php
 /Models/Translated/Translations/,c:self-SUB.c:self-NESTED,Zanořené,,php
