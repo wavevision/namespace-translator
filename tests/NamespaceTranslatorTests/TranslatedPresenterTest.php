@@ -13,8 +13,7 @@ class TranslatedPresenterTest extends PresenterTestCase
 	public function testDefault(): void
 	{
 		$this->assertEquals(
-			"\nSome text\n\nApp\Presenters.\n\nVítejte\nYou are here!
-2 ks\nMy chceme modele!\nZanořené\nHello Json Cs\nPrefixedJson\n",
+			"\nSome text\n\nApp\Presenters.\n\nVítejte\nYou are here!\n2 ks\nMy chceme modele!\nZanořené\n",
 			$this->extractTextResponseContent(
 				$this->runPresenter(
 					new PresenterRequest(HomePresenter::class, HomePresenter::DEFAULT_ACTION, ['locale' => 'cs'])
@@ -26,8 +25,7 @@ class TranslatedPresenterTest extends PresenterTestCase
 	public function testDefaultEn(): void
 	{
 		$this->assertEquals(
-			"\nSome text\n\nApp\Presenters.\n\nVítejte\nYou are here!
-2 ks\nWe want modele!\nZanořené\nHello Json En\nPrefixedJson\n",
+			"\nSome text\n\nApp\Presenters.\n\nVítejte\nYou are here!\n2 ks\nWe want modele!\nZanořené\n",
 			$this->extractTextResponseContent(
 				$this->runPresenter(
 					new PresenterRequest(HomePresenter::class, HomePresenter::DEFAULT_ACTION, ['locale' => 'en'])
@@ -68,6 +66,16 @@ class TranslatedPresenterTest extends PresenterTestCase
 			"One!\n",
 			$this->extractTextResponseContent(
 				$this->runPresenter(new PresenterRequest(HomePresenter::class, 'integer', ['locale' => 'en']))
+			)
+		);
+	}
+
+	public function testJson(): void
+	{
+		$this->assertEquals(
+			"Hello Json Cs\nNested12 Cs",
+			$this->extractTextResponseContent(
+				$this->runPresenter(new PresenterRequest(HomePresenter::class, 'json', ['locale' => 'cs']))
 			)
 		);
 	}

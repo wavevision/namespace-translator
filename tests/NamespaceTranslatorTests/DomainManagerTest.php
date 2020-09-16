@@ -5,9 +5,6 @@ namespace Wavevision\NamespaceTranslatorTests;
 use PHPUnit\Framework\TestCase;
 use Wavevision\NamespaceTranslator\DomainManager;
 
-/**
- * @covers \Wavevision\NamespaceTranslator\DomainManager
- */
 class DomainManagerTest extends TestCase
 {
 

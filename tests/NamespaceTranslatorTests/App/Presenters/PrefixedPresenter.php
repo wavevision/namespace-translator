@@ -2,23 +2,20 @@
 
 namespace Wavevision\NamespaceTranslatorTests\App\Presenters;
 
-use Wavevision\NamespaceTranslatorTests\App\Models\Translated\Other;
+use Wavevision\NamespaceTranslatorTests\App\Models\Translated\InjectOther;
 
 class PrefixedPresenter extends BasePresenter
 {
 
-	/**
-	 * @inject
-	 */
-	public Other $model;
+	use InjectOther;
 
 	public function actionDefault(): void
 	{
 		$this->template->setParameters(
 			[
-				'message' => $this->model->processClassPrefixed(),
-				'nested' => $this->model->processNestedPrefixed(),
-				'unknown' => $this->model->processPrefixed(),
+				'message' => $this->other->processClassPrefixed(),
+				'nested' => $this->other->processNestedPrefixed(),
+				'unknown' => $this->other->processPrefixed(),
 			]
 		);
 	}

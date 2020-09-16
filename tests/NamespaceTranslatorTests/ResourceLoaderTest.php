@@ -7,9 +7,6 @@ use Wavevision\NamespaceTranslator\Exceptions\InvalidState;
 use Wavevision\NamespaceTranslator\Loaders\Manager;
 use Wavevision\NamespaceTranslator\ResourceLoader;
 
-/**
- * @covers \Wavevision\NamespaceTranslator\ResourceLoader
- */
 class ResourceLoaderTest extends TestCase
 {
 

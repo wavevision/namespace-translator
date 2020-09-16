@@ -19,17 +19,37 @@ class CsvTest extends DIContainerTestCase
 		$root = vfsStream::setup('r');
 		vfsStream::copyFromFileSystem(__DIR__ . '/../../../App', $root);
 		$this->csv->read(__DIR__ . '/export.csv', $root->url());
-		$files = ['Cs', 'En', 'PrefixedCs', 'PrefixedEn', 'OneCs'];
-		foreach ($files as $file) {
-			$this->checkFile($file);
+		$phpFiles = ['Cs', 'En', 'PrefixedCs', 'PrefixedEn', 'OneCs'];
+		foreach ($phpFiles as $file) {
+			$this->translated($file);
+		}
+		$jsonFiles = ['cs', 'en'];
+		foreach ($jsonFiles as $file) {
+			$this->json($file);
 		}
 	}
 
-	private function checkFile(string $file): void
+	private function checkFile(string $expected, string $actual): void
 	{
 		$this->assertFileEquals(
-			Path::join(__DIR__, 'expected', $file . '.expected'),
-			vfsStream::url(Path::join('r/Models/Translated/Translations', $file . '.php'))
+			$expected,
+			vfsStream::url($actual)
+		);
+	}
+
+	private function translated(string $file): void
+	{
+		$this->checkFile(
+			Path::join(__DIR__, 'expected', 'Translated', $file . '.expected'),
+			Path::join('r/Models/Translated/Translations', $file . '.php'),
+		);
+	}
+
+	private function json(string $file): void
+	{
+		$this->checkFile(
+			Path::join(__DIR__, 'expected', 'Json', $file . '.json'),
+			Path::join('r/Models/Json/translations', $file . '.json'),
 		);
 	}
 

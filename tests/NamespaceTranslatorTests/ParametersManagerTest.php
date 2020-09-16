@@ -5,9 +5,6 @@ namespace Wavevision\NamespaceTranslatorTests;
 use PHPUnit\Framework\TestCase;
 use Wavevision\NamespaceTranslator\ParametersManager;
 
-/**
- * @covers \Wavevision\NamespaceTranslator\ParametersManager
- */
 class ParametersManagerTest extends TestCase
 {
 

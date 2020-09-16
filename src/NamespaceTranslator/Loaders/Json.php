@@ -6,6 +6,7 @@ use Nette\SmartObject;
 use Nette\Utils\FileSystem;
 use Nette\Utils\Json as NetteJson;
 use Wavevision\NamespaceTranslator\Resources\LocalePrefixPair;
+use Wavevision\Utils\Json as WavevisionJson;
 
 class Json implements Loader
 {
@@ -20,7 +21,7 @@ class Json implements Loader
 	 */
 	public function load(string $resource): array
 	{
-		return NetteJson::decode($this->helpers->readResourceContent($resource), NetteJson::FORCE_ARRAY);
+		return NetteJson::decode($this->helpers->readResourceContent($resource), NetteJson::FORCE_ARRAY) ?: [];
 	}
 
 	/**
@@ -46,7 +47,8 @@ class Json implements Loader
 	 */
 	public function save(string $resource, array $content, ?string $referenceResource = null): void
 	{
-		FileSystem::write($resource, NetteJson::encode($content, NetteJson::PRETTY));
+		$encodedJson = WavevisionJson::encodePretty($content, WavevisionJson::INDENT_JS);
+		FileSystem::write($resource, $encodedJson);
 	}
 
 }

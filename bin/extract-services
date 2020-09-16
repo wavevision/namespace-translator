@@ -12,5 +12,9 @@ Runner::run(
 	new Configuration(
 		$root->string('src'),
 		$root->string('src', 'NamespaceTranslator', 'DI', 'config.neon')
+	),
+	new Configuration(
+		$root->string('tests'),
+		$root->string('tests', 'NamespaceTranslatorTests', 'App', 'services.neon')
 	)
 );

@@ -1,0 +1,12 @@
+# Generated file, do not modify directly!
+services:
+	- implement: Wavevision\NamespaceTranslatorTests\App\Components\OtherComponent\OtherComponentFactory
+	  inject: true
+	- implement: Wavevision\NamespaceTranslatorTests\App\Components\SomeComponent\SomeComponentFactory
+	  inject: true
+	- factory: Wavevision\NamespaceTranslatorTests\App\Models\Json\JsonModel
+	  inject: true
+	- factory: Wavevision\NamespaceTranslatorTests\App\Models\Translated\Model
+	  inject: true
+	- factory: Wavevision\NamespaceTranslatorTests\App\Models\Translated\Other
+	  inject: true

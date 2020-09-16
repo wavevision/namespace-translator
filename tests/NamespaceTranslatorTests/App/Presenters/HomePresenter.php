@@ -2,31 +2,40 @@
 
 namespace Wavevision\NamespaceTranslatorTests\App\Presenters;
 
-use Wavevision\NamespaceTranslatorTests\App\Models\Translated\Model;
+use Wavevision\NamespaceTranslatorTests\App\Models\Json\InjectJsonModel;
+use Wavevision\NamespaceTranslatorTests\App\Models\Translated\InjectModel;
 
 class HomePresenter extends BasePresenter
 {
 
-	/**
-	 * @inject
-	 */
-	public Model $translatedModel;
+	use InjectModel;
+	use InjectJsonModel;
 
 	public function actionDefault(): void
 	{
 		$this->template->setParameters(
 			[
-				'modelTranslation' => $this->translatedModel->process(),
-				'nestedTranslation' => $this->translatedModel->processNested(),
-				'paramTranslation' => $this->translatedModel->process(),
-				'integerTranslation' => $this->translatedModel->processInteger(),
+				'modelTranslation' => $this->model->process(),
+				'nestedTranslation' => $this->model->processNested(),
+				'paramTranslation' => $this->model->process(),
+				'integerTranslation' => $this->model->processInteger(),
 			]
 		);
 	}
 
 	public function actionInteger(): void
 	{
-		$this->template->setParameters(['translation' => $this->translatedModel->processInteger()]);
+		$this->template->setParameters(['translation' => $this->model->processInteger()]);
+	}
+
+	public function actionJson(): void
+	{
+		$this->template->setParameters(
+			[
+				'nonPrefix' => $this->jsonModel->nonPrefix(),
+				'nested' => $this->jsonModel->nested(),
+			]
+		);
 	}
 
 }

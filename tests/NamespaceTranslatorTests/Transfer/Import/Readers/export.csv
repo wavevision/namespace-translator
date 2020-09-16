@@ -1,6 +1,4 @@
 file,key,cs,en,format
-/Presenters/translations/,jsonMessage,"Hello Json Cs","Hello Json En",json
-/Presenters/translations/prefixed.,jsonMessage,PrefixedJson,,json
 /Presenters/translations/other.,title,"Titulek presenteru","Presenter title",neon
 /Presenters/translations/home.,title,Vítejte,,neon
 /Presenters/translations/home.,text,"You are here!",,neon
@@ -11,11 +9,13 @@ file,key,cs,en,format
 /translations/app.,someText,"Some text",,neon
 /translations/app.,messageWithCount,"Celkem %count% kusů",,neon
 /translations/app.,nested1.nested2,42,,neon
+/Models/Json/translations/,jsonMessage,"Hello Json Cs+", "Hello Json En+",json
+/Models/Json/translations/,nested1.nested2,"Nested12 Cs+", "Nested12 En+",json
 /Models/Translated/Translations/,1,Jedna!,One!,php
 /Models/Translated/Translations/Prefixed,test,123,eng123,php
 /Models/Translated/Translations/Prefixed,one.two.nested,nested,,php
 /Models/Translated/Translations/Prefixed,one.one,asd,,php
 /Models/Translated/Translations/Prefixed,c:self-BOOK,"The Tale of Scrotie McBoogerballs",,php
-/Models/Translated/Translations/,c:self-SOME_KEY,"My chceme modele!","We want modele!",php
+/Models/Translated/Translations/,c:self-SOME_KEY,"My chceme modele?","We want modele!",php
 /Models/Translated/Translations/,c:self-SUB.c:self-NESTED,Zanořené,nested,php
 /Models/Translated/Translations/One,c:self-HELLO,"Ahoj {c:self-NAME}!",,php

@@ -35,9 +35,6 @@ namespaceTranslator:
 
 services:
 	router: Wavevision\NamespaceTranslatorTests\App\Router\RouterFactory::createRouter
-	- Wavevision\NamespaceTranslatorTests\App\Components\OtherComponent\OtherComponentFactory
-	- Wavevision\NamespaceTranslatorTests\App\Components\SomeComponent\SomeComponentFactory
-	- factory: Wavevision\NamespaceTranslatorTests\App\Models\Translated\Model
-	  inject: true
-	- factory: Wavevision\NamespaceTranslatorTests\App\Models\Translated\Other
-	  inject: true
+
+includes:
+	- services.neon

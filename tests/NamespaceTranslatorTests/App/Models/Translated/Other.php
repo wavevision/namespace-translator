@@ -4,9 +4,13 @@ namespace Wavevision\NamespaceTranslatorTests\App\Models\Translated;
 
 use Contributte\Translation\Wrappers\Message;
 use Nette\SmartObject;
+use Wavevision\DIServiceAnnotation\DIService;
 use Wavevision\NamespaceTranslator\NamespaceTranslator;
 use Wavevision\NamespaceTranslatorTests\App\Models\Translated\Translations\OtherTranslation;
 
+/**
+ * @DIService(generateInject=true)
+ */
 class Other
 {
 

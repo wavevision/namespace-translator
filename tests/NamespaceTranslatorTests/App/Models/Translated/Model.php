@@ -3,9 +3,13 @@
 namespace Wavevision\NamespaceTranslatorTests\App\Models\Translated;
 
 use Nette\SmartObject;
+use Wavevision\DIServiceAnnotation\DIService;
 use Wavevision\NamespaceTranslator\NamespaceTranslator;
 use Wavevision\NamespaceTranslatorTests\App\Models\Translated\Translations\Cs;
 
+/**
+ * @DIService(generateInject=true)
+ */
 class Model
 {
 

@@ -9,9 +9,6 @@ use Wavevision\NamespaceTranslator\Loaders\TranslationClass;
 use Wavevision\NamespaceTranslator\Resources\Translation;
 use Wavevision\Utils\Strings;
 
-/**
- * @covers \Wavevision\NamespaceTranslator\Loaders\TranslationClass
- */
 class TranslationClassTest extends TestCase
 {
 

@@ -7,9 +7,6 @@ use Wavevision\NamespaceTranslator\Exceptions\InvalidArgument;
 use Wavevision\NamespaceTranslator\Loaders\Manager;
 use Wavevision\NamespaceTranslator\Loaders\Neon;
 
-/**
- * @covers \Wavevision\NamespaceTranslator\Loaders\Manager
- */
 class ManagerTest extends TestCase
 {
 
