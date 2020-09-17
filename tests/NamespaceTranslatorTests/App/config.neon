@@ -20,11 +20,21 @@ translation:
 		whitelist: [cs, en]
 	dirs: [%appDir%/translations]
 
+namespaceTranslator:
+	transfer:
+		google:
+			credentials: %vendorDir%/../temp/credentials.json
+			sheetId: '1yyLcWaBh5OiLcouMr0xhCqu4o_xLrJKc2tIuupVW8LE'
+			parts:
+				- directory: %vendorDir%/../tests/NamespaceTranslatorTests/App
+				  tabName: App
+		csv:
+			parts:
+				- directory: %vendorDir%/../tests/NamespaceTranslatorTests/App
+				  filename: %vendorDir%/../temp/export.csv
+
 services:
 	router: Wavevision\NamespaceTranslatorTests\App\Router\RouterFactory::createRouter
-	- Wavevision\NamespaceTranslatorTests\App\Components\OtherComponent\OtherComponentFactory
-	- Wavevision\NamespaceTranslatorTests\App\Components\SomeComponent\SomeComponentFactory
-	- factory: Wavevision\NamespaceTranslatorTests\App\Models\Translated\Model
-	  inject: true
-	- factory: Wavevision\NamespaceTranslatorTests\App\Models\Translated\Other
-	  inject: true
+
+includes:
+	- services.neon

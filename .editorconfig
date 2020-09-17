@@ -1,5 +1,8 @@
 root = true
 
+[*.expected]
+insert_final_newline = false
+
 [*.neon]
 charset = utf-8
 indent_style = tab

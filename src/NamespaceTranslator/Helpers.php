@@ -10,7 +10,15 @@ class Helpers
 	use StaticClass;
 
 	/**
-	 * @param string [] $keys
+	 * @param mixed $message
+	 */
+	public static function filter($message): string
+	{
+		return (string)$message;
+	}
+
+	/**
+	 * @param int[]|string[] $keys
 	 */
 	public static function key(array $keys): string
 	{

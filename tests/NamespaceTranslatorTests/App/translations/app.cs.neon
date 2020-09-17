@@ -1,3 +1,5 @@
-# Root translations, also handled by contributte/translation
-someText: "Some text"
-messageWithCount: "Celkem %count% kusů"
+someText: Some text
+messageWithCount: Celkem %count% kusů
+nested1:
+	nested2: "42"
+

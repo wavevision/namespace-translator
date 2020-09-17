@@ -12,20 +12,13 @@ use Wavevision\Utils\Strings;
 class Translator implements ITranslator
 {
 
+	use InjectContributteTranslator;
 	use SmartObject;
 
-	private ?string $domain;
-
-	private ContributteTranslator $translator;
-
-	public function __construct(ContributteTranslator $translator)
-	{
-		$this->domain = null;
-		$this->translator = $translator;
-	}
+	private ?string $domain = null;
 
 	/**
-	 * @param Message|NotTranslate|string|string[] $message
+	 * @param Message|NotTranslate|int|int[]|string|string[] $message
 	 * @param mixed ...$parameters
 	 */
 	public function translate($message, ...$parameters): string
@@ -40,6 +33,7 @@ class Translator implements ITranslator
 		if (is_array($message)) {
 			$message = Helpers::key($message);
 		}
+		$message = Helpers::filter($message);
 		$count = $parameters[0] ?? null;
 		$params = $parameters[1] ?? [];
 		$domain = $parameters[2] ?? null;
@@ -51,7 +45,7 @@ class Translator implements ITranslator
 			$params = $count;
 			$count = null;
 		}
-		return $this->translator->translate($message, $count, $params, $domain, $locale);
+		return $this->contributteTranslator->translate($message, $count, $params, $domain, $locale);
 	}
 
 	public function getDomain(): ?string
@@ -67,7 +61,7 @@ class Translator implements ITranslator
 
 	public function getTranslator(): ContributteTranslator
 	{
-		return $this->translator;
+		return $this->contributteTranslator;
 	}
 
 	public function classPrefixed(string $className): PrefixedTranslator
@@ -85,7 +79,7 @@ class Translator implements ITranslator
 		if ($this->domain === null) {
 			return false;
 		}
-		return $this->translator
+		return $this->contributteTranslator
 			->getCatalogue($locale)
 			->has($message, $this->domain);
 	}

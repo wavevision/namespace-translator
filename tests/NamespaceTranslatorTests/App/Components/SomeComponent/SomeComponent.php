@@ -5,8 +5,14 @@ namespace Wavevision\NamespaceTranslatorTests\App\Components\SomeComponent;
 use Contributte\Translation\Wrappers\Message;
 use Contributte\Translation\Wrappers\NotTranslate;
 use Nette\Application\UI\Control;
+use Nette\Bridges\ApplicationLatte\Template;
+use Wavevision\DIServiceAnnotation\DIService;
 use Wavevision\NamespaceTranslator\TranslatedComponent;
 
+/**
+ * @DIService(generateFactory=true)
+ * @property Template $template
+ */
 class SomeComponent extends Control
 {
 
@@ -14,10 +20,14 @@ class SomeComponent extends Control
 
 	public function render(): void
 	{
-		$this->template->no = $this->translator->translate(new NotTranslate('Bla!'));
-		$this->template->count = $this->translator->translate(new Message('app.messageWithCount', 5));
-		$this->template->locale = $this->translator->getTranslator()->getLocale();
-		$this->template->message = $this->translator->translate('message');
+		$this->template->setParameters(
+			[
+				'no' => $this->translator->translate(new NotTranslate('Bla!')),
+				'count' => $this->translator->translate(new Message('app.messageWithCount', 5)),
+				'locale' => $this->translator->getTranslator()->getLocale(),
+				'message' => $this->translator->translate('message'),
+			]
+		);
 		$this->template->render(__DIR__ . '/templates/default.latte');
 	}
 

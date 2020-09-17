@@ -3,12 +3,13 @@
 namespace Wavevision\NamespaceTranslator\DI;
 
 use Nette\DI\CompilerExtension;
+use Nette\DI\Extensions\InjectExtension;
 use Nette\DI\Helpers;
-use Nette\DI\Statement;
 use Nette\Schema\Expect;
 use Nette\Schema\Schema;
 use ReflectionClass;
 use Wavevision\NamespaceTranslator\Exceptions\InvalidArgument;
+use Wavevision\NamespaceTranslator\Loaders\FlatJson;
 use Wavevision\NamespaceTranslator\Loaders\Loader;
 use Wavevision\NamespaceTranslator\Loaders\Manager;
 use Wavevision\NamespaceTranslator\Loaders\Neon;
@@ -16,6 +17,22 @@ use Wavevision\NamespaceTranslator\Loaders\TranslationClass;
 
 class Extension extends CompilerExtension
 {
+
+	public const GOOGLE = 'google';
+
+	public const CSV = 'csv';
+
+	public const PARTS = 'parts';
+
+	public const DIRECTORY = 'directory';
+
+	public const FILENAME = 'filename';
+
+	public const TAB_NAME = 'tabName';
+
+	public const CREDENTIALS = 'credentials';
+
+	public const SHEET_ID = 'sheetId';
 
 	/**
 	 * @var mixed[]
@@ -28,6 +45,7 @@ class Extension extends CompilerExtension
 		self::LOADERS => [
 			Neon::FORMAT => Neon::class,
 			TranslationClass::FORMAT => TranslationClass::class,
+			FlatJson::FORMAT => FlatJson::class,
 		],
 	];
 
@@ -43,23 +61,27 @@ class Extension extends CompilerExtension
 	public function loadConfiguration(): void
 	{
 		$config = $this->validateExtensionConfig();
+		$builder = $this->getContainerBuilder();
 		['services' => $services] = $this->loadFromFile(__DIR__ . '/config.neon');
-		foreach ($services as $service) {
-			if ($service instanceof Statement) {
-				foreach ($service->arguments as $key => $argument) {
-					$service->arguments[$key] = Helpers::expand($argument, $config);
+		foreach ($services as $name => $service) {
+			$definition = $builder
+				->addDefinition($this->prefix(is_int($name) ? 's' . $name : $name))
+				->setFactory($service['factory'])
+				->addTag(InjectExtension::TAG_INJECT, $service['inject'] ?? false);
+			if (isset($service['arguments'])) {
+				foreach ($service['arguments'] as $key => $argument) {
+					$definition->setArgument($key, Helpers::expand($argument, $config));
 				}
 			}
 		}
-		$this->compiler->loadDefinitionsFromConfig($services);
-		$builder = $this->getContainerBuilder();
 		$manager = $builder
 			->addDefinition($this->prefix('loaderManager'))
 			->setFactory(Manager::class);
 		foreach ($config[self::LOADERS] as $format => $factory) {
 			$loader = $builder
 				->addDefinition($this->prefix($format . 'Loader'))
-				->setFactory($factory);
+				->setFactory($factory)
+				->addTag(InjectExtension::TAG_INJECT, true);
 			$manager->addSetup('addLoader', [$format, $loader]);
 		}
 	}
@@ -70,6 +92,42 @@ class Extension extends CompilerExtension
 		foreach (self::OPTIONS as $item) {
 			$structure[$item] = Expect::type(gettype($this->defaults[$item]))->default($this->defaults[$item]);
 		}
+		$structure['transfer'] = Expect::structure(
+			[
+				self::GOOGLE => Expect::anyOf(
+					Expect::structure(
+						[
+							self::CREDENTIALS => Expect::string()->required(),
+							self::SHEET_ID => Expect::string()->required(),
+							self::PARTS => Expect::arrayOf(
+								Expect::structure(
+									[
+										self::DIRECTORY => Expect::string()->required(),
+										self::TAB_NAME => Expect::string()->required(),
+									]
+								)->castTo('array')
+							)->required()->min(1),
+						]
+					)->required(false)->castTo('array'),
+					Expect::null()
+				),
+				self::CSV => Expect::anyOf(
+					Expect::structure(
+						[
+							self::PARTS => Expect::arrayOf(
+								Expect::structure(
+									[
+										self::DIRECTORY => Expect::string()->required(),
+										self::FILENAME => Expect::string()->required(),
+									]
+								)->castTo('array'),
+							)->required()->min(1),
+						]
+					)->required(false)->castTo('array'),
+					Expect::null()
+				),
+			]
+		)->required(false)->castTo('array');
 		return Expect::structure($structure)->castTo('array');
 	}
 

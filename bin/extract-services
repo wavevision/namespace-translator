@@ -1,0 +1,20 @@
+#!/usr/bin/env php
+<?php declare(strict_types = 1);
+
+use Wavevision\DIServiceAnnotation\Configuration;
+use Wavevision\DIServiceAnnotation\Runner;
+use Wavevision\Utils\Path;
+
+require __DIR__. '/../vendor/autoload.php';
+
+$root = Path::create(__DIR__, '..');
+Runner::run(
+	new Configuration(
+		$root->string('src'),
+		$root->string('src', 'NamespaceTranslator', 'DI', 'config.neon')
+	),
+	new Configuration(
+		$root->string('tests'),
+		$root->string('tests', 'NamespaceTranslatorTests', 'App', 'services.neon')
+	)
+);

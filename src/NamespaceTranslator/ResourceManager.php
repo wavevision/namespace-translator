@@ -2,53 +2,49 @@
 
 namespace Wavevision\NamespaceTranslator;
 
-use Contributte\Translation\Translator;
 use Nette\SmartObject;
 use Nette\Utils\Finder;
 use ReflectionClass;
 use SplFileInfo;
 use Symfony\Component\Translation\MessageCatalogue;
+use Wavevision\DIServiceAnnotation\DIService;
 use Wavevision\NamespaceTranslator\Exceptions\InvalidState;
+use Wavevision\NamespaceTranslator\Loaders\InjectManager;
+use Wavevision\NamespaceTranslator\Loaders\Loader;
 use Wavevision\Utils\Arrays;
 use Wavevision\Utils\Path;
 
+/**
+ * @DIService(name="resourceManager", generateInject=true)
+ */
 class ResourceManager
 {
 
+	use InjectContributteTranslator;
+	use InjectManager;
+	use InjectParametersManager;
+	use InjectResourceLoader;
 	use SmartObject;
-
-	private ResourceLoader $loader;
 
 	/**
 	 * @var string[]
 	 */
 	private array $namespaces = [];
 
-	private ParametersManager $pm;
-
 	/**
 	 * @var MessageCatalogue[]
 	 */
 	private array $resources = [];
 
-	private Translator $translator;
-
-	public function __construct(ResourceLoader $loader, ParametersManager $pm, Translator $translator)
-	{
-		$this->loader = $loader;
-		$this->pm = $pm;
-		$this->translator = $translator;
-	}
-
 	/**
 	 * @return Finder<SplFileInfo>|null
 	 */
-	public function findResources(string $namespace): ?iterable
+	public function findResources(string $className): ?iterable
 	{
-		if (!class_exists($namespace)) {
-			throw new InvalidState("Namespace '$namespace' is not a valid class.");
+		if (!class_exists($className)) {
+			throw new InvalidState("'$className' is not a valid class.");
 		}
-		$file = (string)(new ReflectionClass($namespace))->getFileName();
+		$file = (string)(new ReflectionClass($className))->getFileName();
 		$dirs = $this->getDirs($file);
 		if (!Arrays::isEmpty($dirs)) {
 			return Finder::findFiles(...$this->getMasks())->in(...$dirs);
@@ -59,8 +55,8 @@ class ResourceManager
 	public function loadResource(string $resource, string $domain): MessageCatalogue
 	{
 		if (!isset($this->resources[$resource])) {
-			$catalogue = $this->loader->load($resource, $domain);
-			$this->translator
+			$catalogue = $this->resourceLoader->load($resource, $domain);
+			$this->contributteTranslator
 				->getCatalogue($catalogue->getLocale())
 				->addCatalogue($catalogue);
 			$this->setFallback($catalogue);
@@ -86,7 +82,7 @@ class ResourceManager
 	{
 		return array_filter(
 			Arrays::map(
-				$this->pm->getDirNames(),
+				$this->parametersManager->getDirNames(),
 				function (string $dir) use ($file): string {
 					return Path::join(dirname($file), $dir);
 				}
@@ -100,16 +96,18 @@ class ResourceManager
 	 */
 	private function getMasks(): array
 	{
-		return Arrays::map($this->pm->getFormats(), fn(string $format): string => "*.$format");
+		return array_values(
+			Arrays::map($this->manager->getLoaders(), fn(Loader $loader): string => "*." . $loader->getFileExtension())
+		);
 	}
 
 	private function setFallback(MessageCatalogue $catalogue): void
 	{
-		foreach ($this->translator->getFallbackLocales() as $fallbackLocale) {
+		foreach ($this->contributteTranslator->getFallbackLocales() as $fallbackLocale) {
 			if ($catalogue->getLocale() !== $fallbackLocale) {
-				$this->translator
+				$this->contributteTranslator
 					->getCatalogue($catalogue->getLocale())
-					->addFallbackCatalogue($this->translator->getCatalogue($fallbackLocale));
+					->addFallbackCatalogue($this->contributteTranslator->getCatalogue($fallbackLocale));
 			}
 		}
 	}

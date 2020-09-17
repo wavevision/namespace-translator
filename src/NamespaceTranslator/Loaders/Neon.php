@@ -4,33 +4,62 @@ namespace Wavevision\NamespaceTranslator\Loaders;
 
 use Nette\Neon\Neon as NetteNeon;
 use Nette\SmartObject;
-use Wavevision\NamespaceTranslator\DomainManager;
-use Wavevision\NamespaceTranslator\Exceptions\InvalidState;
+use Nette\Utils\FileSystem;
 use Wavevision\NamespaceTranslator\Resources\LocalePrefixPair;
-use Wavevision\NamespaceTranslator\Resources\Messages;
-use Wavevision\Utils\Arrays;
 
 class Neon implements Loader
 {
 
 	use SmartObject;
+	use InjectHelpers;
 
 	public const FORMAT = 'neon';
 
-	public function load(string $resource, LocalePrefixPair $localePrefixPair): Messages
+	/**
+	 * @inheritDoc
+	 */
+	public function load(string $resource): array
 	{
-		$content = @file_get_contents($resource);
-		if ($content === false) {
-			throw new InvalidState("Unable to read contents of '$resource'.");
-		}
-		$messages = NetteNeon::decode($content) ?: [];
-		return new Messages($messages, $localePrefixPair->getLocale(), $localePrefixPair->getPrefix());
+		return NetteNeon::decode($this->helpers->readResourceContent($resource)) ?: [];
 	}
 
 	public function getLocalePrefixPair(string $resourceName): LocalePrefixPair
 	{
-		$parts = explode(DomainManager::DOMAIN_DELIMITER, $resourceName);
-		return new LocalePrefixPair(Arrays::pop($parts), Arrays::pop($parts));
+		return $this->helpers->dotNotationLocalePrefixPair($resourceName);
+	}
+
+	public function fileSuffix(string $locale): string
+	{
+		return $locale . '.' . $this->getFileExtension();
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function save(string $resource, array $content, ?string $referenceResource = null): void
+	{
+		FileSystem::write($resource, NetteNeon::encode($content, NetteNeon::BLOCK));
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function loadExport(string $resource): array
+	{
+		return $this->load($resource);
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function saveKeyValue($key, string $value, array &$content): void
+	{
+		$this->helpers->buildTree($key, $value, $content);
+	}
+
+	public function getFileExtension(): string
+	{
+		return 'neon';
 	}
 
 }

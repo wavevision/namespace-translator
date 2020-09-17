@@ -7,9 +7,6 @@ use Wavevision\NamespaceTranslator\Exceptions\InvalidArgument;
 use Wavevision\NamespaceTranslator\Loaders\Manager;
 use Wavevision\NamespaceTranslator\Loaders\Neon;
 
-/**
- * @covers \Wavevision\NamespaceTranslator\Loaders\Manager
- */
 class ManagerTest extends TestCase
 {
 
@@ -17,6 +14,12 @@ class ManagerTest extends TestCase
 	{
 		$this->expectException(InvalidArgument::class);
 		(new Manager())->getFormatLoader('');
+	}
+
+	public function testGetFormatLoaderByExtensionThrowsInvalidArgument(): void
+	{
+		$this->expectException(InvalidArgument::class);
+		(new Manager())->getFormatLoaderByExtension('');
 	}
 
 	public function testGetLoaders(): void
