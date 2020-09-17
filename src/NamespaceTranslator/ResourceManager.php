@@ -2,7 +2,6 @@
 
 namespace Wavevision\NamespaceTranslator;
 
-use Contributte\Translation\Translator;
 use Nette\SmartObject;
 use Nette\Utils\Finder;
 use ReflectionClass;
@@ -16,36 +15,26 @@ use Wavevision\Utils\Arrays;
 use Wavevision\Utils\Path;
 
 /**
- * @DIService(name="resourceManager")
+ * @DIService(name="resourceManager", generateInject=true)
  */
 class ResourceManager
 {
 
-	use SmartObject;
+	use InjectContributteTranslator;
 	use InjectManager;
-
-	private ResourceLoader $loader;
+	use InjectParametersManager;
+	use InjectResourceLoader;
+	use SmartObject;
 
 	/**
 	 * @var string[]
 	 */
 	private array $namespaces = [];
 
-	private ParametersManager $pm;
-
 	/**
 	 * @var MessageCatalogue[]
 	 */
 	private array $resources = [];
-
-	private Translator $translator;
-
-	public function __construct(ResourceLoader $loader, ParametersManager $pm, Translator $translator)
-	{
-		$this->loader = $loader;
-		$this->pm = $pm;
-		$this->translator = $translator;
-	}
 
 	/**
 	 * @return Finder<SplFileInfo>|null
@@ -66,8 +55,8 @@ class ResourceManager
 	public function loadResource(string $resource, string $domain): MessageCatalogue
 	{
 		if (!isset($this->resources[$resource])) {
-			$catalogue = $this->loader->load($resource, $domain);
-			$this->translator
+			$catalogue = $this->resourceLoader->load($resource, $domain);
+			$this->contributteTranslator
 				->getCatalogue($catalogue->getLocale())
 				->addCatalogue($catalogue);
 			$this->setFallback($catalogue);
@@ -93,7 +82,7 @@ class ResourceManager
 	{
 		return array_filter(
 			Arrays::map(
-				$this->pm->getDirNames(),
+				$this->parametersManager->getDirNames(),
 				function (string $dir) use ($file): string {
 					return Path::join(dirname($file), $dir);
 				}
@@ -114,11 +103,11 @@ class ResourceManager
 
 	private function setFallback(MessageCatalogue $catalogue): void
 	{
-		foreach ($this->translator->getFallbackLocales() as $fallbackLocale) {
+		foreach ($this->contributteTranslator->getFallbackLocales() as $fallbackLocale) {
 			if ($catalogue->getLocale() !== $fallbackLocale) {
-				$this->translator
+				$this->contributteTranslator
 					->getCatalogue($catalogue->getLocale())
-					->addFallbackCatalogue($this->translator->getCatalogue($fallbackLocale));
+					->addFallbackCatalogue($this->contributteTranslator->getCatalogue($fallbackLocale));
 			}
 		}
 	}

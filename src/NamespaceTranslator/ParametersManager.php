@@ -6,7 +6,7 @@ use Nette\SmartObject;
 use Wavevision\DIServiceAnnotation\DIService;
 
 /**
- * @DIService(generateInject=true, name="parametersManager", params={"%dirNames%", "%loaders%"})
+ * @DIService(generateInject=true, name="parametersManager", params={"%dirNames%"})
  */
 class ParametersManager
 {
@@ -19,20 +19,11 @@ class ParametersManager
 	private array $dirNames;
 
 	/**
-	 * @var string[]
-	 */
-	private array $loaders;
-
-	/**
 	 * @param string[] $dirNames
-	 * @param string[] $loaders
 	 */
-	public function __construct(
-		array $dirNames,
-		array $loaders
-	) {
+	public function __construct(array $dirNames)
+	{
 		$this->dirNames = $dirNames;
-		$this->loaders = $loaders;
 	}
 
 	/**
@@ -41,14 +32,6 @@ class ParametersManager
 	public function getDirNames(): array
 	{
 		return $this->dirNames;
-	}
-
-	/**
-	 * @return string[]
-	 */
-	public function getLoaders(): array
-	{
-		return $this->loaders;
 	}
 
 }

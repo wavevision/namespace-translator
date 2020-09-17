@@ -29,7 +29,7 @@ services:
 	  inject: true
 	parametersManager:
 	  factory: Wavevision\NamespaceTranslator\ParametersManager
-	  arguments: [%dirNames%, %loaders%]
+	  arguments: [%dirNames%]
 	  inject: true
 	resourceLoader:
 	  factory: Wavevision\NamespaceTranslator\ResourceLoader

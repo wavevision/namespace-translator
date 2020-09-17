@@ -6,7 +6,7 @@ use Nette\SmartObject;
 use Wavevision\DIServiceAnnotation\DIService;
 
 /**
- * @DIService(name="domainManager")
+ * @DIService(name="domainManager", generateInject=true)
  */
 class DomainManager
 {

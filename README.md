@@ -38,7 +38,7 @@ namespaceTranslator:
     loaders: # namespace translations loaders
         neon: Wavevision\NamespaceTranslator\Loaders\Neon
         php: Wavevision\NamespaceTranslator\Loaders\TranslationClass
-    
+        flatJson: Wavevision\NamespaceTranslator\Loaders\FlatJson
 ```
 > **Note:** Refer to [Contributte docs](https://contributte.org/packages/contributte/translation.html#configuration) 
 > for further info about configuring `translation`.
@@ -74,6 +74,7 @@ There are two resource loaders included by default:
 
 - [Neon](./src/NamespaceTranslator/Loaders/Neon.php) – loads translations from `neon` files
 - [TranslationClass](./src/NamespaceTranslator/Loaders/TranslationClass.php) – loads translations from PHP classes
+- [FlatJson](./src/NamespaceTranslator/Loaders/FlatJson.php) - loads translations from flat (no nesting) `json` files
 
 Using PHP classes is useful when you want to refer to your translations using constants so changes in your resources get propagated throughout the whole project.
 
@@ -89,7 +90,7 @@ For exporting \ importing translations to \ from CSV or GoogleSheet (or both) up
 namespaceTranslator:
 	transfer:
 		google:
-.			credentials: credentials.json
+			credentials: credentials.json
 			sheetId: googleSheetId
 			parts:
 				- directory: %vendorDir%/../App/AdminModule
@@ -100,13 +101,15 @@ namespaceTranslator:
 				  filename: %vendorDir%/../temp/front-module.csv
 ```
 
-run command to export translations
+Set locales whitelist from [contributte/translation](https://contributte.org/packages/contributte/translation.html#configuration). Whitelist is used for creating translation columns in export.
+
+Run command to export translations
 
 ```bash
 php {bin/console} namespace-translator:export
 ``` 
 
-update translations, then run command to import them
+Update translations, then run command to import them
 
 ```bash
 php {bin/console} namespace-translator:import
