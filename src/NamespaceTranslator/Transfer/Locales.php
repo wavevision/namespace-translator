@@ -27,12 +27,8 @@ class Locales
 	 */
 	public function optionalLocales(): array
 	{
-		$whitelist = $this->translator->getLocalesWhitelist();
-		if ($whitelist === null) {
-			throw new InvalidState('Locale whitelist must be set.');
-		}
 		return Arrays::filter(
-			$whitelist,
+			$this->locales(),
 			fn(string $locale): bool => $locale !== $this->defaultLocale()
 		);
 	}
@@ -43,6 +39,18 @@ class Locales
 	public function allLocales(): array
 	{
 		return [$this->defaultLocale(), ...$this->optionalLocales()];
+	}
+
+	/**
+	 * @return array<string>
+	 */
+	public function locales(): array
+	{
+		$whitelist = $this->translator->getLocalesWhitelist();
+		if ($whitelist === null) {
+			throw new InvalidState('Locale whitelist must be set.');
+		}
+		return $whitelist;
 	}
 
 }
