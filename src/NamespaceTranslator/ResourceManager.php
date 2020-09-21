@@ -11,6 +11,7 @@ use Wavevision\DIServiceAnnotation\DIService;
 use Wavevision\NamespaceTranslator\Exceptions\InvalidState;
 use Wavevision\NamespaceTranslator\Loaders\InjectManager;
 use Wavevision\NamespaceTranslator\Loaders\Loader;
+use Wavevision\NamespaceTranslator\Transfer\InjectLocales;
 use Wavevision\Utils\Arrays;
 use Wavevision\Utils\Path;
 
@@ -21,6 +22,7 @@ class ResourceManager
 {
 
 	use InjectContributteTranslator;
+	use InjectLocales;
 	use InjectManager;
 	use InjectParametersManager;
 	use InjectResourceLoader;
@@ -103,11 +105,16 @@ class ResourceManager
 
 	private function setFallback(MessageCatalogue $catalogue): void
 	{
-		foreach ($this->contributteTranslator->getFallbackLocales() as $fallbackLocale) {
-			if ($catalogue->getLocale() !== $fallbackLocale) {
-				$this->contributteTranslator
-					->getCatalogue($catalogue->getLocale())
-					->addFallbackCatalogue($this->contributteTranslator->getCatalogue($fallbackLocale));
+		$fallbackLocales = $this->contributteTranslator->getFallbackLocales();
+		if (in_array($catalogue->getLocale(), $fallbackLocales)) {
+			foreach ($this->locales->locales() as $locale) {
+				foreach ($fallbackLocales as $fallbackLocale) {
+					if ($fallbackLocale !== $locale) {
+						$this->contributteTranslator
+							->getCatalogue($locale)
+							->addFallbackCatalogue($this->contributteTranslator->getCatalogue($fallbackLocale));
+					}
+				}
 			}
 		}
 	}
