@@ -4,6 +4,7 @@ namespace Wavevision\NamespaceTranslator\Loaders\TranslationClass;
 
 use Nette\SmartObject;
 use Wavevision\DIServiceAnnotation\DIService;
+use function basename;
 
 /**
  * @DIService(generateInject=true)

@@ -14,6 +14,9 @@ use Wavevision\NamespaceTranslator\Loaders\Loader;
 use Wavevision\NamespaceTranslator\Loaders\Manager;
 use Wavevision\NamespaceTranslator\Loaders\Neon;
 use Wavevision\NamespaceTranslator\Loaders\TranslationClass;
+use function gettype;
+use function is_int;
+use function sprintf;
 
 class Extension extends CompilerExtension
 {
@@ -34,6 +37,15 @@ class Extension extends CompilerExtension
 
 	public const SHEET_ID = 'sheetId';
 
+	private const DIR_NAMES = 'dirNames';
+
+	private const LOADERS = 'loaders';
+
+	private const OPTIONS = [
+		self::DIR_NAMES,
+		self::LOADERS,
+	];
+
 	/**
 	 * @var mixed[]
 	 */
@@ -47,15 +59,6 @@ class Extension extends CompilerExtension
 			TranslationClass::FORMAT => TranslationClass::class,
 			FlatJson::FORMAT => FlatJson::class,
 		],
-	];
-
-	private const DIR_NAMES = 'dirNames';
-
-	private const LOADERS = 'loaders';
-
-	private const OPTIONS = [
-		self::DIR_NAMES,
-		self::LOADERS,
 	];
 
 	public function loadConfiguration(): void

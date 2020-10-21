@@ -4,6 +4,13 @@ namespace Wavevision\NamespaceTranslator;
 
 use Nette\SmartObject;
 use Wavevision\DIServiceAnnotation\DIService;
+use function array_map;
+use function array_pop;
+use function class_exists;
+use function explode;
+use function implode;
+use function lcfirst;
+use function ucfirst;
 
 /**
  * @DIService(name="domainManager", generateInject=true)

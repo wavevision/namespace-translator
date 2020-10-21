@@ -2,7 +2,9 @@
 
 namespace Wavevision\NamespaceTranslator\Exceptions;
 
-class SkipResource extends \Exception
+use Exception;
+
+class SkipResource extends Exception
 {
 
 }

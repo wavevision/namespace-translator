@@ -6,6 +6,9 @@ use Contributte\Translation\Wrappers\Message;
 use Contributte\Translation\Wrappers\NotTranslate;
 use Nette\Localization\ITranslator;
 use Nette\SmartObject;
+use function is_array;
+use function is_int;
+use function is_string;
 
 class PrefixedTranslator implements ITranslator
 {

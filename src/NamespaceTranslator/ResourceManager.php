@@ -14,6 +14,11 @@ use Wavevision\NamespaceTranslator\Loaders\Loader;
 use Wavevision\NamespaceTranslator\Transfer\InjectLocales;
 use Wavevision\Utils\Arrays;
 use Wavevision\Utils\Path;
+use function array_filter;
+use function array_values;
+use function class_exists;
+use function dirname;
+use function in_array;
 
 /**
  * @DIService(name="resourceManager", generateInject=true)

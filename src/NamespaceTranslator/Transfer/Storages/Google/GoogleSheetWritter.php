@@ -8,6 +8,8 @@ use Google_Service_Sheets_SheetProperties;
 use Google_Service_Sheets_ValueRange;
 use Nette\SmartObject;
 use Wavevision\DIServiceAnnotation\DIService;
+use function array_column;
+use function count;
 
 /**
  * @codeCoverageIgnore

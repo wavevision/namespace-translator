@@ -13,6 +13,14 @@ use PhpParser\Node\Scalar\String_;
 use Wavevision\DIServiceAnnotation\DIService;
 use Wavevision\NamespaceTranslator\Exceptions\InvalidState;
 use Wavevision\Utils\Arrays;
+use function array_slice;
+use function count;
+use function preg_match_all;
+use function preg_quote;
+use function preg_replace;
+use function sprintf;
+use function str_replace;
+use function trim;
 
 /**
  * @DIService(generateInject=true)

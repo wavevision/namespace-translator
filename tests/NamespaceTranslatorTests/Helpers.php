@@ -2,6 +2,7 @@
 
 namespace Wavevision\NamespaceTranslatorTests;
 
+use Exception;
 use Nette\StaticClass;
 use PhpParser\Node\Expr;
 use PhpParser\Node\Stmt\Expression;
@@ -32,7 +33,7 @@ class Helpers
 			$expression = $ast[0];
 			return $expression->expr;
 		}
-		throw new \Exception('Invalid state.');
+		throw new Exception('Invalid state.');
 	}
 
 }

@@ -6,6 +6,7 @@ use Nette\SmartObject;
 use org\bovigo\vfs\vfsStream;
 use Wavevision\NamespaceTranslator\Transfer\Storages\Csv\InjectCsvWritter;
 use Wavevision\NetteTests\TestCases\DIContainerTestCase;
+use function file_get_contents;
 
 class CsvWritterTest extends DIContainerTestCase
 {

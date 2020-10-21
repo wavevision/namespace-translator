@@ -3,6 +3,7 @@
 namespace Wavevision\NamespaceTranslator;
 
 use Nette\StaticClass;
+use function implode;
 
 class Helpers
 {

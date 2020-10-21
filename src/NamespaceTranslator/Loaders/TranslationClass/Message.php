@@ -4,6 +4,7 @@ namespace Wavevision\NamespaceTranslator\Loaders\TranslationClass;
 
 use Nette\StaticClass;
 use Wavevision\Utils\Arrays;
+use function sprintf;
 
 class Message
 {

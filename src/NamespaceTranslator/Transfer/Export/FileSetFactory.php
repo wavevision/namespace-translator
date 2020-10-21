@@ -12,6 +12,9 @@ use Wavevision\NamespaceTranslator\Loaders\Loader;
 use Wavevision\NamespaceTranslator\Transfer\InjectLocales;
 use Wavevision\Utils\Arrays;
 use Wavevision\Utils\Finder;
+use function str_replace;
+use function strlen;
+use function substr_replace;
 
 /**
  * @DIService(generateInject=true)

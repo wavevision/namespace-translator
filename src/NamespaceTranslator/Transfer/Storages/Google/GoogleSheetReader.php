@@ -5,6 +5,7 @@ namespace Wavevision\NamespaceTranslator\Transfer\Storages\Google;
 use Nette\SmartObject;
 use Wavevision\DIServiceAnnotation\DIService;
 use Wavevision\NamespaceTranslator\Transfer\Export\InjectConvertToLines;
+use function count;
 
 /**
  * @codeCoverageIgnore

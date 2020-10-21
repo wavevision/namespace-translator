@@ -16,4 +16,5 @@ class ExtensionTest extends TestCase
 		$this->expectException(InvalidArgument::class);
 		$extension->loadConfiguration();
 	}
+
 }

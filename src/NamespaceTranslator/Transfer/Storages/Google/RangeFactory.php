@@ -4,6 +4,7 @@ namespace Wavevision\NamespaceTranslator\Transfer\Storages\Google;
 
 use Nette\SmartObject;
 use Wavevision\DIServiceAnnotation\DIService;
+use function chr;
 
 /**
  * @DIService(generateInject=true)

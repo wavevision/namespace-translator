@@ -9,6 +9,8 @@ use PhpParser\Node\Expr\ArrayItem;
 use PhpParser\Node\Scalar\LNumber;
 use PhpParser\Node\Scalar\String_;
 use Wavevision\DIServiceAnnotation\DIService;
+use function is_array;
+use function is_int;
 
 /**
  * @DIService(generateInject=true)
