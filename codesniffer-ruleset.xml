@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<ruleset name="WavevisionPropsControl">
+<ruleset name="Wavevision NamespaceTranslator">
 	<rule ref="vendor/wavevision/coding-standard/php/ruleset.xml"/>
 	<rule ref="SlevomatCodingStandard.Files.TypeNameMatchesFileName">
 		<properties>
