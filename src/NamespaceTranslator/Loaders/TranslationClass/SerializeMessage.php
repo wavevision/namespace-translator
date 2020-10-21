@@ -54,6 +54,7 @@ class SerializeMessage
 
 	public function deserialize(string $serialized): ?Expr
 	{
+		$serialized = str_replace('%', '%%', $serialized);
 		$regex = sprintf(
 			'({%s[a-zA-Z%s]*%s[a-zA-Z_]*})',
 			...Arrays::map(

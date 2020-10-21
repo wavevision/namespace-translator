@@ -61,9 +61,9 @@ class SerializeMessageTest extends DIContainerTestCase
 
 	public function testDeserialize(): void
 	{
-		$expr = $this->serializeMessage->deserialize('Hello there {c:self-NAME} {c:A-B_X}!');
+		$expr = $this->serializeMessage->deserialize('Hello % %s there {c:self-NAME} {c:A-B_X}!');
 		$this->assertEquals(
-			"Message::create('Hello there %s %s!', self::NAME, A::B_X)",
+			"Message::create('Hello %% %%s there %s %s!', self::NAME, A::B_X)",
 			Helpers::exprToString($expr)
 		);
 	}
