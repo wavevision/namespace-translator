@@ -10,6 +10,8 @@ use Wavevision\DIServiceAnnotation\DIService;
 use Wavevision\NamespaceTranslator\Exceptions\InvalidState;
 use Wavevision\NamespaceTranslator\Loaders\InjectManager;
 use Wavevision\NamespaceTranslator\Resources\Messages;
+use function basename;
+use function pathinfo;
 
 /**
  * @DIService(name="resourceLoader", generateInject=true)

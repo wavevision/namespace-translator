@@ -8,6 +8,7 @@ use Contributte\Translation\Wrappers\NotTranslate;
 use Nette\Localization\ITranslator;
 use Nette\SmartObject;
 use Wavevision\Utils\Strings;
+use function is_array;
 
 class Translator implements ITranslator
 {

@@ -10,6 +10,9 @@ use Wavevision\NamespaceTranslator\Transfer\Export\FileSet;
 use Wavevision\NamespaceTranslator\Transfer\Export\InjectConvertToLines;
 use Wavevision\NamespaceTranslator\Transfer\Export\Translations;
 use Wavevision\NamespaceTranslator\Transfer\InjectLocales;
+use function array_shift;
+use function implode;
+use function sprintf;
 
 /**
  * @DIService(generateInject=true)

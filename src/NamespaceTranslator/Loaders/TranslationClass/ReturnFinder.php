@@ -8,6 +8,7 @@ use PhpParser\Node\Stmt\Return_;
 use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitorAbstract;
 use Wavevision\NamespaceTranslator\Exceptions\InvalidState;
+use function count;
 
 class ReturnFinder extends NodeVisitorAbstract
 {

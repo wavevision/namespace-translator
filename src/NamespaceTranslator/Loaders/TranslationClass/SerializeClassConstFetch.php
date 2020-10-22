@@ -8,6 +8,11 @@ use PhpParser\Node\Identifier;
 use PhpParser\Node\Name;
 use Wavevision\DIServiceAnnotation\DIService;
 use Wavevision\NamespaceTranslator\Exceptions\InvalidState;
+use function explode;
+use function implode;
+use function strlen;
+use function strpos;
+use function substr;
 
 /**
  * @DIService(generateInject=true)

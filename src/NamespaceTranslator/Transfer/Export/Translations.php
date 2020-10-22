@@ -4,6 +4,7 @@ namespace Wavevision\NamespaceTranslator\Transfer\Export;
 
 use Nette\SmartObject;
 use Wavevision\Utils\Arrays;
+use function usort;
 
 class Translations
 {

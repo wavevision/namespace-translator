@@ -2,7 +2,9 @@
 
 namespace Wavevision\NamespaceTranslator\Exceptions;
 
-class InvalidArgument extends \Exception
+use Exception;
+
+class InvalidArgument extends Exception
 {
 
 }

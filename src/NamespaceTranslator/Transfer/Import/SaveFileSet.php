@@ -12,6 +12,10 @@ use Wavevision\NamespaceTranslator\Loaders\Loader;
 use Wavevision\NamespaceTranslator\Transfer\Export\FileSet;
 use Wavevision\NamespaceTranslator\Transfer\InjectLocales;
 use Wavevision\Utils\Arrays;
+use function count;
+use function is_file;
+use function trim;
+use function unlink;
 
 /**
  * @DIService(generateInject=true)

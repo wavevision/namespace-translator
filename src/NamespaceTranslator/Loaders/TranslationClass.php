@@ -13,8 +13,16 @@ use Wavevision\NamespaceTranslator\Resources\LocalePrefixPair;
 use Wavevision\NamespaceTranslator\Resources\Translation;
 use Wavevision\NamespaceTranslator\Transfer\InjectLocales;
 use Wavevision\Utils\Arrays;
+use Wavevision\Utils\Strings;
 use Wavevision\Utils\Tokenizer\Tokenizer;
 use Wavevision\Utils\Tokenizer\TokenizeResult;
+use function class_exists;
+use function class_implements;
+use function in_array;
+use function is_file;
+use function sprintf;
+use function ucfirst;
+use const T_CLASS;
 
 class TranslationClass implements Loader
 {
@@ -49,10 +57,7 @@ class TranslationClass implements Loader
 	 */
 	public function getLocalePrefixPair(string $resourceName): LocalePrefixPair
 	{
-		$parts = preg_split('/(?=[A-Z])/', $resourceName);
-		if ($parts === false) {
-			throw new InvalidState("Invalid resource name '$resourceName'.");
-		}
+		$parts = Strings::split($resourceName, '/(?=[A-Z])/');
 		return new LocalePrefixPair(Arrays::pop($parts), Arrays::implode($parts, ''));
 	}
 

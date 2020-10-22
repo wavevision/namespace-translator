@@ -8,6 +8,10 @@ use Wavevision\NamespaceTranslator\DomainManager;
 use Wavevision\NamespaceTranslator\Exceptions\MissingResource;
 use Wavevision\NamespaceTranslator\Resources\LocalePrefixPair;
 use Wavevision\Utils\Arrays;
+use function explode;
+use function file_get_contents;
+use function filter_var;
+use const FILTER_VALIDATE_INT;
 
 /**
  * @DIService(generateInject=true)

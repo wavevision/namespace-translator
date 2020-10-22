@@ -2,7 +2,9 @@
 
 namespace Wavevision\NamespaceTranslator\Exceptions;
 
-class MissingResource extends \Exception
+use Exception;
+
+class MissingResource extends Exception
 {
 
 }

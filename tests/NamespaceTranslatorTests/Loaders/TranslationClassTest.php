@@ -2,17 +2,13 @@
 
 namespace Wavevision\NamespaceTranslatorTests\Loaders;
 
-use phpmock\phpunit\PHPMock;
 use PHPUnit\Framework\TestCase;
 use Wavevision\NamespaceTranslator\Exceptions\InvalidState;
 use Wavevision\NamespaceTranslator\Loaders\TranslationClass;
 use Wavevision\NamespaceTranslator\Resources\Translation;
-use Wavevision\Utils\Strings;
 
 class TranslationClassTest extends TestCase
 {
-
-	use PHPMock;
 
 	public function testLoadThrowsInvalidStateOnClassName(): void
 	{
@@ -38,16 +34,6 @@ class TranslationClassTest extends TestCase
 			)
 		);
 		$translationClass->load(__DIR__ . '/InvalidClass.php');
-	}
-
-	public function testGetLocalePrefixPairThrowsInvalidState(): void
-	{
-		$this->getFunctionMock(Strings::getNamespace(TranslationClass::class), 'preg_split')
-			->expects($this->once())
-			->willReturn(false);
-		$translationClass = new TranslationClass();
-		$this->expectException(InvalidState::class);
-		$translationClass->getLocalePrefixPair('');
 	}
 
 }

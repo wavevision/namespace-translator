@@ -6,6 +6,8 @@ use Nette\SmartObject;
 use Wavevision\DIServiceAnnotation\DIService;
 use Wavevision\NamespaceTranslator\Exceptions\InvalidState;
 use Wavevision\NamespaceTranslator\Transfer\InjectLocales;
+use function array_search;
+use function is_int;
 
 /**
  * @DIService(generateInject=true)

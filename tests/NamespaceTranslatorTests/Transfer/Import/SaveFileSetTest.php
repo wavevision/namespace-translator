@@ -9,6 +9,7 @@ use Wavevision\NamespaceTranslator\Loaders\Neon;
 use Wavevision\NamespaceTranslator\Transfer\Export\FileSet;
 use Wavevision\NamespaceTranslator\Transfer\Import\InjectSaveFileSet;
 use Wavevision\NetteTests\TestCases\DIContainerTestCase;
+use function touch;
 
 class SaveFileSetTest extends DIContainerTestCase
 {
@@ -41,7 +42,7 @@ class SaveFileSetTest extends DIContainerTestCase
 				Neon::FORMAT
 			)
 		);
-		$this->assertFileNotExists($file);
+		$this->assertFileDoesNotExist($file);
 	}
 
 }

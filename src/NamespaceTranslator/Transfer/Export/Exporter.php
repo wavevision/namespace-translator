@@ -9,6 +9,7 @@ use Wavevision\NamespaceTranslator\Transfer\Export\Writters\InjectCsv;
 use Wavevision\NamespaceTranslator\Transfer\Export\Writters\InjectGoogleSheet;
 use Wavevision\NamespaceTranslator\Transfer\InjectTransferWalker;
 use Wavevision\NamespaceTranslator\Transfer\Storages\Google\Config;
+use function sprintf;
 
 /**
  * @DIService(generateInject=true)
