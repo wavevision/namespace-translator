@@ -61,4 +61,4 @@ else
 	google-chrome $(coverage)/index.html
 endif
 
-ci: phpcs phpstan test-coverage-report
+ci: check-syntax phpcs phpstan test-coverage-report
