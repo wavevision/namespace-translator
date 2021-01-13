@@ -5,6 +5,7 @@ namespace Wavevision\NamespaceTranslator\Transfer;
 use Nette\SmartObject;
 use Wavevision\DIServiceAnnotation\DIService;
 use Wavevision\NamespaceTranslator\DI\Extension;
+use Wavevision\NamespaceTranslator\Exceptions\InvalidState;
 use Wavevision\NamespaceTranslator\Transfer\Storages\Google\Config;
 
 /**
@@ -16,20 +17,23 @@ class TransferWalker
 	use SmartObject;
 
 	/**
-	 * @var array<mixed>
+	 * @var array<mixed>|null
 	 */
-	private array $config;
+	private ?array $config;
 
 	/**
-	 * @param array<mixed> $config
+	 * @param array<mixed>|null $config
 	 */
-	public function __construct(array $config)
+	public function __construct(?array $config)
 	{
 		$this->config = $config;
 	}
 
 	public function execute(callable $csv, callable $google): void
 	{
+		if ($this->config === null) {
+			throw new InvalidState("Export/Import not configured. Property 'transfer' is not set.");
+		}
 		foreach ($this->config as $type => $config) {
 			if ($config === null) {
 				continue;
