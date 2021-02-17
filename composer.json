@@ -35,10 +35,10 @@
   },
   "require": {
     "php": ">=7.4",
-    "contributte/console": "^0.8.0",
-    "contributte/translation": "^0.7.1",
+    "contributte/console": "^0.9",
+    "contributte/translation": "^0.8",
     "google/apiclient": "^2.7",
-    "nette/application": "^3.0",
+    "nette/application": "3.0.8",
     "nette/di": "^3.0",
     "nette/neon": "^3.0",
     "nikic/php-parser": "^4.9",

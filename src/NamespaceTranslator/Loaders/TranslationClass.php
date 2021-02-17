@@ -115,6 +115,7 @@ class TranslationClass implements Loader
 		if (!class_exists($class)) {
 			throw new InvalidState("Translation class '$class' does not exist.");
 		}
+		// @phpstan-ignore-next-line
 		if (!in_array(Translation::class, class_implements($class))) {
 			throw new InvalidState(sprintf("Translation class '%s' must implement '%s'.", $class, Translation::class));
 		}
