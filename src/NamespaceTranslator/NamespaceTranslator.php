@@ -2,7 +2,9 @@
 
 namespace Wavevision\NamespaceTranslator;
 
-use Nette\Bridges\ApplicationLatte\Template;
+use Nette\Application\UI\Template;
+use Wavevision\Utils\Arrays;
+use Wavevision\Utils\Objects;
 
 trait NamespaceTranslator
 {
@@ -19,9 +21,10 @@ trait NamespaceTranslator
 
 	private function setTemplateTranslator(Template $template): Template
 	{
-		return $template
-			->setParameters(['translator' => $this->translator])
-			->setTranslator($this->translator);
+		$prop = 'translator';
+		Arrays::toObject([$prop => $this->translator], $template);
+		Objects::set($template, $prop, $this->translator);
+		return $template;
 	}
 
 }

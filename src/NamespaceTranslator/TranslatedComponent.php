@@ -2,19 +2,16 @@
 
 namespace Wavevision\NamespaceTranslator;
 
-use Nette\Application\UI\ITemplate;
-use Nette\Bridges\ApplicationLatte\Template;
+use Nette\Application\UI\Template;
 
 trait TranslatedComponent
 {
 
 	use NamespaceTranslator;
 
-	protected function createTemplate(): ITemplate
+	protected function createTemplate(): Template
 	{
-		/** @var Template $template */
-		$template = parent::createTemplate();
-		return $this->setTemplateTranslator($template);
+		return $this->setTemplateTranslator(parent::createTemplate());
 	}
 
 }

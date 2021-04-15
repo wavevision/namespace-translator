@@ -1,3 +1,2 @@
-service_name: travis-ci
-coverage_clover: temp/coverage.xml
+service_name: github-actions
 json_path: temp/coveralls.json

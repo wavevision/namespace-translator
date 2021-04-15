@@ -3,13 +3,13 @@
 namespace Wavevision\NamespaceTranslatorTests\App\Components\OtherComponent;
 
 use Nette\Application\UI\Control;
-use Nette\Bridges\ApplicationLatte\Template;
+use Nette\Bridges\ApplicationLatte\DefaultTemplate;
 use Wavevision\DIServiceAnnotation\DIService;
 use Wavevision\NamespaceTranslator\TranslatedComponent;
 
 /**
  * @DIService(generateFactory=true)
- * @property Template $template
+ * @property DefaultTemplate $template
  */
 class OtherComponent extends Control
 {

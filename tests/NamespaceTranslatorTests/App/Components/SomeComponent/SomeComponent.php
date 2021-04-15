@@ -5,13 +5,13 @@ namespace Wavevision\NamespaceTranslatorTests\App\Components\SomeComponent;
 use Contributte\Translation\Wrappers\Message;
 use Contributte\Translation\Wrappers\NotTranslate;
 use Nette\Application\UI\Control;
-use Nette\Bridges\ApplicationLatte\Template;
+use Nette\Bridges\ApplicationLatte\DefaultTemplate;
 use Wavevision\DIServiceAnnotation\DIService;
 use Wavevision\NamespaceTranslator\TranslatedComponent;
 
 /**
  * @DIService(generateFactory=true)
- * @property Template $template
+ * @property DefaultTemplate $template
  */
 class SomeComponent extends Control
 {

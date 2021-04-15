@@ -3,11 +3,11 @@
 namespace Wavevision\NamespaceTranslatorTests\App\Presenters;
 
 use Nette\Application\UI\Presenter;
-use Nette\Bridges\ApplicationLatte\Template;
+use Nette\Bridges\ApplicationLatte\DefaultTemplate;
 use Wavevision\NamespaceTranslator\TranslatedComponent;
 
 /**
- * @property Template $template
+ * @property DefaultTemplate $template
  */
 abstract class BasePresenter extends Presenter
 {
