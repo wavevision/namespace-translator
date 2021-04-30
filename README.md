@@ -18,6 +18,8 @@ Via [Composer](https://getcomposer.org)
 composer require wavevision/namespace-translator
 ```
 
+> **Note**: This will automatically install `contributte/translation` too.
+
 ## Usage
 
 Register required extensions in your project config:
@@ -70,7 +72,7 @@ After that, it works the same as with your components.
 
 ## Loaders
 
-There are two resource loaders included by default:
+There are three resource loaders included by default:
 
 - [Neon](./src/NamespaceTranslator/Loaders/Neon.php) – loads translations from `neon` files
 - [TranslationClass](./src/NamespaceTranslator/Loaders/TranslationClass.php) – loads translations from PHP classes
